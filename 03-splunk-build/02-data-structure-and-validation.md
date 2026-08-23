@@ -112,7 +112,7 @@ host       = $decideOnStartup
 source     = s3://.../vpc-flow/AWSLogs/.../vpcflowlogs/...
 ```
 
-Both `SOC-LAB-VPC` and `ATTACK-LAB-VPC` were proven in the indexed data.
+Both original in-account VPCs (`SOC-LAB-VPC` and historical `ATTACK-LAB-VPC`) were proven in the indexed data. The official Scenario 01 separate-account attacker does not send attacker-side Flow/Resolver telemetry into the defender Splunk environment; its behavior is observed from the target side.
 
 Useful normalized fields observed from real events include:
 
