@@ -6,7 +6,7 @@
 
 # Splunk Troubleshooting & Lessons
 
-The final platform is stable. This file records only engineering problems that changed how the team built or validated the platform. Repetitive commands and intermediate trial-and-error output are intentionally excluded.
+The final platform is stable. This file records only engineering problems that changed how the team built or validated the platform. 
 
 The format is simple:
 
@@ -98,7 +98,7 @@ Application health, Docker port publishing and AWS security-group controls all n
 
 ## 6. Index retention was verified explicitly
 
-The project indexes were created before log onboarding, but retention initially reflected a longer default. All five indexes were corrected to the intended 30-day lab policy:
+The project indexes were created before log onboarding, but retention initially reflected a longer default. All five indexes were corrected to the intended 30-day policy:
 
 ```text
 frozenTimePeriodInSecs = 2592000
@@ -120,7 +120,7 @@ The original host screenshot is retained only as historical evidence:
 
 **Root cause / decision**
 
-The project needed a supported, predictable host foundation for Splunk `10.4.2` and KV Store. Rather than trying to force the old database path to work, the team rebuilt `dns-soc-splunk01` cleanly on **Ubuntu 24.04 LTS**.
+The project needed a supported, predictable host foundation for Splunk `10.4.2` and KV Store. Rather than trying to force the old database path to work, Sonia then rebuilt `dns-soc-splunk01` cleanly on **Ubuntu 24.04 LTS**.
 
 The rebuild kept the architecture stable:
 
@@ -305,7 +305,7 @@ while the previously installed compatible kernel remained available:
 
 The recovery was kept reversible. A one-time GRUB boot into `6.17.0-1017-aws` was used to test the compatibility hypothesis.
 
-The team deliberately did **not**:
+Sonia deliberately did **not**:
 
 - delete KV Store data;
 - rebuild the Splunk container;
@@ -343,7 +343,7 @@ supported host
     -> trusted AWS telemetry
 ```
 
-Only concise, useful engineering evidence is kept in the repository. Historical screenshots are clearly labelled when they no longer represent the current deployed state.
+> Only concise, useful engineering evidence is kept in the repository. Historical screenshots are clearly labelled when they no longer represent the current deployed state.
 
 ## Scenario 02 — dedicated Unbound log handoff
 
