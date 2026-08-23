@@ -118,8 +118,6 @@ dns_soc_ai
 human validation
 ```
 
-Scenario 01 detection engineering is active in its dedicated repository. Future scenario-specific infrastructure remains tracked in [`../00-project-design/scenario-infrastructure-roadmap.md`](../00-project-design/scenario-infrastructure-roadmap.md).
-
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
 [🔎 Previous: Splunk Build](../03-splunk-build/README.md) · [🏠 Repository Home](../README.md)
