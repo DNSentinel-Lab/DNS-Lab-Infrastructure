@@ -2,7 +2,7 @@
 
 [🏠 Repository Home](../README.md) · [🧭 Project Design](../00-project-design/README.md) · **🌐 Network Architecture** · [☁️ AWS Build](../02-aws-build/README.md)
 
-This folder is the **network and DNS blueprint** for the lab. It explains how traffic moves, how the public namespace is delegated, why the attacker and SOC environments are separated, and how the defender-controlled DNS path fits into the locked design.
+This folder is the **network and DNS blueprint** for the lab. It explains how traffic moves, how the public namespace is delegated, how the official external adversary is separated from the defender AWS account, and how the defender-controlled DNS path fits into the locked design.
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
@@ -11,7 +11,8 @@ This folder is the **network and DNS blueprint** for the lab. It explains how tr
 | Document | Purpose |
 |---|---|
 | 🏗️ [`base-network.md`](base-network.md) | Overall AWS network design and trust boundaries |
-| 🧮 [`cidr-plan.md`](cidr-plan.md) | VPC, subnet and assigned address plan |
+| 🧮 [`cidr-plan.md`](cidr-plan.md) | Defender CIDRs plus the historical in-account attack-VPC record |
+| 🕶️ [`external-adversary-boundary.md`](external-adversary-boundary.md) | Official Scenario 01 separate-account attacker trust boundary |
 | 🔐 [`security-groups.md`](security-groups.md) | Baseline and Scenario 02 service exposure / SG-to-SG access |
 | 🌍 [`dns-authority-and-delegation.md`](dns-authority-and-delegation.md) | Registrar, parent zone, child zone and public DNS delegation |
 | 🔀 [`traffic-flow.md`](traffic-flow.md) | Management, DNS, public target, logging, defender DNS and response paths |
@@ -21,7 +22,7 @@ This folder is the **network and DNS blueprint** for the lab. It explains how tr
 
 ```mermaid
 flowchart LR
-    A[ATTACK-LAB-VPC] -->|Public DNS / Internet only| P[Public Lab Surface]
+    A[External attacker account / Windows] -->|Public DNS / Internet only| P[Public Lab Surface]
     P --> S[SOC-LAB-VPC]
     A -. No peering / no private route .- S
     V[Victim] --> R[Defender DNS Resolver]
@@ -41,7 +42,7 @@ Implementation evidence stays in [`../02-aws-build/`](../02-aws-build/); Splunk-
 | `dns-soc-victim01` | `10.50.30.20` | Controlled victim endpoint |
 | `dns-soc-sinkhole01` | `10.50.30.30` | Private sinkhole target |
 
-The subnet remains private and uses `SOC-MONITORING-NAT` for outbound package/management egress. No VPC peering or attacker-to-SOC private route was introduced.
+The subnet remains private and uses `SOC-MONITORING-NAT` for outbound package/management egress. No private attacker-to-SOC route exists. The official Scenario 01 adversary is outside the defender account and uses public Internet paths only.
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 

@@ -6,14 +6,14 @@
 
 # CIDR and Address Plan
 
-The two VPC CIDRs do not overlap. Subnet ranges are intentionally simple so the team can identify a system's role from its address during investigations.
+The defender CIDRs remain stable. The repository also preserves the original in-account attack-VPC CIDR as historical engineering evidence, but the official Scenario 01 attacker now runs in a separate AWS account and its private addressing is intentionally not part of the defender CIDR plan.
 
 ## VPCs
 
 | VPC | CIDR | Purpose |
 |---|---|---|
 | `SOC-LAB-VPC` | `10.50.0.0/16` | Target, SIEM and monitoring/defense services |
-| `ATTACK-LAB-VPC` | `10.60.0.0/16` | Authorized attack/simulation environment |
+| `ATTACK-LAB-VPC` | `10.60.0.0/16` | Historical in-account engineering attack environment — not the official Scenario 01 attacker |
 
 ## Subnets
 
@@ -22,7 +22,7 @@ The two VPC CIDRs do not overlap. Subnet ranges are intentionally simple so the 
 | SOC | `SOC-TARGET-SUBNET` | `10.50.10.0/24` | Public | Public Web target + public monitoring NAT placement |
 | SOC | `SOC-SIEM-SUBNET` | `10.50.20.0/24` | Public/restricted | Splunk / AI services with restricted inbound access |
 | SOC | `SOC-MONITORING-SUBNET` | `10.50.30.0/24` | Private + NAT egress | Defender resolver, victim and sinkhole |
-| Attack | `ATTACK-PUBLIC-SUBNET` | `10.60.10.0/24` | Public | Authorized attack host |
+| Historical Attack | `ATTACK-PUBLIC-SUBNET` | `10.60.10.0/24` | Public | Historical engineering attack host |
 
 ## Assigned private addresses
 
@@ -33,7 +33,12 @@ The two VPC CIDRs do not overlap. Subnet ranges are intentionally simple so the 
 | `10.50.30.10` | `dns-soc-resolver01` | **Deployed** |
 | `10.50.30.20` | `dns-soc-victim01` | **Deployed** |
 | `10.50.30.30` | `dns-soc-sinkhole01` | **Deployed** |
-| `10.60.10.10` | `dns-attack01` | Deployed |
+| `10.60.10.10` | `dns-attack01` | Deployed — historical engineering host |
+
+
+## Official external attacker addressing
+
+The official Kali adversary runs in a separate AWS account. Its private VPC/subnet addressing and account identifiers are deliberately omitted from this defender repository because they are not required for the SOC investigation. Defender-visible identity begins at the public Internet boundary.
 
 ## Monitoring subnet egress
 
