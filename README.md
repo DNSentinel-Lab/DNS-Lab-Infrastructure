@@ -25,7 +25,7 @@
 ![License](https://img.shields.io/github/license/DNSentinel-Lab/DNS-Lab-Infrastructure?style=flat-square)
 ![Issues](https://img.shields.io/github/issues/DNSentinel-Lab/DNS-Lab-Infrastructure?style=flat-square)
 
-**Shared infrastructure and engineering record for a four-person, DNS-focused SOC lab built around AWS, Splunk Enterprise, controlled DNS attack simulations, detection engineering, threat hunting, incident response and AI-assisted analyst context.**
+**Shared infrastructure and engineering record for a four-person, DNS-focused SOC lab built around AWS, Splunk Enterprise, blind adversary exercises against project-owned public services, detection engineering, threat hunting, incident response and AI-assisted analyst context.**
 
 [Project at a Glance](#-project-at-a-glance) · [Architecture](#-architecture-at-a-glance) · [Telemetry](#-security-telemetry-pipeline) · [Status](#-project-status) · [Team](#-team--rotating-roles) · [Repository](#-repository-navigation)
 
@@ -120,7 +120,28 @@ The AWS collection layer uses the supported Splunk Add-on for AWS `8.2.1`. Live 
 | Team-controlled Unbound resolver | `dns_soc_dns` | `unbound:dns` |
 | Private sinkhole Nginx access | `dns_soc_web` | `nginx:access` |
 
+> The defender repository also preserves Flow/Resolver evidence from the original in-account `ATTACK-LAB-VPC`. The **official Scenario 01 separate-account attacker does not export attacker-side telemetry into Splunk**; defender analysis relies on Route 53 authoritative logs and target-side Web/network evidence.
+
 > Detailed onboarding, source validation and field-quality evidence are maintained in [`03-splunk-build/`](03-splunk-build/).
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+
+## 🕶️ Official Scenario 01 adversary boundary
+
+The official Scenario 01 exercise no longer uses the original in-account attack host as the defender-visible source. The Project Lead operates a Kali host from a **separate AWS account**, with an optional external Windows source, and reaches the lab only through public Internet services.
+
+```text
+External attacker account / Windows
+        |
+        | public DNS / HTTPS only
+        v
+Route 53 + public Web target
+        |
+        v
+Defender telemetry → Splunk → SOC / IR
+```
+
+The SOC Analyst has no attacker-account inventory, no private network route and no live ground-truth feed. Historical `ATTACK-LAB-VPC` build evidence is retained as engineering history, but it is **not the official blind-exercise trust boundary**. See [`01-network-architecture/external-adversary-boundary.md`](01-network-architecture/external-adversary-boundary.md).
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
@@ -136,7 +157,7 @@ The AWS collection layer uses the supported Splunk Add-on for AWS `8.2.1`. Live 
 | 🤖 Shared AI foundation | ✅ Complete |
 | 🛡️ Common shared infrastructure | ✅ Complete |
 | 🔎 Scenario 01 detection engineering | ✅ Complete — maintained in separate Scenario 01 repository |
-| 🧑‍💻 Scenario 01 official SOC / IR exercise | ⚪ Pending — maintained in separate Scenario 01 repository |
+| 🧑‍💻 Scenario 01 blind external-adversary SOC / IR exercise | 🟡 Ready / pending execution — maintained in separate Scenario 01 repository |
 | 🧬 Scenario 02 defender DNS infrastructure + Splunk onboarding | ✅ Complete |
 | 🧬 Scenario 02 detection engineering / ML / exercise | ⚪ Not started in this repository baseline |
 | 🔄 Scenario 03 Fast Flux resources | ⚪ Planned when Scenario 03 begins |
@@ -152,7 +173,7 @@ For chronological implementation detail, see [`00-project-design/project-roadmap
 
 The four-role rotation model was designed so each member practices every major SOC role once across the four core scenarios. This model was **designed and proposed by [Lubaba](https://github.com/lubaba1513-pixel)**.
 
-| Scenario | Project Lead / Simulation | SOC Analyst / Hunter | Detection Engineer | IR / Defender |
+| Scenario | Project Lead / Adversary Operator | SOC Analyst / Hunter | Detection Engineer | IR / Defender |
 |---|---|---|---|---|
 | 01 — DNS Recon | [Abdul-Rehman](https://github.com/abdul4rehman215) | [Musfira](https://github.com/MUSFIRA-ZAFAR) | [Sonia](https://github.com/sonia11mansha415) | [Lubaba](https://github.com/lubaba1513-pixel) |
 | 02 — DGA + NXDOMAIN | Musfira | Sonia | Lubaba | Abdul-Rehman |
@@ -160,7 +181,7 @@ The four-role rotation model was designed so each member practices every major S
 | 04 — DNS Tunneling | Lubaba | Abdul-Rehman | Musfira | Sonia |
 
 ```text
-Simulation → Telemetry → Detection → AI Assistance → SOC Investigation → IR / Defense → Verification → Documentation
+External Adversary → Telemetry → Detection → AI Assistance → Blind SOC Investigation → IR / Defense → Ground-Truth Comparison → Documentation
 ```
 
 See [`00-project-design/team-roles.md`](00-project-design/team-roles.md) for each role responsibilities.
