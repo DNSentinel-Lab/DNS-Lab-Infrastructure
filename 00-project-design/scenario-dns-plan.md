@@ -24,7 +24,12 @@ The Route 53 child hosted zone `soclab.abdul4rehman215.tech` keeps five permanen
 
 ## Scenario 01 — DNS Reconnaissance
 
-No additional public DNS record is required. The existing A/NS/SOA/TXT/CNAME baseline is sufficient for record enumeration and HTTPS follow-up.
+**Detection Engineering:** Complete.  
+**Official exercise:** Blind external-adversary SOC/IR run pending.
+
+No additional public DNS record is required. The existing A/NS/SOA/TXT/CNAME baseline is sufficient for real public DNS enumeration and optional HTTPS follow-up.
+
+The official attacker operates from a separate AWS account (with optional external Windows traffic) and is not disclosed to the SOC Analyst before the investigation. The attacker may query the existing public records, test likely names and check whether AXFR is exposed; the defender must rely on Route 53 authoritative logs rather than attacker-side telemetry.
 
 ## Scenario 02 — DGA / High NXDOMAIN
 

@@ -13,7 +13,7 @@ The shared AWS/Splunk/Web/DNS/AI platform is not rebuilt for each scenario. New 
 ## Shared foundation already complete
 
 - `SOC-LAB-VPC` — `10.50.0.0/16`
-- `ATTACK-LAB-VPC` — `10.60.0.0/16`
+- `ATTACK-LAB-VPC` — `10.60.0.0/16` (**historical in-account engineering environment; not the official Scenario 01 blind attacker source**)
 - Route 53 parent + delegated `soclab` child zone
 - `dns-soc-web01` + Nginx/HTTPS + Web UF
 - `dns-soc-splunk01` + Splunk Enterprise + project indexes
@@ -22,11 +22,29 @@ The shared AWS/Splunk/Web/DNS/AI platform is not rebuilt for each scenario. New 
 - CloudTrail
 - AWS VPC Resolver Query Logs
 - shared `dns-soc-ai-bridge`
-- `dns-attack01`
+- `dns-attack01` (**historical in-account engineering host**)
+- official Scenario 01 Kali adversary in a **separate AWS account**
+- optional external Windows adversary source
 
 ## Scenario 01 — DNS Reconnaissance
 
-No additional infrastructure is required. Scenario 01 uses the existing public DNS, public Web target, AWS telemetry, Splunk and shared AI bridge.
+Defender infrastructure requires no additional resource. Scenario 01 uses the existing public DNS, public Web target, AWS telemetry, Splunk and shared AI bridge.
+
+The official adversary boundary is external to the defender account:
+
+```text
+Separate AWS account / Kali
+        + optional external Windows
+                 |
+                 | public Internet only
+                 v
+         Route 53 / public Web
+                 |
+                 v
+            defender telemetry
+```
+
+The original in-account `ATTACK-LAB-VPC` is retained only as historical engineering evidence and is not used as the official blind-exercise attacker source.
 
 ## Scenario 02 — DGA + High NXDOMAIN
 

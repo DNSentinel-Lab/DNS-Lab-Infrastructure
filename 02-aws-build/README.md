@@ -11,7 +11,9 @@ This folder records **what has actually been built in AWS**. Architecture files 
 | AWS work | Status |
 |---|---|
 | IAM / MFA / budget / SSM role | ✅ Complete |
-| `SOC-LAB-VPC` and `ATTACK-LAB-VPC` | ✅ Complete |
+| Defender `SOC-LAB-VPC` | ✅ Complete |
+| Original in-account `ATTACK-LAB-VPC` | ✅ Complete — historical engineering environment |
+| Official Scenario 01 external Kali attacker | ✅ Separate AWS account — outside defender build scope |
 | Base subnets, IGWs and route tables | ✅ Complete |
 | Baseline security groups | ✅ Complete |
 | Scenario 01 EC2 deployment | ✅ Complete |
@@ -28,6 +30,9 @@ This folder records **what has actually been built in AWS**. Architecture files 
 | Unbound forwarding resolver + persistent victim DNS path | ✅ Complete |
 | Private Nginx sinkhole | ✅ Complete |
 | Unbound RPZ safe-match / controlled redirect / reset | ✅ Complete |
+
+> [!IMPORTANT]
+> The AWS build folder preserves what was actually built in the defender account, including the original `ATTACK-LAB-VPC` and `dns-attack01`. Those artifacts are historical engineering evidence. The official Scenario 01 blind exercise now uses a Kali attacker in a **separate AWS account**, so attacker-account infrastructure is intentionally not mirrored into this defender build record.
 
 ## 🏗️ Current AWS Environment
 

@@ -28,9 +28,11 @@ Security Groups are the primary service-level network control. Ports are added o
 
 `SG-VICTIM -> 9997` is reserved for a future victim forwarder path. No victim UF was installed during the Scenario 02 infrastructure build.
 
-## `SG-ATTACKER`
+## `SG-ATTACKER` — historical in-account engineering host
 
-No unnecessary public inbound management rule. The attack host uses SSM and scenario-required outbound paths.
+This security group belongs to the original defender-account `ATTACK-LAB-VPC` build and is retained as historical infrastructure evidence. The official Scenario 01 Kali adversary now runs in a separate AWS account, so its security-group configuration is outside the defender repository.
+
+The historical attack host used no unnecessary public inbound management rule, relied on SSM, and used scenario-required outbound paths.
 
 ## `SG-DNS`
 

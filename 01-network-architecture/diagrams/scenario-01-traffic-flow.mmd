@@ -1,22 +1,26 @@
 sequenceDiagram
-    participant A as Project Lead / Attack Host
+    participant A as Project Lead / External Adversary
     participant P as Route 53 Parent DNS
     participant C as Route 53 Child DNS
     participant W as Public Web Target
     participant S as Splunk Enterprise
-    participant L as LLM Bridge
+    participant L as AI Bridge
     participant SOC as SOC Analyst
     participant IR as IR / Defender
 
-    A->>P: Resolve / enumerate lab namespace
+    Note over A,SOC: Adversary uses separate AWS account / optional external Windows. SOC is not told start time, source IP or commands.
+    A->>P: Public lookup for lab namespace
     P-->>A: Child NS referral where applicable
-    A->>C: Authorized A/AAAA/MX/NS/TXT/CNAME-related queries
-    C-->>A: DNS responses
-    A->>W: Optional HTTP / HTTPS follow-up
-    W-->>S: Nginx/server telemetry
-    S->>S: SPL detection / alert
-    S->>L: Webhook alert context
-    L-->>S: AI-assisted summary via HEC
-    SOC->>S: Validate raw evidence
-    SOC->>IR: Escalate if confirmed
-    IR->>IR: Contain / reduce exposure / verify
+    A->>C: A / AAAA / MX / NS / TXT / likely-name DNS reconnaissance
+    C-->>A: Authoritative DNS responses
+    A->>C: Optional AXFR check
+    A->>W: Optional non-destructive HTTP / HTTPS follow-up
+    C-->>S: Route 53 authoritative query logs via collection pipeline
+    W-->>S: Nginx / network telemetry
+    S->>S: Detection v1.0 / scheduled alert
+    S->>L: Webhook alert evidence
+    L-->>S: AI-assisted context via HEC
+    SOC->>S: Validate raw evidence / history / correlations
+    SOC->>IR: Evidence-backed escalation when warranted
+    IR->>IR: Human-approved response / verification if required
+    Note over A,IR: Ground truth is revealed only after SOC disposition and IR handoff are locked.

@@ -6,13 +6,22 @@
 
 # Base Network Architecture
 
-The lab uses two non-overlapping VPCs and no private route between them.
+The current official Scenario 01 trust model separates the adversary from the defender **by AWS account**, not only by VPC. The defender platform remains in `SOC-LAB-VPC`; the official Kali attacker is in a separate AWS account and reaches only public services.
+
+The original in-account `ATTACK-LAB-VPC` is retained as historical engineering infrastructure and is not the official Scenario 01 blind-exercise source.
 
 ```text
-ATTACK-LAB-VPC  10.60.0.0/16
-    ATTACK-PUBLIC-SUBNET 10.60.10.0/24
-        dns-attack01 10.60.10.10
+OFFICIAL EXTERNAL ADVERSARY
+    Separate AWS account / Kali
+    Optional external Windows
+    Public Internet only
 
+HISTORICAL ENGINEERING ATTACK VPC
+    ATTACK-LAB-VPC  10.60.0.0/16
+        ATTACK-PUBLIC-SUBNET 10.60.10.0/24
+            dns-attack01 10.60.10.10
+
+DEFENDER
 SOC-LAB-VPC     10.50.0.0/16
     SOC-TARGET-SUBNET     10.50.10.0/24
         dns-soc-web01     10.50.10.10
@@ -29,7 +38,8 @@ SOC-LAB-VPC     10.50.0.0/16
 
 ## Trust boundaries
 
-- The attack VPC and SOC VPC do not use VPC peering, Transit Gateway or a private cross-VPC route.
+- The official external attacker account has no VPC peering, Transit Gateway or private cross-account route to the defender.
+- The historical in-account attack VPC also has no private route to the SOC VPC.
 - The public Web target is intentionally reachable through the Internet on 80/443.
 - Splunk Web is restricted to approved team source addresses; administration uses SSM.
 - The Scenario 02 resolver and sinkhole are private-only.

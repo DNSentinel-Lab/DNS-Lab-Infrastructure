@@ -14,7 +14,8 @@ The lab is built in checkpoints. A later phase should not hide an unfinished fou
 |---|---|---|
 | 01 | AWS identities, MFA and budget controls | **Complete** |
 | 02 | `SOC-LAB-VPC`, SOC subnets, IGW, routes and baseline security groups | **Complete** |
-| 03 | `ATTACK-LAB-VPC`, attack subnet, IGW, routes and baseline security group | **Complete** |
+| 03 | Original in-account `ATTACK-LAB-VPC` engineering environment | **Complete / historical; not official Scenario 01 attacker source** |
+| 03B | External Scenario 01 Kali adversary in a separate AWS account | **Complete / official blind-exercise source** |
 | 04 | Launch Scenario 01 EC2 instances | **Complete** |
 | 05 | Route 53 parent migration, child delegation and permanent web/recon DNS baseline | **Complete** |
 | 06 | Nginx / HTTPS validation | **Complete** |
@@ -24,7 +25,7 @@ The lab is built in checkpoints. A later phase should not hide an unfinished fou
 | 10 | Bring AWS telemetry into Splunk and validate index / host / source / sourcetype / time / fields / Gate C | **Complete** |
 | 11 | Build the shared Flask / OpenAI bridge and validate the common alert-enrichment contract | **Complete** |
 | 12 | Scenario 01 DNS investigation dashboard and detection engineering | **Complete / maintained in separate Scenario 01 repository** |
-| 13 | Scenario 01 controlled exercise, AI-assisted analysis and response evidence | **Pending / separate Scenario 01 repository** |
+| 13 | Scenario 01 blind external-adversary exercise, SOC analysis, IR and ground-truth comparison | **Ready / pending execution in separate Scenario 01 repository** |
 
 ## Parallel Scenario 02 infrastructure expansion
 
@@ -58,12 +59,12 @@ AWS + Route 53 + Web + Splunk + AWS telemetry + shared AI
              +--------------+----------------+
              |                               |
              v                               v
-Scenario 01 detection engineering     Scenario 02 defender DNS platform
+Scenario 01 Detection Engineering     Scenario 02 defender DNS platform
 COMPLETE IN SCENARIO 01 REPO          COMPLETE
-                                             |
-                                             v
-                                      Scenario 02 baseline / detection / ML
-                                      NOT STARTED
+             |                               |
+             v                               v
+Scenario 01 blind external-adversary   Scenario 02 baseline / detection / ML
+SOC / IR exercise READY, PENDING       NOT STARTED
 ```
 
 The current Splunk host is `dns-soc-splunk01` on Ubuntu 24.04 LTS at `10.50.20.10`, running Splunk Enterprise `10.4.2`. The shared `dns-soc-ai-bridge` remains on the same EC2 through the internal Docker network.

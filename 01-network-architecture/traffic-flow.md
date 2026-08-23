@@ -27,11 +27,22 @@ sequenceDiagram
 ## Scenario 01 public path
 
 ```text
-dns-attack01 -> Internet -> Route 53 child authority -> optional public Web follow-up
-                                                    -> Nginx UF -> Splunk
+Separate AWS account / Kali
+        + optional external Windows
+                 |
+                 v
+              Internet
+                 |
+                 +--> Route 53 child authority
+                 |        +--> authoritative DNS response
+                 |        +--> Route 53 query log -> Splunk
+                 |
+                 +--> optional public Web follow-up
+                          +--> Nginx -> UF -> Splunk
+                          +--> VPC Flow Logs -> Splunk
 ```
 
-No attacker-to-SOC private route exists.
+No attacker-to-SOC private route exists. The official attacker account does not forward its own CloudTrail, Flow Logs or Resolver logs into the defender SIEM. This preserves the blind investigation boundary.
 
 ## Team management path
 
