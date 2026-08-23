@@ -35,16 +35,16 @@
 
 ## 🎯 Project at a Glance
 
-One shared SOC platform supports **four DNS security scenarios**. The infrastructure stays common where possible; scenario-specific resources are added only when a scenario genuinely needs them.
+One SOC platform supports **four DNS security scenarios**. The infrastructure stays common where possible; scenario-specific resources are added only when a scenario needs them.
 
 | Scenario | Security focus | MITRE ATT&CK | What the team practices |
 |---|---|---|---|
-| 🔎 **01 — DNS Reconnaissance & Enumeration** | Abnormal DNS record enumeration and follow-up activity | `T1590.002` | Public DNS visibility, detection, investigation and evidence correlation |
-| 🧬 **02 — DGA + High NXDOMAIN** | Generated-domain behavior and abnormal NXDOMAIN activity | `T1568.002` | Defender-controlled resolution, baselining, detection/ML and containment path |
-| 🔄 **03 — Fast Flux DNS** | Rapidly changing DNS answers and short-TTL behavior | `T1568.001` | DNS answer/TTL correlation and destination-change analysis |
-| 🛰️ **04 — DNS Tunneling** | Controlled encoded DNS behavior | `T1071.004` / `T1572` where the implemented behavior fits | Suspicious query-pattern detection, investigation and response verification |
+| 🔎 [**01 — DNS Reconnaissance & Enumeration**](https://github.com/DNSentinel-Lab/Scenario-01-DNS-Recon) | Abnormal DNS record enumeration and follow-up activity | `T1590.002` | Public DNS visibility, detection, investigation and evidence correlation |
+| 🧬 [**02 — DGA + High NXDOMAIN**](https://github.com/DNSentinel-Lab/Scenario-02-DGA) | Generated-domain behavior and abnormal NXDOMAIN activity | `T1568.002` | Defender-controlled resolution, baselining, detection/ML and containment path |
+| 🔄 [**03 — Fast Flux DNS**](https://github.com/DNSentinel-Lab/Scenario-03-Fast-Flux) | Rapidly changing DNS answers and short-TTL behavior | `T1568.001` | DNS answer/TTL correlation and destination-change analysis |
+| 🛰️ [**04 — DNS Tunneling**](https://github.com/DNSentinel-Lab/Scenario-04-DNS-Tunneling) | Controlled encoded DNS behavior | `T1071.004` / `T1572` where the implemented behavior fits | Suspicious query-pattern detection, investigation and response verification |
 
-> MITRE mappings describe the behavior the team intends to simulate. Scenario implementation and evidence remain in separate scenario repositories.
+> MITRE mappings describe the behavior the team intends to simulate.
 
 <div align="center">
 
@@ -58,8 +58,6 @@ One shared SOC platform supports **four DNS security scenarios**. The infrastruc
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
 ## 🏗️ Architecture at a Glance
-
-This view is intentionally **scenario-neutral**. It shows the complete project model without duplicating subnet, registrar, private-IP, NAT, RPZ or Docker implementation details.
 
 ```mermaid
 flowchart TB
@@ -92,7 +90,7 @@ The detailed network, DNS authority, trust boundaries, CIDRs, security groups an
 
 ## 📡 Security Telemetry Pipeline
 
-Splunk is the central evidence and analysis layer. The project intentionally combines public DNS, network, cloud, web and defender-controlled DNS telemetry instead of treating one source as the whole investigation.
+Splunk is the central evidence and analysis layer. The project combines public DNS, network, cloud, web and defender-controlled DNS telemetry instead of treating one source as the whole investigation.
 
 ```mermaid
 flowchart LR
@@ -128,8 +126,6 @@ The AWS collection layer uses the supported Splunk Add-on for AWS `8.2.1`. Live 
 
 ## 🚦 Project Status
 
-The root README tracks only the **high-level shared-platform and scenario state**. Detailed implementation checkpoints belong in the relevant build folders and the project roadmap.
-
 | Area | Current state |
 |---|---|
 | 🧭 Project design baseline | ✅ Complete / maintained |
@@ -146,7 +142,7 @@ The root README tracks only the **high-level shared-platform and scenario state*
 | 🔄 Scenario 03 Fast Flux resources | ⚪ Planned when Scenario 03 begins |
 | 🛰️ Scenario 04 tunneling-specific resources | ⚪ Conditional / planned when Scenario 04 begins |
 
-Scenario-specific detections and exercises are maintained in the team's separate [scenario repositories](https://github.com/orgs/DNSentinel-Lab/repositories).
+Scenario-specific detections and exercises are maintained in the separate [scenario repositories](https://github.com/orgs/DNSentinel-Lab/repositories).
 
 For chronological implementation detail, see [`00-project-design/project-roadmap.md`](00-project-design/project-roadmap.md) and [`00-project-design/scenario-infrastructure-roadmap.md`](00-project-design/scenario-infrastructure-roadmap.md).
 
@@ -154,7 +150,7 @@ For chronological implementation detail, see [`00-project-design/project-roadmap
 
 ## 👥 Team & Rotating Roles
 
-The four-role rotation model was designed so each member practices every major SOC role once across the four core scenarios. The model was **designed and proposed by [Lubaba](https://github.com/lubaba1513-pixel)**.
+The four-role rotation model was designed so each member practices every major SOC role once across the four core scenarios. This model was **designed and proposed by [Lubaba](https://github.com/lubaba1513-pixel)**.
 
 | Scenario | Project Lead / Simulation | SOC Analyst / Hunter | Detection Engineer | IR / Defender |
 |---|---|---|---|---|
@@ -167,7 +163,7 @@ The four-role rotation model was designed so each member practices every major S
 Simulation → Telemetry → Detection → AI Assistance → SOC Investigation → IR / Defense → Verification → Documentation
 ```
 
-See [`00-project-design/team-roles.md`](00-project-design/team-roles.md) for the responsibilities, AI decision boundary and parallel working model.
+See [`00-project-design/team-roles.md`](00-project-design/team-roles.md) for each role responsibilities.
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
@@ -205,7 +201,7 @@ This repository deliberately separates **design**, **implementation** and **scen
 
 - **Design documents** explain how the lab is intended to work and why decisions were made.
 - **Build documents** record what was actually configured and how it was validated.
-- **Troubleshooting documents** keep useful root causes and final fixes instead of repetitive trial-and-error history.
+- **Troubleshooting documents** keep useful root causes and final fixes.
 - **Scenario repositories** contain scenario-specific preparation, execution, detection, analysis, response and evidence.
 
 The common 20-part scenario workflow, networking view, MITRE discipline and dashboard engineering standard are defined in [`00-project-design/scenario-documentation-standard.md`](00-project-design/scenario-documentation-standard.md).
