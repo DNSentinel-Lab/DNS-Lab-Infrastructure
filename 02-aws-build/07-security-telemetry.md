@@ -121,7 +121,10 @@ This is authoritative-DNS visibility. It is different from VPC Resolver Query Lo
 
 ## 2. VPC Flow Logs
 
-Flow logging was enabled for **both** project VPCs because both contain workloads that are useful during investigation.
+Flow logging was enabled for **both** VPCs that existed in the original defender-account engineering build.
+
+> [!NOTE]
+> The official Scenario 01 adversary now runs in a separate AWS account. Its VPC Flow Logs, CloudTrail and Resolver Query Logs are **not** ingested into the defender Splunk environment. This is intentional: the official SOC investigation should rely on target-side Route 53 authoritative logs and any defender-side Web/VPC evidence, not attacker-side ground truth. The `ATTACK-LAB-VPC` telemetry below remains historical engineering evidence.
 
 | VPC | Flow log | Traffic | Aggregation | Destination |
 |---|---|---|---|---|
@@ -140,7 +143,7 @@ The AWS default flow-log record format and plain-text file format are used.
 
 ![Attack VPC Flow Log active](screenshots/security-telemetry/vpc-flow-attack-active.png)
 
-*The attacker flow log uses the same format and destination, giving network context from the simulation side as well.*
+*This flow log records the original in-account engineering attack VPC. It is not available as attacker-side evidence in the official blind Scenario 01 exercise.*
 
 ### S3 delivery
 
@@ -237,7 +240,7 @@ CloudTrail -> S3 -> SQS -> Splunk AWS Add-on
 
 ### Why it was enabled early
 
-The original scenario roadmap introduced defender-side resolver visibility mainly from Scenario 02 onward. The Project Lead later chose to enable **AWS VPC Resolver Query Logging during Gate C** because the current `SOC-LAB-VPC` and `ATTACK-LAB-VPC` already contain active workloads that generate useful DNS queries.
+The original scenario roadmap introduced defender-side resolver visibility mainly from Scenario 02 onward. During Gate C, Resolver Query Logging was enabled for the VPCs that existed in the original engineering account. The official separate-account Scenario 01 attacker is intentionally outside that defender-side Resolver logging scope.
 
 The logging configuration is named `dns-soc-resolver-query-logs` and is associated with both existing VPCs.
 

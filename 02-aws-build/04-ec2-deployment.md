@@ -13,7 +13,10 @@
 
 ## Objective
 
-Deploy the compute layer required for Scenario 01 on top of the completed VPC, routing, security-group and SSM foundation. The deployment keeps the attacker in a separate VPC while the web target and Splunk host remain inside the SOC VPC.
+Deploy the compute layer that was used during the original Scenario 01 infrastructure build on top of the completed VPC, routing, security-group and SSM foundation.
+
+> [!IMPORTANT]
+> This document is a **historical implementation record**. It correctly preserves the original `dns-attack01` deployment inside the in-account `ATTACK-LAB-VPC`. The official Scenario 01 blind adversary exercise has since moved to a Kali host in a **separate AWS account**, with optional external Windows traffic. The Web and Splunk hosts documented here remain the current defender targets; the original attacker host is no longer the official exercise source.
 
 ## Deployment overview
 
@@ -21,7 +24,7 @@ Deploy the compute layer required for Scenario 01 on top of the completed VPC, r
 |---|---|---|---|---|---|
 | `dns-soc-web01` | Public web target | Canonical Ubuntu 26.04, amd64 | `t3.small` | 30 GiB | `10.50.10.10` |
 | `dns-soc-splunk01` | Splunk / SIEM host | Canonical Ubuntu 26.04, amd64 | `t3.xlarge` | 100 GiB | `10.50.20.10` |
-| `dns-attack01` | Attack / simulation host | Kali Linux | `t3.small` | 25 GiB | `10.60.10.10` |
+| `dns-attack01` | Original engineering attack host — historical | Kali Linux | `t3.small` | 25 GiB | `10.60.10.10` |
 
 All three instances use the project SSM administration model. Termination protection was enabled during the launch configuration captured for the hosts.
 
@@ -106,9 +109,9 @@ The captured session confirms:
 
 *The validation proves the SIEM host is reachable through SSM and has the network and DNS connectivity required before Docker and Splunk are installed.*
 
-## Attack host — `dns-attack01`
+## Historical attack host — `dns-attack01`
 
-The attacker is deployed separately inside `ATTACK-LAB-VPC`. This keeps the simulation source outside the SOC VPC's private address space.
+The original engineering attacker was deployed inside `ATTACK-LAB-VPC`. This evidence remains accurate for the build checkpoint, but the host is superseded for the official blind Scenario 01 run by the separate-account attacker.
 
 | Setting | Implemented value |
 |---|---|
@@ -158,7 +161,7 @@ All three Scenario 01 instances reached the `Running` state and the captured EC2
 
 ## Result
 
-Scenario 01 now has its required compute foundation: a public-facing web target, a dedicated Splunk/SIEM host and a separate Kali attack host. The instances are running on the planned VPC/subnet layout, use the SSM administration path, and passed the network/DNS/time checks captured during deployment.
+This checkpoint established the original compute foundation: a public-facing web target, a dedicated Splunk/SIEM host and a separate in-account Kali engineering host. The defender Web/Splunk foundation remains current; the official Scenario 01 adversary now operates from a different AWS account. The instances are running on the planned VPC/subnet layout, use the SSM administration path, and passed the network/DNS/time checks captured during deployment.
 
 Route 53 parent/child delegation, Nginx/HTTPS, Web telemetry and AWS telemetry were completed after this checkpoint. Scenario 02 later added three private EC2s — `dns-soc-resolver01`, `dns-soc-victim01` and `dns-soc-sinkhole01` — documented in [`08-scenario-02-defender-dns.md`](08-scenario-02-defender-dns.md). Scenario 03–04 additions remain just-in-time in [`../00-project-design/scenario-infrastructure-roadmap.md`](../00-project-design/scenario-infrastructure-roadmap.md).
 

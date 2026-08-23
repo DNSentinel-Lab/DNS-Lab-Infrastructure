@@ -12,14 +12,17 @@
 
 ## Objective
 
-Build the network foundation manually instead of relying on the default VPC. The attacker and SOC environments use non-overlapping address spaces and do not have a private route between them.
+Build the network foundation manually instead of relying on the default VPC. The original engineering build created non-overlapping SOC and attack VPCs with no private route between them.
+
+> [!NOTE]
+> The `ATTACK-LAB-VPC` in this document is **historical build evidence** from the original defender-account implementation. The official Scenario 01 blind exercise now uses a Kali attacker in a separate AWS account. The original VPC remains documented because it was genuinely built and validated; it is not presented as the current official attacker boundary.
 
 ## VPC design
 
 | VPC | CIDR | Purpose |
 |---|---|---|
 | `SOC-LAB-VPC` | `10.50.0.0/16` | SOC, target and monitoring resources |
-| `ATTACK-LAB-VPC` | `10.60.0.0/16` | Separate attack/simulation environment |
+| `ATTACK-LAB-VPC` | `10.60.0.0/16` | Original in-account engineering attack environment — historical |
 
 ![SOC lab VPC](screenshots/network-foundation/soc-lab-vpc.png)
 
@@ -27,7 +30,7 @@ Build the network foundation manually instead of relying on the default VPC. The
 
 ![Attack lab VPC](screenshots/network-foundation/attack-lab-vpc.png)
 
-*`ATTACK-LAB-VPC` uses a separate `10.60.0.0/16` range so the attacker environment does not overlap the SOC network.*
+*The original `ATTACK-LAB-VPC` used a separate `10.60.0.0/16` range so early engineering tests did not overlap the SOC network. The official exercise now adds a stronger separation boundary by using a different AWS account.*
 
 ## Subnet layout
 
