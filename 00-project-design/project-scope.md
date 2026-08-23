@@ -10,7 +10,7 @@
 
 Build a realistic, network-centric DNS security lab where a four-person team can practice the full SOC lifecycle:
 
-**Attack Simulation → Telemetry → Splunk Detection → AI-Assisted Summary → Human Investigation → Incident Response → Containment → Verification → Documentation**
+**External Adversary Activity → Telemetry → Splunk Detection → AI-Assisted Summary → Blind Human Investigation → Incident Response → Verification → Ground-Truth Comparison → Documentation**
 
 The goal is not to create a single dashboard or one successful alert. Each exercise should leave enough evidence for the team to explain what happened at the DNS, network, cloud and system levels.
 
@@ -18,7 +18,7 @@ The goal is not to create a single dashboard or one successful alert. Each exerc
 
 | Area | Decision |
 |---|---|
-| Cloud | One AWS account, `us-east-1` |
+| Cloud | Defender/SOC platform in the primary AWS account (`us-east-1`); official Scenario 01 Kali adversary in a separate AWS account; optional external Windows source |
 | Domain registrar | Hostinger for `abdul4rehman215.tech` |
 | Parent authoritative DNS | Route 53 public hosted zone for `abdul4rehman215.tech` |
 | Public lab namespace | `soclab.abdul4rehman215.tech` |
@@ -26,8 +26,8 @@ The goal is not to create a single dashboard or one successful alert. Each exerc
 | Public web targets | `soclab.abdul4rehman215.tech` -> `100.49.192.164`; `www.soclab.abdul4rehman215.tech` -> CNAME to the main hostname |
 | Existing parent services | Preserved through the Route 53 parent zone, including website and mail-related DNS |
 | SOC network | `SOC-LAB-VPC` |
-| Attacker network | `ATTACK-LAB-VPC` |
-| Private connection between VPCs | None |
+| Official Scenario 01 attacker network | External Kali VPC in a separate AWS account; exact attacker-account identifiers intentionally excluded from defender documentation |
+| Private attacker-to-defender connection | None — no peering, Transit Gateway or private route; official adversary uses public Internet services only |
 | SIEM | Splunk Enterprise in Docker |
 | Endpoint/server collection | Splunk Universal Forwarder where required |
 | AWS telemetry | Route 53 public query logs, VPC Flow Logs, CloudTrail and AWS VPC Resolver Query Logs are active and validated in Splunk |
@@ -35,6 +35,9 @@ The goal is not to create a single dashboard or one successful alert. Each exerc
 | AI | One shared Flask/OpenAI bridge is implemented on `dns-soc-splunk01`; scenario-specific profiles reuse it and remain analyst-validated |
 | Static child-zone fixtures | Permanent `A`, `NS`, `SOA`, training `TXT` and `www` CNAME records |
 | DNS defense | Scenario 02 defender resolver + reusable RPZ/sinkhole path is implemented and reused by later scenarios |
+
+> [!NOTE]
+> The original `ATTACK-LAB-VPC` (`10.60.0.0/16`) and `dns-attack01` were built during early infrastructure engineering and remain documented as historical evidence. The **official Scenario 01 blind exercise uses the separate-account Kali host instead**, so the defender cannot identify the attacker through same-account asset inventory.
 
 ## Current DNS telemetry boundary
 
@@ -87,7 +90,7 @@ The public child zone stays stable. Scenario 02 DGA names are intentionally **no
 
 The project focuses on DNS behavior and the network evidence around it. It may use endpoint, cloud or web telemetry when those sources help prove the DNS story, but the lab does not try to become a general-purpose attack range.
 
-Attack simulations are limited to infrastructure and domains the team owns or is explicitly authorized to test. High-volume public attacks, public DNS reflection/amplification and uncontrolled exfiltration are outside scope.
+Adversary exercises are limited to infrastructure and domains the team owns or is explicitly authorized to test. High-volume public attacks, public DNS reflection/amplification, exploitation outside the scenario plan and uncontrolled exfiltration are outside scope.
 
 ## What the team should be able to demonstrate
 

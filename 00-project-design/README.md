@@ -35,6 +35,7 @@ Detailed VPC, subnet, routing, DNS authority and traffic decisions belong in [`.
 
 - The **four-scenario model** remains the shared baseline.
 - The **shared AI foundation** is complete.
+- The **official Scenario 01 adversary boundary** is a separate AWS account, with optional external Windows traffic; the original in-account attack VPC remains historical engineering evidence.
 - The **Scenario 02 defender-DNS infrastructure** is complete.
 - Remaining infrastructure is **scenario-specific and just-in-time**.
 - Scenario implementation/evidence is maintained in separate scenario repositories.

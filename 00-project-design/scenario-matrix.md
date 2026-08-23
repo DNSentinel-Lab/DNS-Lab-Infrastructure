@@ -10,7 +10,7 @@ The four scenario repositories use one shared infrastructure and one documentati
 
 | # | Scenario | Primary MITRE ATT&CK | Detection focus | Response objective | Infrastructure state |
 |---|---|---|---|---|---|
-| 01 | DNS Reconnaissance & Enumeration | `T1590.002` — Gather Victim Network Information: DNS | query volume, unique names, record-type diversity, source identity and Web/network follow-up | investigate source/scope and verify the approved response | Shared platform complete; scenario detection engineering active separately |
+| 01 | DNS Reconnaissance & Enumeration | `T1590.002` — Gather Victim Network Information: DNS | query volume, unique names, record-type diversity, source identity and Web/network follow-up | investigate source/scope and verify the approved response | Detection Engineering complete; blind external-adversary SOC/IR exercise ready and pending |
 | 02 | DGA + High NXDOMAIN | `T1568.002` — Dynamic Resolution: Domain Generation Algorithms | NXDOMAIN count/ratio, unique generated names, rate, label length/randomness, client/time behavior | human-confirm DGA-like behavior, enable approved RPZ/sinkhole response and prove before/after | **Resolver/victim/sinkhole + telemetry + reusable RPZ path complete; scenario execution/ML not started** |
 | 03 | Fast Flux DNS | `T1568.001` — Dynamic Resolution: Fast Flux DNS | answer/IP churn, TTL, changing destinations and client follow-up | identify controlled flux behavior and verify containment | Reuse Scenario 02 platform; temporary flux resources later |
 | 04 | DNS Tunneling | `T1071.004` — Application Layer Protocol: DNS; `T1572` only where implemented behavior fits | label structure/length, frequency, query type, unique subdomains and client behavior | investigate encoded DNS behavior and prove block/sinkhole result | Reuse Scenario 02 platform; authoritative endpoint only if final design requires it |
@@ -34,7 +34,7 @@ This does **not** mean the Scenario 02 exercise is complete. The separate reposi
 
 A scenario is complete only after the repository can reproduce and defend the full chain:
 
-**Simulation → Telemetry → Detection → Alert → AI Assistance → Human Investigation → Response → Verification → Lessons Learned.**
+**External Adversary → Telemetry → Detection → Alert → AI Assistance → Blind Human Investigation → Response → Verification → Ground-Truth Comparison → Lessons Learned.**
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
