@@ -24,8 +24,8 @@ The lab is built in checkpoints. A later phase should not hide an unfinished fou
 | 09 | Enable AWS telemetry: Route 53 public logging, VPC Flow Logs, CloudTrail and VPC Resolver Query Logging | **Complete** |
 | 10 | Bring AWS telemetry into Splunk and validate index / host / source / sourcetype / time / fields / Gate C | **Complete** |
 | 11 | Build the shared Flask / OpenAI bridge and validate the common alert-enrichment contract | **Complete** |
-| 12 | Scenario 01 DNS investigation dashboard and detection engineering | **Complete / maintained in separate Scenario 01 repository** |
-| 13 | Scenario 01 external-adversary exercise, SOC analysis, IR and final comparison | **Complete — documented in separate Scenario 01 repository** |
+| 12 | Scenario 01 DNS investigation dashboard and detection engineering | **Complete / maintained in separate [Scenario 01 repository](https://github.com/DNSentinel-Lab/Scenario-01-DNS-Recon/tree/main)** |
+| 13 | Scenario 01 external-adversary exercise, SOC analysis, IR and final comparison | **Complete — documented in separate[ Scenario 01 repository](https://github.com/DNSentinel-Lab/Scenario-01-DNS-Recon/tree/main)** |
 
 ## Parallel Scenario 02 infrastructure expansion
 
