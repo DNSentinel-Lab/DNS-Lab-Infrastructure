@@ -56,7 +56,7 @@ DNS Firewall is not part of the locked implementation. Containment uses the team
 The common platform and Scenario 02 defender DNS infrastructure are now complete:
 
 - **Scenario 01:** reuses the common AWS/Splunk/Web/DNS/AI platform.
-- **Scenario 02:** uses the implemented private resolver, victim and sinkhole in `SOC-MONITORING-SUBNET`; scenario execution and ML are separate later work.
+- **Scenario 02:** uses the implemented private resolver, victim and sinkhole in `SOC-MONITORING-SUBNET`; Machine Learning Engineering is now complete in the dedicated Scenario 02 repository, while rule-based Detection Engineering and the official exercise remain later work.
 - **Scenario 03:** reuses Scenario 02 and adds only temporary team-controlled Fast Flux destinations and DNS behavior.
 - **Scenario 04:** reuses the same defender DNS path and adds a separate authoritative DNS service only if the final tunneling design genuinely needs it.
 
