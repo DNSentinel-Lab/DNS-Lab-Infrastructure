@@ -32,7 +32,7 @@ This folder records **what has actually been built in AWS**. Architecture files 
 | Unbound RPZ safe-match / controlled redirect / reset | ✅ Complete |
 
 > [!IMPORTANT]
-> The AWS build folder preserves what was actually built in the defender account, including the original `ATTACK-LAB-VPC` and `dns-attack01`. Those artifacts are historical engineering evidence. The official Scenario 01 blind exercise now uses a Kali attacker in a **separate AWS account**, so attacker-account infrastructure is intentionally not mirrored into this defender build record.
+> The AWS build folder preserves what was actually built in the defender account, including the original `ATTACK-LAB-VPC` and `dns-attack01`. Those artifacts are historical engineering evidence. The official Scenario 01 information-separated exercise now uses a Kali attacker in a **separate AWS account**, so attacker-account infrastructure is intentionally not mirrored into this defender build record.
 
 ## 🏗️ Current AWS Environment
 

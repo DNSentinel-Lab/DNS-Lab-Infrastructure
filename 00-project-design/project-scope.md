@@ -10,7 +10,7 @@
 
 Build a realistic, network-centric DNS security lab where a four-person team can practice the full SOC lifecycle:
 
-**External Adversary Activity → Telemetry → Splunk Detection → AI-Assisted Summary → Blind Human Investigation → Incident Response → Verification → Ground-Truth Comparison → Documentation**
+**External Adversary Activity → Telemetry → Splunk Detection → AI-Assisted Summary → Independent Human Investigation → Incident Response → Verification → Ground-Truth Comparison → Documentation**
 
 The goal is not to create a single dashboard or one successful alert. Each exercise should leave enough evidence for the team to explain what happened at the DNS, network, cloud and system levels.
 
@@ -37,7 +37,7 @@ The goal is not to create a single dashboard or one successful alert. Each exerc
 | DNS defense | Scenario 02 defender resolver + reusable RPZ/sinkhole path is implemented and reused by later scenarios |
 
 > [!NOTE]
-> The original `ATTACK-LAB-VPC` (`10.60.0.0/16`) and `dns-attack01` were built during early infrastructure engineering and remain documented as historical evidence. The **official Scenario 01 blind exercise uses the separate-account Kali host instead**, so the defender cannot identify the attacker through same-account asset inventory.
+> The original `ATTACK-LAB-VPC` (`10.60.0.0/16`) and `dns-attack01` were built during early infrastructure engineering and remain documented as historical evidence. The **official Scenario 01 information-separated exercise uses the separate-account Kali host instead**, so the defender cannot identify the attacker through same-account asset inventory.
 
 ## Current DNS telemetry boundary
 

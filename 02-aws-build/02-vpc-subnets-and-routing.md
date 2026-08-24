@@ -15,7 +15,7 @@
 Build the network foundation manually instead of relying on the default VPC. The original engineering build created non-overlapping SOC and attack VPCs with no private route between them.
 
 > [!NOTE]
-> The `ATTACK-LAB-VPC` in this document is **historical build evidence** from the original defender-account implementation. The official Scenario 01 blind exercise now uses a Kali attacker in a separate AWS account. The original VPC remains documented because it was genuinely built and validated; it is not presented as the current official attacker boundary.
+> The `ATTACK-LAB-VPC` in this document is **historical build evidence** from the original defender-account implementation. The official Scenario 01 information-separated exercise now uses a Kali attacker in a separate AWS account. The original VPC remains documented because it was genuinely built and validated; it is not presented as the current official attacker boundary.
 
 ## VPC design
 

@@ -25,7 +25,7 @@ The Route 53 child hosted zone `soclab.abdul4rehman215.tech` keeps five permanen
 ## Scenario 01 — DNS Reconnaissance
 
 **Detection Engineering:** Complete.  
-**Official exercise:** Blind external-adversary SOC/IR run pending.
+**Official exercise:** ✅ External-adversary SOC/IR run complete; final evidence is maintained in the Scenario 01 repository.
 
 No additional public DNS record is required. The existing A/NS/SOA/TXT/CNAME baseline is sufficient for real public DNS enumeration and optional HTTPS follow-up.
 

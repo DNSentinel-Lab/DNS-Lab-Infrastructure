@@ -25,7 +25,7 @@
 ![License](https://img.shields.io/github/license/DNSentinel-Lab/DNS-Lab-Infrastructure?style=flat-square)
 ![Issues](https://img.shields.io/github/issues/DNSentinel-Lab/DNS-Lab-Infrastructure?style=flat-square)
 
-**Shared infrastructure and engineering record for a four-person, DNS-focused SOC lab built around AWS, Splunk Enterprise, blind adversary exercises against project-owned public services, detection engineering, threat hunting, incident response and AI-assisted analyst context.**
+**Shared infrastructure and engineering record for a four-person, DNS-focused SOC lab built around AWS, Splunk Enterprise, information-separated adversary exercises against project-owned public services, detection engineering, threat hunting, incident response and AI-assisted analyst context.**
 
 [Project at a Glance](#-project-at-a-glance) · [Architecture](#-architecture-at-a-glance) · [Telemetry](#-security-telemetry-pipeline) · [Status](#-project-status) · [Team](#-team--rotating-roles) · [Repository](#-repository-navigation)
 
@@ -141,7 +141,7 @@ Route 53 + public Web target
 Defender telemetry → Splunk → SOC / IR
 ```
 
-The SOC Analyst has no attacker-account inventory, no private network route and no live ground-truth feed. Historical `ATTACK-LAB-VPC` build evidence is retained as engineering history, but it is **not the official blind-exercise trust boundary**. See [`01-network-architecture/external-adversary-boundary.md`](01-network-architecture/external-adversary-boundary.md).
+The SOC Analyst has no attacker-account inventory, no private network route and no live ground-truth feed. Historical `ATTACK-LAB-VPC` build evidence is retained as engineering history, but it is **not part of the official defender trust boundary for the completed exercise**. See [`01-network-architecture/external-adversary-boundary.md`](01-network-architecture/external-adversary-boundary.md).
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
@@ -157,7 +157,7 @@ The SOC Analyst has no attacker-account inventory, no private network route and 
 | 🤖 Shared AI foundation | ✅ Complete |
 | 🛡️ Common shared infrastructure | ✅ Complete |
 | 🔎 Scenario 01 detection engineering | ✅ Complete — maintained in separate Scenario 01 repository |
-| 🧑‍💻 Scenario 01 blind external-adversary SOC / IR exercise | 🟡 Ready / pending execution — maintained in separate Scenario 01 repository |
+| 🧑‍💻 Scenario 01 external-adversary SOC / IR exercise | ✅ Complete — final evidence maintained in the Scenario 01 repository |
 | 🧬 Scenario 02 defender DNS infrastructure + Splunk onboarding | ✅ Complete |
 | 🧬 Scenario 02 detection engineering / ML / exercise | ⚪ Not started in this repository baseline |
 | 🔄 Scenario 03 Fast Flux resources | ⚪ Planned when Scenario 03 begins |
@@ -181,7 +181,7 @@ The four-role rotation model was designed so each member practices every major S
 | 04 — DNS Tunneling | Lubaba | Abdul-Rehman | Musfira | Sonia |
 
 ```text
-External Adversary → Telemetry → Detection → AI Assistance → Blind SOC Investigation → IR / Defense → Ground-Truth Comparison → Documentation
+External Adversary → Telemetry → Detection → AI Assistance → Independent SOC Investigation → IR / Defense → Evidence-Backed Response → Documentation
 ```
 
 See [`00-project-design/team-roles.md`](00-project-design/team-roles.md) for each role responsibilities.

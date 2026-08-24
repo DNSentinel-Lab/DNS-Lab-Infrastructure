@@ -13,7 +13,7 @@ The shared AWS/Splunk/Web/DNS/AI platform is not rebuilt for each scenario. New 
 ## Shared foundation already complete
 
 - `SOC-LAB-VPC` — `10.50.0.0/16`
-- `ATTACK-LAB-VPC` — `10.60.0.0/16` (**historical in-account engineering environment; not the official Scenario 01 blind attacker source**)
+- `ATTACK-LAB-VPC` — `10.60.0.0/16` (**historical in-account engineering environment; not the official Scenario 01 information-separated attacker source**)
 - Route 53 parent + delegated `soclab` child zone
 - `dns-soc-web01` + Nginx/HTTPS + Web UF
 - `dns-soc-splunk01` + Splunk Enterprise + project indexes
@@ -44,7 +44,7 @@ Separate AWS account / Kali
             defender telemetry
 ```
 
-The original in-account `ATTACK-LAB-VPC` is retained only as historical engineering evidence and is not used as the official blind-exercise attacker source.
+The original in-account `ATTACK-LAB-VPC` is retained only as historical engineering evidence and is not used as the official information-separated attacker source.
 
 ## Scenario 02 — DGA + High NXDOMAIN
 

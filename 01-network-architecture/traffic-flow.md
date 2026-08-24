@@ -42,7 +42,7 @@ Separate AWS account / Kali
                           +--> VPC Flow Logs -> Splunk
 ```
 
-No attacker-to-SOC private route exists. The official attacker account does not forward its own CloudTrail, Flow Logs or Resolver logs into the defender SIEM. This preserves the blind investigation boundary.
+No attacker-to-SOC private route exists. The official attacker account does not forward its own CloudTrail, Flow Logs or Resolver logs into the defender SIEM. This preserves the information-separation boundary.
 
 ## Team management path
 

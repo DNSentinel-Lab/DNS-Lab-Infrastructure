@@ -8,7 +8,7 @@
 
 The current official Scenario 01 trust model separates the adversary from the defender **by AWS account**, not only by VPC. The defender platform remains in `SOC-LAB-VPC`; the official Kali attacker is in a separate AWS account and reaches only public services.
 
-The original in-account `ATTACK-LAB-VPC` is retained as historical engineering infrastructure and is not the official Scenario 01 blind-exercise source.
+The original in-account `ATTACK-LAB-VPC` is retained as historical engineering infrastructure and is not the official Scenario 01 information-separated source.
 
 ```text
 OFFICIAL EXTERNAL ADVERSARY

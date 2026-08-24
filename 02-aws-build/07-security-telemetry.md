@@ -143,20 +143,20 @@ The AWS default flow-log record format and plain-text file format are used.
 
 ![Attack VPC Flow Log active](screenshots/security-telemetry/vpc-flow-attack-active.png)
 
-*This flow log records the original in-account engineering attack VPC. It is not available as attacker-side evidence in the official blind Scenario 01 exercise.*
+*This flow log records the original in-account engineering attack VPC. It is not available as attacker-side evidence in the official information-separated Scenario 01 exercise.*
 
 ### S3 delivery
 
 The shared bucket is:
 
 ```text
-dns-soc-aws-logs-388096320287
+dns-soc-aws-logs-<AWS_ACCOUNT_ID>
 ```
 
 VPC Flow Log objects are written under:
 
 ```text
-vpc-flow/AWSLogs/388096320287/vpcflowlogs/us-east-1/...
+vpc-flow/AWSLogs/<AWS_ACCOUNT_ID>/vpcflowlogs/us-east-1/...
 ```
 
 ![VPC Flow Log files in S3](screenshots/security-telemetry/vpc-flow-s3-delivery.png)
@@ -206,7 +206,7 @@ Implemented settings:
 | Write events | Enabled |
 | Data events | Not enabled for this phase |
 | Insights | Disabled |
-| S3 bucket | `dns-soc-aws-logs-388096320287` |
+| S3 bucket | `dns-soc-aws-logs-<AWS_ACCOUNT_ID>` |
 | Prefix | `cloudtrail` |
 
 ![CloudTrail trail logging](screenshots/security-telemetry/cloudtrail-trail-logging.png)
@@ -216,7 +216,7 @@ Implemented settings:
 S3 object-created notifications for the prefix:
 
 ```text
-cloudtrail/AWSLogs/388096320287/CloudTrail/
+cloudtrail/AWSLogs/<AWS_ACCOUNT_ID>/CloudTrail/
 ```
 
 feed:
@@ -260,7 +260,7 @@ Those remain later scenario work.
 Resolver Query Logs use the same shared bucket. AWS creates the standard path:
 
 ```text
-AWSLogs/388096320287/vpcdnsquerylogs/<vpc-id>/YYYY/MM/DD/...
+AWSLogs/<AWS_ACCOUNT_ID>/vpcdnsquerylogs/<vpc-id>/YYYY/MM/DD/...
 ```
 
 No custom prefix was required in the console workflow.
@@ -272,7 +272,7 @@ No custom prefix was required in the console workflow.
 S3 notifications for:
 
 ```text
-AWSLogs/388096320287/vpcdnsquerylogs/
+AWSLogs/<AWS_ACCOUNT_ID>/vpcdnsquerylogs/
 ```
 
 feed:

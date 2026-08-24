@@ -57,7 +57,7 @@ ATTACK-LAB-VPC 10.60.0.0/16
 dns-attack01  10.60.10.10
 ```
 
-That environment was created during early infrastructure engineering and remains useful historical evidence. It is **superseded operationally for the official Scenario 01 blind exercise** by the separate-account attacker.
+That environment was created during early infrastructure engineering and remains useful historical evidence. It is **superseded operationally for the official Scenario 01 information-separated exercise** by the separate-account attacker.
 
 Historical screenshots/configuration are not rewritten to pretend they were created in another account.
 
@@ -73,7 +73,7 @@ Instead, the analyst must reason from:
 - names and record types;
 - baseline comparison;
 - optional Nginx/VPC follow-up;
-- AI assistance that is also blind to attacker ground truth.
+- AI assistance that is also without attacker ground truth.
 
 The attacker public IP, commands and exact execution times remain private until the defender investigation is locked.
 
