@@ -98,7 +98,7 @@ Application health, Docker port publishing and AWS security-group controls all n
 
 ## 6. Index retention was verified explicitly
 
-The project indexes were created before log onboarding, but retention initially reflected a longer default. All five indexes were corrected to the intended 30-day policy:
+The project indexes were created before log onboarding, but retention initially reflected a longer default. All five original common project indexes were corrected to the intended 30-day policy:
 
 ```text
 frozenTimePeriodInSecs = 2592000
