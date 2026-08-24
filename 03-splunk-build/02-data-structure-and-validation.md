@@ -30,8 +30,9 @@ useful investigation fields
 | `dns_soc_aws` | Route 53, VPC Flow Logs, CloudTrail and AWS VPC Resolver telemetry | 15 GiB | 30 days | Active / Gate C |
 | `dns_soc_dns` | Team-controlled Unbound resolver DNS data | 10 GiB | 30 days | **Active / Scenario 02 validated** |
 | `dns_soc_ai` | AI triage/enrichment returned to Splunk | 5 GiB | 30 days | **Active / shared AI foundation** |
+| `dns_soc_ml` | Scenario 02 Isolation Forest result events | 5 GiB | 30 days | **Active / Scenario 02 ML validated** |
 
-All five indexes were validated with:
+The original five common project indexes were validated together with:
 
 ```spl
 | rest splunk_server=local /services/data/indexes
@@ -47,6 +48,31 @@ frozenTimePeriodInSecs = 2592000
 ```
 
 ![Project index configuration](screenshots/platform/65-splunk-custom-indexes.png)
+
+`dns_soc_ml` was added later during Scenario 02 ML Engineering with the same 30-day lab policy and validated independently through HEC + Splunk search.
+
+## Scenario 02 ML result dataset
+
+The Scenario 02 ML implementation adds one analysis/result index while keeping raw resolver evidence separate:
+
+```text
+dns_soc_dns = trusted Unbound resolver evidence
+dns_soc_ml  = Isolation Forest analysis results
+dns_soc_ai  = LLM analyst assistance
+```
+
+Validated ML result identity:
+
+```text
+index      = dns_soc_ml
+host       = dns-soc-ml
+source     = isolation-forest
+sourcetype = dns_soc:ml:iforest
+```
+
+Observed result fields include `model`, `scenario`, `client_ip`, `window_time`, `prediction`, `prediction_value`, `anomaly_score` and the one-minute DNS behavior features used by the model.
+
+The model itself and Scenario-specific code/evaluation stay in the separate Scenario 02 repository. This shared document records only the Splunk dataset boundary.
 
 ## Gate B — Web telemetry
 

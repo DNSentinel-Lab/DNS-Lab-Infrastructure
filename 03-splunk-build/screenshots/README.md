@@ -25,7 +25,7 @@ The current host is Ubuntu 24.04 LTS. The old `55-splunk-host-preflight.png` cam
 | 62 | [`platform/62-sg-splunk-access-control.png`](platform/62-sg-splunk-access-control.png) | Restricted TCP `8000` and SG-to-SG receiver control |
 | 63 | [`platform/63-splunk-9997-receiver.png`](platform/63-splunk-9997-receiver.png) | Receiver endpoint available on `10.50.20.10:9997` |
 | 64 | [`platform/64-splunk-port-exposure-validation.png`](platform/64-splunk-port-exposure-validation.png) | `8000/9997` published; `8088/8089` not host-published |
-| 65 | [`platform/65-splunk-custom-indexes.png`](platform/65-splunk-custom-indexes.png) | Five project indexes and 30-day retention |
+| 65 | [`platform/65-splunk-custom-indexes.png`](platform/65-splunk-custom-indexes.png) | Original five project indexes and 30-day retention (pre-ML evidence) |
 | 66 | [`platform/66-splunk-restart-validation.png`](platform/66-splunk-restart-validation.png) | Normal restart returns healthy |
 | 66b | [`platform/66b-docker-daemon-restart-recovery.png`](platform/66b-docker-daemon-restart-recovery.png) | Docker daemon restart recovers Splunk |
 | 67 | [`platform/67-splunk-persistence-recreate.png`](platform/67-splunk-persistence-recreate.png) | Configuration survives container recreation |

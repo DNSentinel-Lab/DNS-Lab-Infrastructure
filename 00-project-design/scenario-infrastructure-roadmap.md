@@ -140,16 +140,16 @@ The RPZ path was tested first in disabled/log-only behavior, then with one contr
 - [`../03-splunk-build/07-scenario-02-dns-onboarding.md`](../03-splunk-build/07-scenario-02-dns-onboarding.md)
 - [`../01-network-architecture/diagrams/scenario-02-defender-dns.mmd`](../01-network-architecture/diagrams/scenario-02-defender-dns.mmd)
 
-### Not part of infrastructure completion
+### Work outside the infrastructure layer
 
-The following remain in the Scenario 02 repository and are not claimed complete here:
+The dedicated Scenario 02 repository now records **Machine Learning Engineering as complete**. The following official scenario stages remain outside this infrastructure repository:
 
-- normal baseline;
-- controlled DGA/high-NXDOMAIN simulation;
-- dashboard/hunting;
+- Detection Engineering baseline and hunting;
+- official controlled DGA/high-NXDOMAIN simulation;
+- dashboard engineering;
 - rule-based DGA detection and tuning;
 - scheduled alert;
-- optional Isolation Forest comparison;
+- rule-based SPL versus implemented Isolation Forest comparison;
 - Scenario 02 AI profile;
 - SOC investigation;
 - human-approved response exercise and final evidence chain.

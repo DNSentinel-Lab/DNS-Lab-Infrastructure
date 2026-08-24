@@ -25,7 +25,7 @@ The lab is built in checkpoints. A later phase should not hide an unfinished fou
 | 10 | Bring AWS telemetry into Splunk and validate index / host / source / sourcetype / time / fields / Gate C | **Complete** |
 | 11 | Build the shared Flask / OpenAI bridge and validate the common alert-enrichment contract | **Complete** |
 | 12 | Scenario 01 DNS investigation dashboard and detection engineering | **Complete / maintained in separate [Scenario 01 repository](https://github.com/DNSentinel-Lab/Scenario-01-DNS-Recon/tree/main)** |
-| 13 | Scenario 01 external-adversary exercise, SOC analysis, IR and final comparison | **Complete — documented in separate[ Scenario 01 repository](https://github.com/DNSentinel-Lab/Scenario-01-DNS-Recon/tree/main)** |
+| 13 | Scenario 01 external-adversary exercise, SOC analysis, IR and final comparison | **Complete — documented in separate [Scenario 01 repository](https://github.com/DNSentinel-Lab/Scenario-01-DNS-Recon/tree/main)** |
 
 ## Parallel Scenario 02 infrastructure expansion
 
@@ -44,8 +44,8 @@ Scenario 02 infrastructure was built in parallel after the common platform was s
 | Private Nginx sinkhole + Splunk access-log evidence | **Complete** |
 | Unbound RPZ safe-match + controlled redirect validation | **Complete** |
 | Final RPZ reset to disabled-enforcement state | **Complete** |
-| Scenario 02 ML | **Not started** |
-| Scenario 02 dashboard/detection/alert/AI/SOC/IR exercise | **Not started** |
+| Scenario 02 Machine Learning Engineering | **Complete — maintained in separate [Scenario 02 repository](https://github.com/DNSentinel-Lab/Scenario-02-DGA/tree/main/ml)** |
+| Scenario 02 Detection Engineering / dashboard / alert / AI / SOC / IR exercise | **Not started** |
 
 Implementation is documented in [`../02-aws-build/08-scenario-02-defender-dns.md`](../02-aws-build/08-scenario-02-defender-dns.md) and [`../03-splunk-build/07-scenario-02-dns-onboarding.md`](../03-splunk-build/07-scenario-02-dns-onboarding.md).
 
@@ -63,8 +63,11 @@ Scenario 01 Detection Engineering     Scenario 02 defender DNS platform
 COMPLETE IN SCENARIO 01 REPO          COMPLETE
              |                               |
              v                               v
-Scenario 01 external-adversary complete                  Scenario 02 baseline / detection / ML
-SOC / IR exercise COMPLETE             NOT STARTED
+Scenario 01 official exercise         Scenario 02 ML Engineering
+SOC / IR COMPLETE                      COMPLETE
+                                             |
+                                             v
+                                  Detection Engineering NEXT
 ```
 
 The current Splunk host is `dns-soc-splunk01` on Ubuntu 24.04 LTS at `10.50.20.10`, running Splunk Enterprise `10.4.2`. The shared `dns-soc-ai-bridge` remains on the same EC2 through the internal Docker network.
@@ -99,7 +102,7 @@ Scenario repositories reuse this bridge and add only a scenario profile after st
 ## Later scenario expansion rule
 
 - **Scenario 01:** reuse the completed shared platform.
-- **Scenario 02:** defender DNS infrastructure is complete; next work is baseline, controlled DGA/high-NXDOMAIN activity, detection engineering, optional ML comparison and the full SOC/IR exercise.
+- **Scenario 02:** defender DNS infrastructure and Machine Learning Engineering are complete. Next work is rule-based Detection Engineering, dashboard/alert engineering and the official information-separated SOC/IR exercise; ML remains a supporting signal rather than an automatic verdict.
 - **Scenario 03:** reuse the Scenario 02 victim/resolver/sinkhole platform and add only temporary controlled Fast Flux resources/DNS behavior.
 - **Scenario 04:** reuse the same defender path; add a separate authoritative DNS endpoint only if the final tunneling implementation genuinely requires it.
 

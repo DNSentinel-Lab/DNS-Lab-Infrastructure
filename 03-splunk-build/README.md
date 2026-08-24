@@ -2,10 +2,10 @@
 
 [🏠 Repository Home](../README.md) · [☁️ AWS Build](../02-aws-build/README.md) · **🔎 Splunk Build** · [🤖 AI Integration](../04-ai-integration/README.md)
 
-**Status:** Gates A, B and C complete; shared AI return path complete; Scenario 02 resolver/sinkhole onboarding complete.  
+**Status:** Gates A, B and C complete; shared AI return path complete; Scenario 02 resolver/sinkhole onboarding + ML result path complete.  
 **Splunk implementation / validation owner:** [_Sonia_](https://github.com/sonia11mansha415) — Detection Engineer
 
-This folder records the deployed Splunk Enterprise platform on `dns-soc-splunk01`, Web telemetry, AWS telemetry and the completed Scenario 02 resolver/sinkhole data-quality path.
+This folder records the deployed Splunk Enterprise platform on `dns-soc-splunk01`, Web telemetry, AWS telemetry, the completed Scenario 02 resolver/sinkhole data-quality path and the shared Splunk-side state used by Scenario 02 ML.
 
 Scenario-specific dashboards, detections, tuning, attack ground truth, ML models, analyst findings and IR evidence stay in the separate scenario repositories.
 
@@ -35,6 +35,7 @@ Scenario-specific dashboards, detections, tuning, attack ground truth, ML models
 | `dns_soc_aws` | Route 53, VPC Flow, CloudTrail, AWS Resolver Query Logs | **Active / validated** |
 | `dns_soc_dns` | Team-controlled Unbound resolver telemetry | **Active / Scenario 02 validated** |
 | `dns_soc_ai` | Shared AI triage/enrichment | **Active / validated** |
+| `dns_soc_ml` | Scenario 02 Isolation Forest scoring results | **Active / ML validated** |
 
 All indexes retain the existing 30-day lab policy.
 
@@ -57,6 +58,10 @@ Nginx access.log → UF → 10.50.20.10:9997
 
 Shared AI
 Splunk alert → internal bridge → OpenAI → internal HEC → dns_soc_ai
+
+Scenario 02 ML
+dns_soc_dns → internal REST :8089 → dns-soc-ml / Isolation Forest
+            → internal HEC :8088 → dns_soc_ml
 ```
 
 ## 🧬 Scenario 02 Resolver Data
@@ -97,7 +102,22 @@ sourcetype = nginx:access
 See [`07-scenario-02-dns-onboarding.md`](07-scenario-02-dns-onboarding.md).
 
 > [!NOTE]
-> `dns_soc_dns` is ready for Scenario 02 baseline and detection engineering, but no DGA threshold or alert logic belongs in this shared infrastructure repository. The dedicated Scenario 02 repository must derive thresholds from normal baseline and controlled DGA/high-NXDOMAIN behavior.
+> `dns_soc_dns` is ready for Scenario 02 Detection Engineering. Scenario 02 ML Engineering is now complete and writes model results to `dns_soc_ml`, but no final DGA rule threshold or alert logic belongs in this shared infrastructure repository. The dedicated Scenario 02 repository owns the ML code/evidence and must derive future rule thresholds from real baseline and controlled Detection Engineering tests.
+
+## 🧠 Scenario 02 ML result path
+
+Shared Splunk-side identity:
+
+```text
+index      = dns_soc_ml
+host       = dns-soc-ml
+source     = isolation-forest
+sourcetype = dns_soc:ml:iforest
+```
+
+The `dns-soc-ml` container is a Scenario 02 component on the existing Splunk host/private Docker network. It reads `dns_soc_dns` through internal REST `8089` with a restricted identity and writes model results through a separate internal HEC `8088` token. No ML port is host-published and no new EC2 is required.
+
+The model code, training/evaluation evidence and screenshots remain in the [Scenario 02 repository](https://github.com/DNSentinel-Lab/Scenario-02-DGA/tree/main/ml), not duplicated here.
 
 ## 📚 Splunk Documents
 

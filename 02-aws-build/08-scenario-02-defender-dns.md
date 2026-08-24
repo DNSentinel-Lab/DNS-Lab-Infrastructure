@@ -353,12 +353,12 @@ Repeated error screenshots and command retries are intentionally excluded from t
 Scenario 02 defender DNS infrastructure    COMPLETE
 Scenario 02 resolver telemetry             COMPLETE
 Scenario 02 reusable RPZ/sinkhole path     COMPLETE
-Scenario 02 ML                             NOT STARTED
+Scenario 02 ML Engineering                 COMPLETE — see Scenario-02-DGA/ml/
 Scenario 02 detection engineering          NOT STARTED
 Scenario 02 exercise / SOC / IR            NOT STARTED
 ```
 
-The next work belongs in the dedicated Scenario 02 repository: baseline, controlled DGA/high-NXDOMAIN generation, dashboard/hunting, rule-based detection, optional Isolation Forest comparison, alerting, AI-assisted analyst context, human investigation and approved containment verification.
+The next work belongs in the dedicated Scenario 02 repository: rule-based Detection Engineering, the official controlled DGA/high-NXDOMAIN exercise, dashboard/hunting, alerting, comparison with the completed Isolation Forest signal, AI-assisted analyst context, human investigation and approved containment verification.
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 

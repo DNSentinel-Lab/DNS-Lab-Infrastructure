@@ -50,7 +50,7 @@ One SOC platform supports **four DNS security scenarios**. The infrastructure st
 
 <img src="https://img.shields.io/badge/Scenarios-4-00F5FF?style=for-the-badge" alt="4 scenarios" />
 <img src="https://img.shields.io/badge/Rotating_Roles-4-FF6B6B?style=for-the-badge" alt="4 rotating roles" />
-<img src="https://img.shields.io/badge/Splunk_Indexes-5-66BB6A?style=for-the-badge" alt="5 Splunk indexes" />
+<img src="https://img.shields.io/badge/Splunk_Indexes-6-66BB6A?style=for-the-badge" alt="6 Splunk indexes" />
 <img src="https://img.shields.io/badge/Shared_AI-1_Foundation-7B2CBF?style=for-the-badge" alt="Shared AI foundation" />
 
 </div>
@@ -152,14 +152,15 @@ The SOC Analyst has no attacker-account inventory, no private network route and 
 | 🧭 Project design baseline | ✅ Complete / maintained |
 | ☁️ Shared AWS network, identity, routing and access | ✅ Complete |
 | 🌐 Route 53 authority, public DNS, Nginx and HTTPS | ✅ Complete |
-| 🔎 Splunk Enterprise platform + five project indexes | ✅ Complete |
+| 🔎 Splunk Enterprise platform + six project indexes | ✅ Complete |
 | 📡 Web + AWS security telemetry | ✅ Complete |
 | 🤖 Shared AI foundation | ✅ Complete |
 | 🛡️ Common shared infrastructure | ✅ Complete |
 | 🔎 Scenario 01 detection engineering | ✅ Complete — maintained in separate Scenario 01 repository |
 | 🧑‍💻 Scenario 01 external-adversary SOC / IR exercise | ✅ Complete — final evidence maintained in the Scenario 01 repository |
 | 🧬 Scenario 02 defender DNS infrastructure + Splunk onboarding | ✅ Complete |
-| 🧬 Scenario 02 detection engineering / ML / exercise | ⚪ Not started in this repository baseline |
+| 🧠 Scenario 02 Machine Learning Engineering | ✅ Complete — detailed in Scenario 02 repository |
+| 🧬 Scenario 02 detection engineering / official exercise | ⚪ Not started |
 | 🔄 Scenario 03 Fast Flux resources | ⚪ Planned when Scenario 03 begins |
 | 🛰️ Scenario 04 tunneling-specific resources | ⚪ Conditional / planned when Scenario 04 begins |
 
@@ -213,6 +214,7 @@ See [`00-project-design/team-roles.md`](00-project-design/team-roles.md) for eac
 | **SOC Operations** | Analyst triage, threat hunting, evidence correlation, human validation and documentation |
 | **Incident Response** | Containment design, DNS deny/sinkhole path, verification and response evidence |
 | **AI Integration** | Shared Flask/LLM bridge that provides structured analyst assistance without replacing human judgement |
+| **ML Integration** | Scenario 02 private `dns-soc-ml` service reads resolver evidence through Splunk REST and returns Isolation Forest results through HEC |
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 

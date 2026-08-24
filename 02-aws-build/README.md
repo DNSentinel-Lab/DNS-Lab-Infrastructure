@@ -62,7 +62,7 @@ The Scenario 02 service path is documented in [`08-scenario-02-defender-dns.md`]
 | **03 — Fast Flux** | Reuse Scenario 02 platform; temporary controlled destinations + short-TTL DNS changes later |
 | **04 — DNS Tunneling** | Reuse Scenario 02 platform; add an authoritative endpoint only if final controlled design needs it |
 
-Scenario 02 infrastructure completion does **not** mean the DGA scenario itself is complete. Baseline, simulation, detection engineering, ML, alerting, AI profile, SOC analysis and human-approved response belong in the Scenario 02 repository.
+Scenario 02 infrastructure completion does **not** mean the DGA scenario itself is complete. Machine Learning Engineering has now been completed in the Scenario 02 repository; rule-based Detection Engineering, the official simulation, alerting, AI profile, SOC analysis and human-approved response still belong there.
 
 ## 📚 Build Documents
 
