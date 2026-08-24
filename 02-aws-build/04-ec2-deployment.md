@@ -16,7 +16,7 @@
 Deploy the compute layer that was used during the original Scenario 01 infrastructure build on top of the completed VPC, routing, security-group and SSM foundation.
 
 > [!IMPORTANT]
-> This document is a **historical implementation record**. It correctly preserves the original `dns-attack01` deployment inside the in-account `ATTACK-LAB-VPC`. The official Scenario 01 blind adversary exercise has since moved to a Kali host in a **separate AWS account**, with optional external Windows traffic. The Web and Splunk hosts documented here remain the current defender targets; the original attacker host is no longer the official exercise source.
+> This document is a **historical implementation record**. It correctly preserves the original `dns-attack01` deployment inside the in-account `ATTACK-LAB-VPC`. The official Scenario 01 adversary exercise has since moved to a Kali host in a **separate AWS account**, with attacker ground truth separated from the defender investigation and optional external Windows traffic. The Web and Splunk hosts documented here remain the current defender targets; the original attacker host is no longer the official exercise source.
 
 ## Deployment overview
 
@@ -111,7 +111,7 @@ The captured session confirms:
 
 ## Historical attack host — `dns-attack01`
 
-The original engineering attacker was deployed inside `ATTACK-LAB-VPC`. This evidence remains accurate for the build checkpoint, but the host is superseded for the official blind Scenario 01 run by the separate-account attacker.
+The original engineering attacker was deployed inside `ATTACK-LAB-VPC`. This evidence remains accurate for the build checkpoint, but the host is superseded for the official information-separated Scenario 01 run by the separate-account attacker.
 
 | Setting | Implemented value |
 |---|---|
