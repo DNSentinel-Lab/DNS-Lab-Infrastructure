@@ -291,7 +291,7 @@ index=dns_soc_aws
 
 **Gate C is complete.**
 
-The shared AI foundation has since been completed in [`../04-ai-integration/`](../04-ai-integration/). Common infrastructure is complete, and Scenario 01 detection engineering is active in the dedicated Scenario 01 repository.
+The shared AI foundation has since been completed in [`../04-ai-integration/`](../04-ai-integration/). Common infrastructure is complete, and Scenario 01 detection engineering and the full adversary/SOC/IR exercise are complete in the dedicated Scenario 01 repository.
 
 ## Evidence index
 
