@@ -2,10 +2,10 @@
 
 [🏠 Repository Home](../README.md) · [☁️ AWS Build](../02-aws-build/README.md) · **🔎 Splunk Build** · [🤖 AI Integration](../04-ai-integration/README.md)
 
-**Status:** Gates A, B and C complete; shared AI return path complete; Scenario 02 resolver/sinkhole onboarding + ML result path complete.  
+**Status:** Gates A, B and C complete; shared AI return path complete; Scenario 02 resolver/sinkhole + ML paths complete; Scenario 02 Detection/Alert/AI readiness validated in its dedicated repository.  
 **Splunk implementation / validation owner:** [_Sonia_](https://github.com/sonia11mansha415) — Detection Engineer
 
-This folder records the deployed Splunk Enterprise platform on `dns-soc-splunk01`, Web telemetry, AWS telemetry, the completed Scenario 02 resolver/sinkhole data-quality path and the shared Splunk-side state used by Scenario 02 ML.
+This folder records the deployed Splunk Enterprise platform on `dns-soc-splunk01`, Web telemetry, AWS telemetry, the completed Scenario 02 resolver/sinkhole data-quality path and the shared Splunk-side state used by Scenario 02 ML, Detection Engineering and AI-assisted alerting.
 
 Scenario-specific dashboards, detections, tuning, attack ground truth, ML models, analyst findings and IR evidence stay in the separate scenario repositories.
 
@@ -102,7 +102,7 @@ sourcetype = nginx:access
 See [`07-scenario-02-dns-onboarding.md`](07-scenario-02-dns-onboarding.md).
 
 > [!NOTE]
-> `dns_soc_dns` is ready for Scenario 02 Detection Engineering. Scenario 02 ML Engineering is now complete and writes model results to `dns_soc_ml`, but no final DGA rule threshold or alert logic belongs in this shared infrastructure repository. The dedicated Scenario 02 repository owns the ML code/evidence and must derive future rule thresholds from real baseline and controlled Detection Engineering tests.
+> `dns_soc_dns` now powers the completed Scenario 02 Detection v1.0 in the dedicated scenario repository. Scenario 02 ML writes supporting results to `dns_soc_ml`, and the final scheduled alert can pass the stable evidence contract through the shared AI bridge into `dns_soc_ai`. The scenario-specific rule, thresholds, dashboard, alert configuration and evidence remain owned by the Scenario 02 repository rather than being duplicated here.
 
 ## 🧠 Scenario 02 ML result path
 
