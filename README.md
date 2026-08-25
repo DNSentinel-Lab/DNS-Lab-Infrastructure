@@ -160,7 +160,8 @@ The SOC Analyst has no attacker-account inventory, no private network route and 
 | 🧑‍💻 Scenario 01 external-adversary SOC / IR exercise | ✅ Complete — final evidence maintained in the Scenario 01 repository |
 | 🧬 Scenario 02 defender DNS infrastructure + Splunk onboarding | ✅ Complete |
 | 🧠 Scenario 02 Machine Learning Engineering | ✅ Complete — detailed in Scenario 02 repository |
-| 🧬 Scenario 02 detection engineering / official exercise | ⚪ Not started |
+| 🚦 Scenario 02 Detection Engineering / dashboard / alert / AI | ✅ Complete — maintained in separate Scenario 02 repository |
+| 🧬 Scenario 02 official adversary / SOC / IR exercise | ⚪ Not started |
 | 🔄 Scenario 03 Fast Flux resources | ⚪ Planned when Scenario 03 begins |
 | 🛰️ Scenario 04 tunneling-specific resources | ⚪ Conditional / planned when Scenario 04 begins |
 

@@ -142,17 +142,14 @@ The RPZ path was tested first in disabled/log-only behavior, then with one contr
 
 ### Work outside the infrastructure layer
 
-The dedicated Scenario 02 repository now records **Machine Learning Engineering as complete**. The following official scenario stages remain outside this infrastructure repository:
+The dedicated Scenario 02 repository now records **Machine Learning Engineering and Detection Engineering readiness as complete**, including Dashboard Studio, the frozen rule, scheduled alerting, Rule ↔ ML comparison and Scenario 02 AI evidence integration. The following official scenario stages remain outside this infrastructure repository:
 
-- Detection Engineering baseline and hunting;
-- official controlled DGA/high-NXDOMAIN simulation;
-- dashboard engineering;
-- rule-based DGA detection and tuning;
-- scheduled alert;
-- rule-based SPL versus implemented Isolation Forest comparison;
-- Scenario 02 AI profile;
-- SOC investigation;
-- human-approved response exercise and final evidence chain.
+- fresh information-separated controlled DGA/high-NXDOMAIN adversary execution;
+- private ground-truth record and later reveal;
+- independent SOC investigation and disposition;
+- IR validation and human-approved response decision;
+- RPZ/sinkhole containment only if warranted;
+- before/after verification, safe reset and final evidence comparison.
 
 ## Scenario 03 — Fast Flux
 

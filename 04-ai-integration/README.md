@@ -104,6 +104,8 @@ The strong synthetic result also demonstrated why framework mappings remain advi
 
 The bridge stays scenario-neutral. A scenario repository adds only its stable evidence mapping/profile after detection fields are ready:
 
+Scenario 02 now validates this reuse pattern end-to-end with `scenario_id=scenario-02-dga` and `ai_profile=dga_nxdomain_v1`; the scenario-specific mapping/evidence remains in the Scenario 02 repository.
+
 ```text
 scenario detection
       ↓

@@ -10,7 +10,7 @@
 **Scenario:** DGA + High NXDOMAIN  
 **Primary MITRE ATT&CK for the later scenario exercise:** `T1568.002` — Dynamic Resolution: Domain Generation Algorithms
 
-This document records the permanent defender-side DNS expansion built for Scenario 02. It is infrastructure validation only. The Scenario 02 DGA simulation, dashboard, detection engineering, alert, AI profile, SOC investigation and incident-response exercise have **not** been executed yet.
+This document records the permanent defender-side DNS expansion built for Scenario 02. It is infrastructure validation only. Since this build completed, the dedicated Scenario 02 repository has also completed ML Engineering, Detection Engineering, Dashboard Studio, scheduled alerting and Scenario 02 AI evidence integration. The **official information-separated adversary/SOC/IR exercise has not been executed yet**.
 
 ## Objective
 
@@ -354,11 +354,11 @@ Scenario 02 defender DNS infrastructure    COMPLETE
 Scenario 02 resolver telemetry             COMPLETE
 Scenario 02 reusable RPZ/sinkhole path     COMPLETE
 Scenario 02 ML Engineering                 COMPLETE — see Scenario-02-DGA/ml/
-Scenario 02 detection engineering          NOT STARTED
-Scenario 02 exercise / SOC / IR            NOT STARTED
+Scenario 02 Detection Engineering + AI     COMPLETE — see Scenario-02-DGA/
+Scenario 02 official exercise / SOC / IR   NOT STARTED
 ```
 
-The next work belongs in the dedicated Scenario 02 repository: rule-based Detection Engineering, the official controlled DGA/high-NXDOMAIN exercise, dashboard/hunting, alerting, comparison with the completed Isolation Forest signal, AI-assisted analyst context, human investigation and approved containment verification.
+The next work belongs in the dedicated Scenario 02 repository: preflight/freeze, a fresh official controlled DGA/high-NXDOMAIN adversary run, independent SOC investigation, IR decision, human-approved RPZ/sinkhole containment if warranted, before/after verification, safe reset and final ground-truth comparison.
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
