@@ -1,5 +1,5 @@
 <img
-  src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=220&section=header&text=DNS%20Attack%20Detection%20Response%20Lab&fontSize=36&fontColor=ffffff&animation=fadeIn&fontAlignY=36&desc=AWS%20Splunk%20Enterprise%20DNS%20Security%20SOC%20Engineering&descSize=17&descAlignY=58&descColor=00F5FF"
+  src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=220&section=header&text=DNS%20Attack%20Detection%20Response%20Lab&fontSize=36&fontColor=ffffff&animation=fadeIn&fontAlignY=36&desc=AWS%20%7C%20%20Splunk%20Enterprise%20%7C%20%20DNS%20Security%20%7C%20%20SOC%20Engineering&descSize=17&descAlignY=58&descColor=00F5FF"
   width="100%"
   alt="DNS Attack Detection and Response Lab"
 />
