@@ -10,7 +10,7 @@
 **Scenario:** DGA + High NXDOMAIN  
 **Primary MITRE ATT&CK for the later scenario exercise:** `T1568.002` — Dynamic Resolution: Domain Generation Algorithms
 
-This document records the permanent defender-side DNS expansion built for Scenario 02. It is infrastructure validation only. Since this build completed, the dedicated Scenario 02 repository has also completed ML Engineering, Detection Engineering, Dashboard Studio, scheduled alerting and Scenario 02 AI evidence integration. The **official information-separated adversary/SOC/IR exercise has not been executed yet**.
+This document records the permanent defender-side DNS expansion built for Scenario 02. It is infrastructure validation only. The dedicated Scenario 02 repository has since completed ML Engineering, Detection Engineering, Dashboard Studio, scheduled alerting, AI integration, the information-separated DGA/SOC/IR exercise, human-approved RPZ containment, response verification, and safe reset.
 
 ## Objective
 
@@ -291,7 +291,7 @@ The victim then accessed the same hostname by name and reached the Nginx sinkhol
 
 *The full path `Victim -> Unbound RPZ -> 10.50.30.30 -> Nginx` is proven rather than only showing a changed DNS answer.*
 
-This is infrastructure capability testing. It is **not** the later Scenario 02 incident-response exercise, which still requires a real detection, analyst investigation and human-approved response decision.
+This section is infrastructure capability testing and remains separate from the later official Scenario 02 incident-response evidence. The dedicated scenario repository now contains the real Detection v1.0 hit, SOC investigation, independent IR validation, human-approved RPZ action, sinkhole proof, and safe reset.
 
 ## 9. Final safe state
 
@@ -355,10 +355,10 @@ Scenario 02 resolver telemetry             COMPLETE
 Scenario 02 reusable RPZ/sinkhole path     COMPLETE
 Scenario 02 ML Engineering                 COMPLETE — see Scenario-02-DGA/ml/
 Scenario 02 Detection Engineering + AI     COMPLETE — see Scenario-02-DGA/
-Scenario 02 official exercise / SOC / IR   NOT STARTED
+Scenario 02 official exercise / SOC / IR   COMPLETE — see Scenario-02-DGA/
 ```
 
-The next work belongs in the dedicated Scenario 02 repository: preflight/freeze, a fresh official controlled DGA/high-NXDOMAIN adversary run, independent SOC investigation, IR decision, human-approved RPZ/sinkhole containment if warranted, before/after verification, safe reset and final ground-truth comparison.
+The completed operational case belongs in the dedicated Scenario 02 repository: pre-flight/freeze, fresh DGA/high-NXDOMAIN execution, independent SOC investigation, IR validation, human-approved RPZ/sinkhole containment, before/after verification, safe reset, and final ground-truth comparison.
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
