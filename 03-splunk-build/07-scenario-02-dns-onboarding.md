@@ -11,7 +11,7 @@
 **Sinkhole:** `dns-soc-sinkhole01` — `10.50.30.30`  
 **Splunk receiver:** `10.50.20.10:9997`
 
-This document records the real Scenario 02 infrastructure telemetry that is now available for later DGA/high-NXDOMAIN detection engineering. It does not contain Scenario 02 detection logic.
+This document records the real Scenario 02 infrastructure telemetry that later supported the completed DGA/high-NXDOMAIN Detection Engineering, SOC, and IR workflow. Scenario-specific detection logic remains in the dedicated Scenario 02 repository.
 
 ## Resolver collection path
 
@@ -182,7 +182,7 @@ During the controlled redirect window, the victim reached Nginx through the RPZ-
 
 The searches used for this onboarding are appended to [`validation/validation-searches.spl`](validation/validation-searches.spl).
 
-Useful starting point for later Scenario 02 work:
+Useful reusable resolver pivot:
 
 ```spl
 index=dns_soc_dns host="dns-soc-resolver01" sourcetype="unbound:dns"
@@ -207,7 +207,7 @@ RPZ safe-match telemetry             PASS
 RPZ redirect + HTTP evidence         PASS
 ```
 
-`dns_soc_dns` is now ready for Scenario 02 baseline and detection engineering. Thresholds and DGA logic must still be developed from real baseline plus controlled DGA/high-NXDOMAIN behavior in the Scenario 02 repository.
+`dns_soc_dns` passed the infrastructure data-quality gate and was later used by the Scenario 02 baseline, Detection v1.0, SOC investigation, IR validation, and RPZ before/after verification. The scenario-specific thresholds and final evidence remain in the Scenario 02 repository.
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
