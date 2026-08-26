@@ -142,7 +142,7 @@ The RPZ path was tested first in disabled/log-only behavior, then with one contr
 
 ### Work outside the infrastructure layer
 
-The dedicated Scenario 02 repository now records **Machine Learning Engineering and Detection Engineering readiness as complete**, including Dashboard Studio, the frozen rule, scheduled alerting, Rule ↔ ML comparison and Scenario 02 AI evidence integration. The following official scenario stages remain outside this infrastructure repository:
+The dedicated Scenario 02 repository now records the **full Scenario 02 lifecycle as complete**: Machine Learning Engineering, Detection Engineering, Dashboard Studio, the frozen rule, scheduled alerting, Rule ↔ ML comparison, AI assistance, official DGA execution, SOC investigation, IR validation, human-approved RPZ containment, before/after verification, and safe reset. The operational case remains outside this infrastructure repository because this repository documents the reusable platform rather than the incident narrative.
 
 - fresh information-separated controlled DGA/high-NXDOMAIN adversary execution;
 - private ground-truth record and later reveal;
@@ -199,3 +199,9 @@ For every new scenario resource:
 
 </div>
 <!-- dns-soc-footer:end -->
+
+## Scenario 02 operational closeout
+
+The platform documented here was later exercised end to end: `10.50.30.20` generated fresh controlled DGA-style DNS through `10.50.30.10`, Detection v1.0 and ML surfaced the abnormal windows, SOC and IR independently investigated the resolver evidence, and a human-approved RPZ rule redirected the observed Scenario 02 namespace to `10.50.30.30`. After sinkhole and normal-DNS verification, RPZ was returned to its safe/non-enforcing state.
+
+Detailed operational evidence remains in the dedicated Scenario 02 repository.

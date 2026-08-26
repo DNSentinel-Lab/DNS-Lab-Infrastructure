@@ -46,7 +46,7 @@ Scenario 02 infrastructure was built in parallel after the common platform was s
 | Final RPZ reset to disabled-enforcement state | **Complete** |
 | Scenario 02 Machine Learning Engineering | **Complete — maintained in separate [Scenario 02 repository](https://github.com/DNSentinel-Lab/Scenario-02-DGA/tree/main/ml)** |
 | Scenario 02 Detection Engineering / Dashboard Studio / scheduled alert / Scenario AI | **Complete — maintained in separate [Scenario 02 repository](https://github.com/DNSentinel-Lab/Scenario-02-DGA/tree/main)** |
-| Scenario 02 official information-separated adversary / SOC / IR / verification exercise | **Not started** |
+| Scenario 02 official information-separated DGA / SOC / IR / RPZ verification exercise | **Complete — documented in separate [Scenario 02 repository](https://github.com/DNSentinel-Lab/Scenario-02-DGA/tree/main)** |
 
 Implementation is documented in [`../02-aws-build/08-scenario-02-defender-dns.md`](../02-aws-build/08-scenario-02-defender-dns.md) and [`../03-splunk-build/07-scenario-02-dns-onboarding.md`](../03-splunk-build/07-scenario-02-dns-onboarding.md).
 
@@ -72,7 +72,7 @@ SOC / IR COMPLETE                      COMPLETE
                                              COMPLETE
                                              |
                                              v
-                                  Official Scenario 02 exercise NEXT
+                                  Official Scenario 02 exercise COMPLETE
 ```
 
 The current Splunk host is `dns-soc-splunk01` on Ubuntu 24.04 LTS at `10.50.20.10`, running Splunk Enterprise `10.4.2`. The shared `dns-soc-ai-bridge` remains on the same EC2 through the internal Docker network.
@@ -107,7 +107,7 @@ Scenario repositories reuse this bridge and add only a scenario profile after st
 ## Later scenario expansion rule
 
 - **Scenario 01:** reuse the completed shared platform.
-- **Scenario 02:** defender DNS infrastructure, Machine Learning Engineering, rule-based Detection Engineering, Dashboard Studio, scheduled alerting and the Scenario 02 AI evidence mapping are complete in the dedicated repository. Next is the official information-separated adversary/SOC/IR/verification exercise; ML and AI remain supporting signals rather than automatic verdicts.
+- **Scenario 02:** defender DNS infrastructure, Machine Learning Engineering, Detection Engineering, Dashboard Studio, scheduled alerting, AI evidence mapping, the information-separated DGA/SOC/IR exercise, human-approved RPZ containment, verification, and safe reset are complete. Final scenario evidence is maintained in the dedicated Scenario 02 repository; ML and AI remained supporting signals rather than automatic verdicts.
 - **Scenario 03:** reuse the Scenario 02 victim/resolver/sinkhole platform and add only temporary controlled Fast Flux resources/DNS behavior.
 - **Scenario 04:** reuse the same defender path; add a separate authoritative DNS endpoint only if the final tunneling implementation genuinely requires it.
 

@@ -34,14 +34,14 @@ The official attacker operates from a separate AWS account (with optional extern
 ## Scenario 02 — DGA / High NXDOMAIN
 
 **Infrastructure status:** Complete.  
-**Scenario simulation/detection status:** Not started.
+**Scenario execution status:** Complete — official DGA run, Detection v1.0, SOC investigation, IR validation, approved RPZ containment, verification, and safe reset are recorded in the dedicated Scenario 02 repository.
 
 Do **not** create random DGA records in Route 53.
 
 Controlled names will conceptually use:
 
 ```text
-<generated-label>.dga.soclab.abdul4rehman215.tech
+<generated-label>.dga-test.soclab.abdul4rehman215.tech
 ```
 
 Those names normally do not exist, producing real `NXDOMAIN` through the implemented path:
@@ -85,7 +85,7 @@ controlled generated/test name
         -> normal upstream result / NXDOMAIN
 ```
 
-Approved containment state during a future exercise:
+Approved containment state used during the completed official exercise:
 
 ```text
 controlled name/pattern
@@ -95,7 +95,7 @@ controlled name/pattern
         -> Splunk evidence
 ```
 
-The infrastructure test proved this path once and then restored `rpz-action-override: disabled`. That test proves the control works; it is **not** the Scenario 02 incident-response exercise.
+The infrastructure build first proved this path safely and restored `rpz-action-override: disabled`. During the later official Scenario 02 exercise, Incident Response independently validated the same reusable control after explicit human approval, proved redirect to `10.50.30.30`, verified unrelated DNS remained functional, and returned RPZ to the safe/non-enforcing state. The operational evidence remains in the dedicated Scenario 02 repository.
 
 ## Scenario 03 — Fast Flux DNS
 
@@ -155,3 +155,10 @@ The permanent child-zone baseline stays stable unless a project-level change is 
 
 </div>
 <!-- dns-soc-footer:end -->
+
+
+## Scenario 02 operational closeout
+
+The Scenario 02 DNS plan has now been exercised successfully. The official case used `dns-soc-victim01` (`10.50.30.20`) through `dns-soc-resolver01` (`10.50.30.10`), produced the planned DGA/high-NXDOMAIN behavior, and later validated the reusable RPZ path to `dns-soc-sinkhole01` (`10.50.30.30`) after explicit human approval. The same test qname was proven as NXDOMAIN before containment, redirected during enforcement, and returned to NXDOMAIN after safe reset.
+
+The evidence and human decision record live in the dedicated Scenario 02 repository; this file remains the shared DNS design reference.
