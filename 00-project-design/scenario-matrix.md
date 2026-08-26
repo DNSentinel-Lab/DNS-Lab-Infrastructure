@@ -11,7 +11,7 @@ The four scenario repositories use one shared infrastructure and one documentati
 | # | Scenario | Primary MITRE ATT&CK | Detection focus | Response objective | Infrastructure state |
 |---|---|---|---|---|---|
 | 01 | DNS Reconnaissance & Enumeration | `T1590.002` — Gather Victim Network Information: DNS | query volume, unique names, record-type diversity, source identity and Web/network follow-up | investigate source/scope and verify the approved response | Scenario 01 complete: Detection Engineering + external-adversary execution + SOC + IR + final comparison |
-| 02 | DGA + High NXDOMAIN | `T1568.002` — Dynamic Resolution: Domain Generation Algorithms | NXDOMAIN count/ratio, unique generated names, rate, label length/randomness, client/time behavior | human-confirm DGA-like behavior, enable approved RPZ/sinkhole response and prove before/after | **Resolver/victim/sinkhole + telemetry + RPZ path complete; ML + Detection Engineering + Dashboard/Alert + Scenario AI complete; official adversary/SOC/IR exercise pending** |
+| 02 | DGA + High NXDOMAIN | `T1568.002` — Dynamic Resolution: Domain Generation Algorithms | NXDOMAIN count/ratio, unique generated names, rate, label length/randomness, client/time behavior | human-confirm DGA-like behavior, enable approved RPZ/sinkhole response and prove before/after | **Complete: resolver/victim/sinkhole + telemetry + ML + Detection Engineering + Dashboard/Alert + Scenario AI + official DGA/SOC/IR exercise + approved RPZ containment + safe reset** |
 | 03 | Fast Flux DNS | `T1568.001` — Dynamic Resolution: Fast Flux DNS | answer/IP churn, TTL, changing destinations and client follow-up | identify controlled flux behavior and verify containment | Reuse Scenario 02 platform; temporary flux resources later |
 | 04 | DNS Tunneling | `T1071.004` — Application Layer Protocol: DNS; `T1572` only where implemented behavior fits | label structure/length, frequency, query type, unique subdomains and client behavior | investigate encoded DNS behavior and prove block/sinkhole result | Reuse Scenario 02 platform; authoritative endpoint only if final design requires it |
 
@@ -28,13 +28,13 @@ sinkhole access log -> Splunk
 reset -> NXDOMAIN / safe disabled enforcement
 ```
 
-This does **not** mean the Scenario 02 exercise is complete. Machine Learning Engineering and the full Detection Engineering readiness path are now complete in the separate Scenario 02 repository, including Dashboard Studio, Detection v1.0, scheduled alerting, Rule ↔ ML comparison and Scenario 02 AI integration. The fresh information-separated adversary run, independent human SOC/IR decisions, approved response and final verification evidence are still pending.
+The Scenario 02 exercise is now **complete** in the separate Scenario 02 repository. The final case includes Machine Learning Engineering, Detection Engineering, Dashboard Studio, Detection v1.0, scheduled alerting, Rule ↔ ML comparison, AI assistance, fresh information-separated DGA execution, independent SOC/IR decisions, human-approved RPZ containment, before/after verification, and safe reset.
 
 ## Common completion rule
 
 A scenario is complete only after the repository can reproduce and defend the full chain:
 
-**External Adversary → Telemetry → Detection → Alert → AI Assistance → Independent Human Investigation → IR Decision → Evidence Review → Lessons Learned.**
+**Adversary/Operator Activity → Telemetry → Detection → Alert → AI Assistance → Independent Human Investigation → IR Decision → Response Verification → Evidence Review → Lessons Learned.**
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
