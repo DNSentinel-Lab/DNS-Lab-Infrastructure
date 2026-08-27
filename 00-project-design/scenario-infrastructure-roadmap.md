@@ -151,6 +151,12 @@ The dedicated Scenario 02 repository now records the **full Scenario 02 lifecycl
 - RPZ/sinkhole containment only if warranted;
 - before/after verification, safe reset and final evidence comparison.
 
+## Scenario 02 operational closeout
+
+The platform documented here was later exercised end to end: `10.50.30.20` generated fresh controlled DGA-style DNS through `10.50.30.10`, Detection v1.0 and ML surfaced the abnormal windows, SOC and IR independently investigated the resolver evidence, and a human-approved RPZ rule redirected the observed Scenario 02 namespace to `10.50.30.30`. After sinkhole and normal-DNS verification, RPZ was returned to its safe/non-enforcing state.
+
+Detailed operational evidence remains in the dedicated Scenario 02 repository.
+
 ## Scenario 03 — Fast Flux
 
 Reuse the completed Scenario 02 resolver/victim/sinkhole platform.
@@ -199,9 +205,3 @@ For every new scenario resource:
 
 </div>
 <!-- dns-soc-footer:end -->
-
-## Scenario 02 operational closeout
-
-The platform documented here was later exercised end to end: `10.50.30.20` generated fresh controlled DGA-style DNS through `10.50.30.10`, Detection v1.0 and ML surfaced the abnormal windows, SOC and IR independently investigated the resolver evidence, and a human-approved RPZ rule redirected the observed Scenario 02 namespace to `10.50.30.30`. After sinkhole and normal-DNS verification, RPZ was returned to its safe/non-enforcing state.
-
-Detailed operational evidence remains in the dedicated Scenario 02 repository.
