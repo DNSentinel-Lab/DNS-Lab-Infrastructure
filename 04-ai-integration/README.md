@@ -12,14 +12,90 @@ The shared AI foundation is deployed and validated. It is common infrastructure 
 ## 🧠 Shared AI Flow
 
 ```mermaid
-flowchart LR
-    A[Splunk scheduled alert] --> B[Internal webhook]
-    B --> C[dns-soc-ai-bridge<br/>Flask + Gunicorn]
-    C --> D[OpenAI Responses API]
-    D --> E[Structured JSON result]
-    E --> F[Internal HTTPS HEC :8088]
-    F --> G[index=dns_soc_ai<br/>sourcetype=dns_soc:ai:triage]
-    G --> H[Human SOC Analyst validates raw evidence]
+flowchart TB
+
+    %% =====================================================
+    %% ROW 1 — ALERT + AI PROCESSING
+    %% =====================================================
+    subgraph AI_PIPE[" "]
+        direction LR
+
+        H1["🧠 1 · Alert & AI Processing"]
+
+        A["🚨 Splunk<br/>Scheduled Alert"]
+        B["🔗 Internal<br/>Webhook"]
+        C["⚙️ AI Bridge<br/>Flask + Gunicorn"]
+        D["🧠 OpenAI<br/>Responses API"]
+
+        H1 --> A --> B --> C --> D
+    end
+
+
+    %% =====================================================
+    %% ROW 2 — RETURN + HUMAN VALIDATION
+    %% =====================================================
+    subgraph RETURN_PIPE[" "]
+        direction LR
+
+        H2["🔎 2 · Return & Human Validation"]
+
+        E["📦 Structured<br/>JSON Result"]
+        F["📥 Splunk HEC<br/>HTTPS :8088"]
+        G["🗃️ dns_soc_ai<br/>dns_soc:ai:triage"]
+        H["👤 SOC Analyst<br/>Validates Raw Evidence"]
+
+        H2 --> E --> F --> G --> H
+    end
+
+
+    %% =====================================================
+    %% GROUP-TO-GROUP CONNECTION
+    %% Keeps both rows horizontal
+    %% =====================================================
+    AI_PIPE --> RETURN_PIPE
+
+
+    %% =====================================================
+    %% HEADER STYLES
+    %% =====================================================
+    classDef aiHeader fill:#3b0764,stroke:#c084fc,stroke-width:2px,color:#ffffff;
+    classDef humanHeader fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#ffffff;
+
+    class H1 aiHeader;
+    class H2 humanHeader;
+
+
+    %% =====================================================
+    %% NODE STYLES
+    %% =====================================================
+    classDef alert fill:#450a0a,stroke:#f87171,stroke-width:2px,color:#ffffff;
+    classDef webhook fill:#172554,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
+    classDef bridge fill:#312e81,stroke:#818cf8,stroke-width:2px,color:#ffffff;
+    classDef api fill:#581c87,stroke:#e879f9,stroke-width:2px,color:#ffffff;
+
+    classDef json fill:#422006,stroke:#fbbf24,stroke-width:2px,color:#ffffff;
+    classDef hec fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#ffffff;
+    classDef index fill:#052e16,stroke:#4ade80,stroke-width:2px,color:#ffffff;
+    classDef analyst fill:#14532d,stroke:#4ade80,stroke-width:3px,color:#ffffff;
+
+    class A alert;
+    class B webhook;
+    class C bridge;
+    class D api;
+
+    class E json;
+    class F hec;
+    class G index;
+    class H analyst;
+
+
+    %% =====================================================
+    %% CONTAINER STYLES
+    %% =====================================================
+    style AI_PIPE fill:#0d1117,stroke:#c084fc,stroke-width:1px
+    style RETURN_PIPE fill:#0d1117,stroke:#22d3ee,stroke-width:1px
+
+    linkStyle default stroke:#94a3b8,stroke-width:2px
 ```
 
 > [!IMPORTANT]
