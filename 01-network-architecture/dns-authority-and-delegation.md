@@ -25,29 +25,129 @@ The final design separates registration, parent authority and child authority in
 
 ```mermaid
 flowchart TB
-    Registrar[Hostinger<br/>Registrar]
-    TLD[.tech registry / DNS hierarchy]
-    Parent[Route 53 Parent Zone<br/>abdul4rehman215.tech]
-    ParentSite[Parent A<br/>2.57.91.91]
-    ParentMail[Parent mail / TXT / CNAME records]
-    ChildNS[NS delegation<br/>soclab.abdul4rehman215.tech]
-    Child[Route 53 Child Zone<br/>soclab.abdul4rehman215.tech]
-    Apex[A<br/>soclab -> 100.49.192.164]
-    WWW[CNAME<br/>www CNAME to soclab]
-    TXT[TXT<br/>DNS SOC Training Lab]
-    Web[dns-soc-web01<br/>EIP 100.49.192.164]
 
-    Registrar -. registered nameservers .-> TLD
+    %% =====================================================
+    %% REGISTRAR / DNS HIERARCHY
+    %% =====================================================
+    subgraph ROOT["🌍 Registrar & DNS Hierarchy"]
+        direction TB
+
+        Registrar["🏷️ Hostinger<br/>Registrar"]
+        TLD["🌐 .tech Registry<br/>DNS Hierarchy"]
+
+        Registrar -. "Registered Nameservers" .-> TLD
+    end
+
+
+    %% =====================================================
+    %% PARENT DOMAIN
+    %% =====================================================
+    subgraph PARENT["🏠 Parent DNS Zone · abdul4rehman215.tech"]
+        direction TB
+
+        Parent["☁️ Route 53<br/>Parent Hosted Zone"]
+
+        subgraph PARENTREC["Parent Records"]
+            direction LR
+
+            ParentSite["🌐 A Record<br/>2.57.91.91"]
+            ParentMail["📨 Mail / TXT / CNAME<br/>Records"]
+            ChildNS["🔀 NS Delegation<br/>soclab.abdul4rehman215.tech"]
+        end
+
+        Parent --> ParentSite
+        Parent --> ParentMail
+        Parent --> ChildNS
+    end
+
     TLD --> Parent
-    Parent --> ParentSite
-    Parent --> ParentMail
-    Parent --> ChildNS
-    ChildNS --> Child
-    Child --> Apex
-    Child --> WWW
-    Child --> TXT
-    Apex --> Web
-    WWW --> Apex
+
+
+    %% =====================================================
+    %% CHILD / LAB DNS
+    %% =====================================================
+    subgraph CHILD["🧪 Delegated Lab Zone · soclab.abdul4rehman215.tech"]
+        direction TB
+
+        Child["☁️ Route 53<br/>Child Hosted Zone"]
+
+        subgraph LABREC["Lab Records"]
+            direction LR
+
+            TXT["📝 TXT<br/>DNS SOC Training Lab"]
+
+            Apex["🎯 A Record<br/>soclab → 100.49.192.164"]
+
+            WWW["🔗 CNAME<br/>www → soclab"]
+        end
+
+        Child --> TXT
+        Child --> Apex
+        Child --> WWW
+
+        WWW --> Apex
+    end
+
+    ChildNS -->|"Delegates Authority"| Child
+
+
+    %% =====================================================
+    %% WEB TARGET
+    %% =====================================================
+    Web["🖥️ dns-soc-web01<br/>Elastic IP<br/>100.49.192.164"]
+
+    Apex -->|"Resolves To"| Web
+
+
+    %% =====================================================
+    %% NODE STYLING
+    %% =====================================================
+
+    classDef registrar fill:#422006,stroke:#fbbf24,stroke-width:2px,color:#ffffff;
+    classDef registry fill:#172554,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
+
+    classDef parentzone fill:#312e81,stroke:#818cf8,stroke-width:3px,color:#ffffff;
+    classDef parentrecord fill:#1f2937,stroke:#94a3b8,stroke-width:2px,color:#ffffff;
+    classDef delegation fill:#581c87,stroke:#e879f9,stroke-width:3px,color:#ffffff;
+
+    classDef childzone fill:#083344,stroke:#22d3ee,stroke-width:3px,color:#ffffff;
+    classDef txtrecord fill:#164e63,stroke:#2dd4bf,stroke-width:2px,color:#ffffff;
+    classDef arecord fill:#052e16,stroke:#4ade80,stroke-width:3px,color:#ffffff;
+    classDef cname fill:#3b0764,stroke:#c084fc,stroke-width:2px,color:#ffffff;
+
+    classDef server fill:#450a0a,stroke:#fb7185,stroke-width:3px,color:#ffffff;
+
+    class Registrar registrar;
+    class TLD registry;
+
+    class Parent parentzone;
+    class ParentSite,ParentMail parentrecord;
+    class ChildNS delegation;
+
+    class Child childzone;
+    class TXT txtrecord;
+    class Apex arecord;
+    class WWW cname;
+
+    class Web server;
+
+
+    %% =====================================================
+    %% GROUP STYLING
+    %% =====================================================
+
+    style ROOT fill:#0d1117,stroke:#fbbf24,stroke-width:1px
+    style PARENT fill:#0d1117,stroke:#818cf8,stroke-width:1px
+    style PARENTREC fill:#111827,stroke:#30363d,stroke-width:1px
+    style CHILD fill:#0d1117,stroke:#22d3ee,stroke-width:1px
+    style LABREC fill:#111827,stroke:#30363d,stroke-width:1px
+
+
+    %% =====================================================
+    %% EDGE STYLING
+    %% =====================================================
+
+    linkStyle default stroke:#94a3b8,stroke-width:2px
 ```
 
 The registrar is part of domain administration, but normal DNS resolution follows the registry and authoritative nameserver chain.
