@@ -22,11 +22,55 @@ This folder is the **source of truth for what the lab is building and why**. It 
 
 ```mermaid
 flowchart LR
-    D[Project Design] --> N[Network Architecture]
-    N --> A[AWS Build]
-    A --> S[Splunk Build]
-    S --> AI[Shared AI]
-    D --> R[Separate Scenario Repositories]
+
+    %% =====================================================
+    %% PROJECT ENTRY
+    %% =====================================================
+    P["🧭 Project<br/>Design"]
+
+    %% =====================================================
+    %% SHARED PLATFORM PATH
+    %% =====================================================
+    N["🌐 Network<br/>Architecture"]
+    A["☁️ AWS<br/>Build"]
+    S["📊 Splunk<br/>Build"]
+    AI["🤖 Shared<br/>AI"]
+
+    P --> N
+    N --> A
+    A --> S
+    S --> AI
+
+    %% =====================================================
+    %% SCENARIO BRANCH
+    %% =====================================================
+    R["🗂️ Separate Scenario<br/>Repositories"]
+
+    P -. "Scenario-specific work" .-> R
+
+
+    %% =====================================================
+    %% STYLING
+    %% =====================================================
+    classDef project fill:#172554,stroke:#60a5fa,stroke-width:3px,color:#ffffff;
+    classDef network fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#ffffff;
+    classDef aws fill:#3f2a0a,stroke:#f59e0b,stroke-width:2px,color:#ffffff;
+    classDef splunk fill:#052e16,stroke:#4ade80,stroke-width:2px,color:#ffffff;
+    classDef ai fill:#3b0764,stroke:#c084fc,stroke-width:2px,color:#ffffff;
+    classDef repo fill:#1f2937,stroke:#f472b6,stroke-width:2px,color:#ffffff;
+
+    class P project;
+    class N network;
+    class A aws;
+    class S splunk;
+    class AI ai;
+    class R repo;
+
+    linkStyle 0 stroke:#38bdf8,stroke-width:3px
+    linkStyle 1 stroke:#f59e0b,stroke-width:3px
+    linkStyle 2 stroke:#4ade80,stroke-width:3px
+    linkStyle 3 stroke:#c084fc,stroke-width:3px
+    linkStyle 4 stroke:#f472b6,stroke-width:2px
 ```
 
 Detailed VPC, subnet, routing, DNS authority and traffic decisions belong in [`../01-network-architecture/`](../01-network-architecture/) so project scope does not become a duplicate architecture manual.
