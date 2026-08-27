@@ -29,12 +29,15 @@ flowchart TB
     %% =====================================================
     %% REGISTRAR / DNS HIERARCHY
     %% =====================================================
-    subgraph ROOT["🌍 Registrar & DNS Hierarchy"]
+    subgraph ROOT[" "]
         direction TB
+
+        RH["🌍 Registrar & DNS Hierarchy"]
 
         Registrar["🏷️ Hostinger<br/>Registrar"]
         TLD["🌐 .tech Registry<br/>DNS Hierarchy"]
 
+        RH --> Registrar
         Registrar -. "Registered Nameservers" .-> TLD
     end
 
@@ -42,44 +45,54 @@ flowchart TB
     %% =====================================================
     %% PARENT DOMAIN
     %% =====================================================
-    subgraph PARENT["🏠 Parent DNS Zone · abdul4rehman215.tech"]
+    subgraph PARENT[" "]
         direction TB
+
+        PH["🏠 Parent DNS Zone<br/>abdul4rehman215.tech"]
 
         Parent["☁️ Route 53<br/>Parent Hosted Zone"]
 
-        subgraph PARENTREC["Parent Records"]
+        subgraph PARENTREC[" "]
             direction LR
 
             ParentSite["🌐 A Record<br/>2.57.91.91"]
+
             ParentMail["📨 Mail / TXT / CNAME<br/>Records"]
+
             ChildNS["🔀 NS Delegation<br/>soclab.abdul4rehman215.tech"]
         end
+
+        PH --> Parent
 
         Parent --> ParentSite
         Parent --> ParentMail
         Parent --> ChildNS
     end
 
-    TLD --> Parent
+    TLD --> PH
 
 
     %% =====================================================
     %% CHILD / LAB DNS
     %% =====================================================
-    subgraph CHILD["🧪 Delegated Lab Zone · soclab.abdul4rehman215.tech"]
+    subgraph CHILD[" "]
         direction TB
+
+        CH["🧪 Delegated Lab Zone<br/>soclab.abdul4rehman215.tech"]
 
         Child["☁️ Route 53<br/>Child Hosted Zone"]
 
-        subgraph LABREC["Lab Records"]
+        subgraph LABREC[" "]
             direction LR
 
-            TXT["📝 TXT<br/>DNS SOC Training Lab"]
+            TXT["📝 TXT Record<br/>DNS SOC Training Lab"]
 
             Apex["🎯 A Record<br/>soclab → 100.49.192.164"]
 
-            WWW["🔗 CNAME<br/>www → soclab"]
+            WWW["🔗 CNAME Record<br/>www → soclab"]
         end
+
+        CH --> Child
 
         Child --> TXT
         Child --> Apex
@@ -88,7 +101,7 @@ flowchart TB
         WWW --> Apex
     end
 
-    ChildNS -->|"Delegates Authority"| Child
+    ChildNS -->|"Delegates Authority"| CH
 
 
     %% =====================================================
@@ -100,9 +113,16 @@ flowchart TB
 
 
     %% =====================================================
+    %% HEADER STYLING
+    %% =====================================================
+    classDef rootheader fill:#422006,stroke:#fbbf24,stroke-width:2px,color:#ffffff,font-size:17px;
+    classDef parentheader fill:#312e81,stroke:#818cf8,stroke-width:2px,color:#ffffff,font-size:17px;
+    classDef childheader fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#ffffff,font-size:17px;
+
+
+    %% =====================================================
     %% NODE STYLING
     %% =====================================================
-
     classDef registrar fill:#422006,stroke:#fbbf24,stroke-width:2px,color:#ffffff;
     classDef registry fill:#172554,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
 
@@ -116,6 +136,14 @@ flowchart TB
     classDef cname fill:#3b0764,stroke:#c084fc,stroke-width:2px,color:#ffffff;
 
     classDef server fill:#450a0a,stroke:#fb7185,stroke-width:3px,color:#ffffff;
+
+
+    %% =====================================================
+    %% APPLY CLASSES
+    %% =====================================================
+    class RH rootheader;
+    class PH parentheader;
+    class CH childheader;
 
     class Registrar registrar;
     class TLD registry;
@@ -133,9 +161,8 @@ flowchart TB
 
 
     %% =====================================================
-    %% GROUP STYLING
+    %% CONTAINER STYLING
     %% =====================================================
-
     style ROOT fill:#0d1117,stroke:#fbbf24,stroke-width:1px
     style PARENT fill:#0d1117,stroke:#818cf8,stroke-width:1px
     style PARENTREC fill:#111827,stroke:#30363d,stroke-width:1px
@@ -146,7 +173,6 @@ flowchart TB
     %% =====================================================
     %% EDGE STYLING
     %% =====================================================
-
     linkStyle default stroke:#94a3b8,stroke-width:2px
 ```
 
