@@ -7,6 +7,7 @@
 # Scenario 02 Defender DNS Infrastructure
 
 **Status:** Complete  
+**Implementation owner:** [_Abdul-Rehman_](https://github.com/abdul4rehman215)  
 **Scenario:** DGA + High NXDOMAIN  
 **Primary MITRE ATT&CK for the later scenario exercise:** `T1568.002` — Dynamic Resolution: Domain Generation Algorithms
 
