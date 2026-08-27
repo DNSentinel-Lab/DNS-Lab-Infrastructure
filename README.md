@@ -61,27 +61,139 @@ One SOC platform supports **four DNS security scenarios**. The infrastructure st
 
 ```mermaid
 flowchart TB
-    subgraph SC[Four DNS Security Scenarios]
-        S1[01 · DNS Recon]
-        S2[02 · DGA + NXDOMAIN]
-        S3[03 · Fast Flux]
-        S4[04 · DNS Tunneling]
+
+    %% =====================================================
+    %% 1 — SCENARIO LAYER
+    %% =====================================================
+    subgraph SC[" "]
+        direction TB
+        SCH["🧭 Four DNS Security Scenarios"]
+
+        subgraph SCROW[" "]
+            direction LR
+            S1["🔎 01 · DNS Recon"]
+            S2["🧬 02 · DGA + NXDOMAIN"]
+            S3["🔄 03 · Fast Flux"]
+            S4["🛰️ 04 · DNS Tunneling"]
+        end
     end
 
-    S1 --> PUB[Public DNS / Web Surface]
-    S2 --> DEF[Victim / Defender DNS Path]
+
+    %% =====================================================
+    %% 2 — EXPOSURE / DEFENDER ENTRY PATHS
+    %% =====================================================
+    subgraph ENTRY[" "]
+        direction LR
+        PUB["🌐 Public DNS / Web Surface"]
+        DEF["🛡️ Victim / Defender DNS Path"]
+    end
+
+
+    %% =====================================================
+    %% 3 — TELEMETRY + ANALYSIS CORE
+    %% =====================================================
+    subgraph CORE[" "]
+        direction TB
+        CH["📡 Security Telemetry & Analysis Core"]
+
+        TEL["📡 Security Telemetry<br/>DNS · Web · Network · AWS · Host"]
+
+        SPL["🟢 Splunk Enterprise"]
+
+        AI["🤖 AI-Assisted<br/>Alert Summary"]
+
+        SOC["🔎 SOC Analysis<br/>+ Threat Hunting"]
+    end
+
+
+    %% =====================================================
+    %% 4 — RESPONSE LAYER
+    %% =====================================================
+    subgraph RESP[" "]
+        direction TB
+        IR["🛡️ Incident Response<br/>/ Defense"]
+    end
+
+
+    %% =====================================================
+    %% FLOW
+    %% =====================================================
+    S1 --> PUB
+    S2 --> DEF
     S3 --> DEF
     S4 --> DEF
 
-    PUB --> TEL[Security Telemetry<br/>DNS · Web · Network · AWS · Host]
+    PUB --> TEL
     DEF --> TEL
 
-    TEL --> SPL[Splunk Enterprise]
-    SPL --> AI[AI-Assisted Alert Summary]
-    SPL --> SOC[SOC Analysis & Threat Hunting]
+    CH --> TEL
+    TEL --> SPL
+    SPL --> AI
+    SPL --> SOC
     AI --> SOC
-    SOC --> IR[Incident Response / Defense]
-    IR -. Block / Sinkhole / Verify .-> DEF
+    SOC --> IR
+    IR -. "Block / Sinkhole / Verify" .-> DEF
+
+
+    %% =====================================================
+    %% HEADER STYLES
+    %% =====================================================
+    classDef scenHeader fill:#2a1f0f,stroke:#fbbf24,stroke-width:2px,color:#ffffff;
+    classDef coreHeader fill:#0f2238,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
+
+    class SCH scenHeader;
+    class CH coreHeader;
+
+
+    %% =====================================================
+    %% NODE STYLES
+    %% =====================================================
+    classDef scenario fill:#1f2937,stroke:#f59e0b,stroke-width:2px,color:#ffffff;
+    classDef public fill:#172554,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
+    classDef defender fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#ffffff;
+
+    classDef telemetry fill:#312e81,stroke:#818cf8,stroke-width:2px,color:#ffffff;
+    classDef splunk fill:#052e16,stroke:#4ade80,stroke-width:3px,color:#ffffff;
+    classDef ai fill:#581c87,stroke:#e879f9,stroke-width:2px,color:#ffffff;
+    classDef soc fill:#164e63,stroke:#38bdf8,stroke-width:2px,color:#ffffff;
+    classDef ir fill:#450a0a,stroke:#f87171,stroke-width:3px,color:#ffffff;
+
+    class S1,S2,S3,S4 scenario;
+    class PUB public;
+    class DEF defender;
+    class TEL telemetry;
+    class SPL splunk;
+    class AI ai;
+    class SOC soc;
+    class IR ir;
+
+
+    %% =====================================================
+    %% CONTAINER STYLES
+    %% =====================================================
+    style SC fill:#0d1117,stroke:#fbbf24,stroke-width:1px
+    style SCROW fill:#111827,stroke:#30363d,stroke-width:1px
+
+    style ENTRY fill:#0d1117,stroke:#60a5fa,stroke-width:1px
+
+    style CORE fill:#0d1117,stroke:#4ade80,stroke-width:1px
+    style RESP fill:#0d1117,stroke:#f87171,stroke-width:1px
+
+
+    %% =====================================================
+    %% EDGE STYLES
+    %% =====================================================
+    linkStyle 0 stroke:#60a5fa,stroke-width:2px
+    linkStyle 1 stroke:#22d3ee,stroke-width:2px
+    linkStyle 2 stroke:#22d3ee,stroke-width:2px
+    linkStyle 3 stroke:#22d3ee,stroke-width:2px
+    linkStyle 4 stroke:#818cf8,stroke-width:2px
+    linkStyle 5 stroke:#818cf8,stroke-width:2px
+    linkStyle 6 stroke:#4ade80,stroke-width:3px
+    linkStyle 7 stroke:#c084fc,stroke-width:2px
+    linkStyle 8 stroke:#38bdf8,stroke-width:2px
+    linkStyle 9 stroke:#e879f9,stroke-width:2px
+    linkStyle 10 stroke:#f87171,stroke-width:3px,stroke-dasharray:6 5
 ```
 
 The detailed network, DNS authority, trust boundaries, CIDRs, security groups and traffic paths live in [`01-network-architecture/`](01-network-architecture/). The registrar/delegation chain is documented specifically in [`01-network-architecture/dns-authority-and-delegation.md`](01-network-architecture/dns-authority-and-delegation.md).
@@ -94,18 +206,99 @@ Splunk is the central evidence and analysis layer. The project combines public D
 
 ```mermaid
 flowchart LR
-    WEB[Web / Nginx] -->|UF · 9997| SPL[Splunk Enterprise]
-    DNS[Unbound + Sinkhole] -->|UF · 9997| SPL
-    R53[Route 53 Public DNS] -->|CloudWatch → Kinesis| SPL
-    VPC[VPC Flow Logs] -->|S3 → SQS| SPL
-    CT[CloudTrail] -->|S3 → SQS| SPL
-    RQ[Resolver Query Logs] -->|S3 → SQS| SPL
 
-    SPL --> IDX[dns_soc_aws · dns_soc_web · dns_soc_dns]
-    SPL -->|Internal webhook| AIB[Shared AI Bridge]
-    AIB --> OAI[OpenAI API]
-    OAI --> AIB
-    AIB -->|Internal HTTPS HEC| AIDX[dns_soc_ai]
+    %% =====================================================
+    %% TELEMETRY SOURCES
+    %% =====================================================
+    subgraph SOURCES["📡 Telemetry Sources"]
+        direction TB
+
+        WEB["🌐 Web / Nginx"]
+        DNS["🛡️ Unbound + Sinkhole"]
+        R53["🌍 Route 53 Public DNS"]
+        VPC["🔀 VPC Flow Logs"]
+        CT["🧾 CloudTrail"]
+        RQ["🔎 Resolver Query Logs"]
+    end
+
+
+    %% =====================================================
+    %% CENTRAL SPLUNK LAYER
+    %% =====================================================
+    SPL["🟢 Splunk Enterprise<br/>Central Evidence + Analysis Layer"]
+
+
+    %% =====================================================
+    %% CORE DATA OUTPUT
+    %% =====================================================
+    subgraph DATA["🗃️ Core Security Data"]
+        direction TB
+        IDX["dns_soc_aws · dns_soc_web · dns_soc_dns"]
+    end
+
+
+    %% =====================================================
+    %% AI ENRICHMENT PATH
+    %% =====================================================
+    subgraph AI["🤖 Shared AI Enrichment"]
+        direction TB
+
+        AIB["⚙️ Shared AI Bridge"]
+        OAI["🧠 OpenAI API"]
+        AIDX["📝 AI Triage Index<br/>dns_soc_ai"]
+    end
+
+
+    %% =====================================================
+    %% INGESTION INTO SPLUNK
+    %% =====================================================
+    WEB -->|"UF · 9997"| SPL
+    DNS -->|"UF · 9997"| SPL
+    R53 -->|"CloudWatch → Kinesis"| SPL
+    VPC -->|"S3 → SQS"| SPL
+    CT -->|"S3 → SQS"| SPL
+    RQ -->|"S3 → SQS"| SPL
+
+
+    %% =====================================================
+    %% SPLUNK OUTPUTS
+    %% =====================================================
+    SPL --> IDX
+    SPL -->|"Internal Webhook"| AIB
+
+    AIB -->|"Responses API"| OAI
+    OAI -->|"Structured JSON"| AIB
+    AIB -->|"Internal HTTPS HEC"| AIDX
+
+
+    %% =====================================================
+    %% NODE STYLING
+    %% =====================================================
+    classDef endpoint fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#ffffff;
+    classDef aws fill:#172554,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
+    classDef splunk fill:#052e16,stroke:#4ade80,stroke-width:3px,color:#ffffff;
+    classDef data fill:#1f2937,stroke:#94a3b8,stroke-width:2px,color:#ffffff;
+    classDef ai fill:#3b0764,stroke:#c084fc,stroke-width:2px,color:#ffffff;
+    classDef api fill:#581c87,stroke:#e879f9,stroke-width:2px,color:#ffffff;
+    classDef aidx fill:#422006,stroke:#fbbf24,stroke-width:2px,color:#ffffff;
+
+    class WEB,DNS endpoint;
+    class R53,VPC,CT,RQ aws;
+    class SPL splunk;
+    class IDX data;
+    class AIB ai;
+    class OAI api;
+    class AIDX aidx;
+
+
+    %% =====================================================
+    %% GROUP STYLING
+    %% =====================================================
+    style SOURCES fill:#0d1117,stroke:#58a6ff,stroke-width:1px
+    style DATA fill:#0d1117,stroke:#94a3b8,stroke-width:1px
+    style AI fill:#0d1117,stroke:#c084fc,stroke-width:1px
+
+    linkStyle default stroke:#94a3b8,stroke-width:2px
 ```
 
 The AWS collection layer uses the supported Splunk Add-on for AWS `8.2.1`. Live implementation recorded the following source identities:
