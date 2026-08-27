@@ -63,55 +63,58 @@ One SOC platform supports **four DNS security scenarios**. The infrastructure st
 flowchart TB
 
     %% =====================================================
-    %% 1 — SCENARIO LAYER
+    %% SCENARIOS
     %% =====================================================
     subgraph SC[" "]
         direction TB
         SCH["🧭 Four DNS Security Scenarios"]
 
-        subgraph SCROW[" "]
+        subgraph SCGRID[" "]
             direction LR
-            S1["🔎 01 · DNS Recon"]
-            S2["🧬 02 · DGA + NXDOMAIN"]
-            S3["🔄 03 · Fast Flux"]
-            S4["🛰️ 04 · DNS Tunneling"]
+
+            subgraph SCL[" "]
+                direction TB
+                S1["🔎 01 · DNS Recon"]
+                S2["🧬 02 · DGA + NXDOMAIN"]
+            end
+
+            subgraph SCR[" "]
+                direction TB
+                S3["🔄 03 · Fast Flux"]
+                S4["🛰️ 04 · DNS Tunneling"]
+            end
         end
     end
 
 
     %% =====================================================
-    %% 2 — EXPOSURE / DEFENDER ENTRY PATHS
+    %% ENTRY PATHS
     %% =====================================================
     subgraph ENTRY[" "]
         direction LR
-        PUB["🌐 Public DNS / Web Surface"]
-        DEF["🛡️ Victim / Defender DNS Path"]
+        PUB["🌐 Public DNS<br/>/ Web"]
+        DEF["🛡️ Defender<br/>DNS Path"]
     end
 
 
     %% =====================================================
-    %% 3 — TELEMETRY + ANALYSIS CORE
+    %% CORE
     %% =====================================================
     subgraph CORE[" "]
         direction TB
-        CH["📡 Security Telemetry & Analysis Core"]
+        CH["📡 Telemetry + Analysis"]
 
-        TEL["📡 Security Telemetry<br/>DNS · Web · Network · AWS · Host"]
+        TEL["DNS · Web · Network<br/>AWS · Host"]
 
-        SPL["🟢 Splunk Enterprise"]
+        SPL["🟢 Splunk<br/>Enterprise"]
 
-        AI["🤖 AI-Assisted<br/>Alert Summary"]
+        subgraph ANAL[" "]
+            direction LR
+            AI["🤖 AI<br/>Summary"]
+            SOC["🔎 SOC Analysis<br/>+ Hunting"]
+        end
 
-        SOC["🔎 SOC Analysis<br/>+ Threat Hunting"]
-    end
-
-
-    %% =====================================================
-    %% 4 — RESPONSE LAYER
-    %% =====================================================
-    subgraph RESP[" "]
-        direction TB
-        IR["🛡️ Incident Response<br/>/ Defense"]
+        IR["🛡️ IR / Defense"]
     end
 
 
@@ -172,28 +175,19 @@ flowchart TB
     %% CONTAINER STYLES
     %% =====================================================
     style SC fill:#0d1117,stroke:#fbbf24,stroke-width:1px
-    style SCROW fill:#111827,stroke:#30363d,stroke-width:1px
+    style SCGRID fill:#111827,stroke:#30363d,stroke-width:1px
+    style SCL fill:#111827,stroke:#30363d,stroke-width:1px
+    style SCR fill:#111827,stroke:#30363d,stroke-width:1px
 
     style ENTRY fill:#0d1117,stroke:#60a5fa,stroke-width:1px
 
     style CORE fill:#0d1117,stroke:#4ade80,stroke-width:1px
-    style RESP fill:#0d1117,stroke:#f87171,stroke-width:1px
-
+    style ANAL fill:#111827,stroke:#30363d,stroke-width:1px
 
     %% =====================================================
     %% EDGE STYLES
     %% =====================================================
-    linkStyle 0 stroke:#60a5fa,stroke-width:2px
-    linkStyle 1 stroke:#22d3ee,stroke-width:2px
-    linkStyle 2 stroke:#22d3ee,stroke-width:2px
-    linkStyle 3 stroke:#22d3ee,stroke-width:2px
-    linkStyle 4 stroke:#818cf8,stroke-width:2px
-    linkStyle 5 stroke:#818cf8,stroke-width:2px
-    linkStyle 6 stroke:#4ade80,stroke-width:3px
-    linkStyle 7 stroke:#c084fc,stroke-width:2px
-    linkStyle 8 stroke:#38bdf8,stroke-width:2px
-    linkStyle 9 stroke:#e879f9,stroke-width:2px
-    linkStyle 10 stroke:#f87171,stroke-width:3px,stroke-dasharray:6 5
+    linkStyle default stroke:#94a3b8,stroke-width:2px
 ```
 
 The detailed network, DNS authority, trust boundaries, CIDRs, security groups and traffic paths live in [`01-network-architecture/`](01-network-architecture/). The registrar/delegation chain is documented specifically in [`01-network-architecture/dns-authority-and-delegation.md`](01-network-architecture/dns-authority-and-delegation.md).
@@ -208,71 +202,80 @@ Splunk is the central evidence and analysis layer. The project combines public D
 flowchart LR
 
     %% =====================================================
-    %% TELEMETRY SOURCES
+    %% SOURCES
     %% =====================================================
-    subgraph SOURCES["📡 Telemetry Sources"]
+    subgraph SOURCES[" "]
         direction TB
+        SH["📡 Telemetry Sources"]
 
         WEB["🌐 Web / Nginx"]
-        DNS["🛡️ Unbound + Sinkhole"]
-        R53["🌍 Route 53 Public DNS"]
-        VPC["🔀 VPC Flow Logs"]
+        DNS["🛡️ Unbound<br/>+ Sinkhole"]
+        R53["🌍 Route 53<br/>Public DNS"]
+        VPC["🔀 VPC Flow"]
         CT["🧾 CloudTrail"]
-        RQ["🔎 Resolver Query Logs"]
+        RQ["🔎 Resolver Logs"]
     end
 
 
     %% =====================================================
-    %% CENTRAL SPLUNK LAYER
+    %% SPLUNK CORE
     %% =====================================================
-    SPL["🟢 Splunk Enterprise<br/>Central Evidence + Analysis Layer"]
+    SPL["🟢 Splunk Enterprise<br/>Evidence + Analysis"]
 
 
     %% =====================================================
-    %% CORE DATA OUTPUT
+    %% RIGHT SIDE
     %% =====================================================
-    subgraph DATA["🗃️ Core Security Data"]
-        direction TB
-        IDX["dns_soc_aws · dns_soc_web · dns_soc_dns"]
-    end
-
-
-    %% =====================================================
-    %% AI ENRICHMENT PATH
-    %% =====================================================
-    subgraph AI["🤖 Shared AI Enrichment"]
+    subgraph RIGHT[" "]
         direction TB
 
-        AIB["⚙️ Shared AI Bridge"]
-        OAI["🧠 OpenAI API"]
-        AIDX["📝 AI Triage Index<br/>dns_soc_ai"]
+        DATA["🗃️ Core Indexes<br/>aws · web · dns"]
+
+        subgraph AI[" "]
+            direction TB
+            AH["🤖 Shared AI Enrichment"]
+
+            AIB["⚙️ Shared<br/>AI Bridge"]
+            OAI["🧠 OpenAI API"]
+            AIDX["📝 AI Triage<br/>dns_soc_ai"]
+
+            AH --> AIB
+            AIB --> OAI
+            OAI --> AIB
+            AIB --> AIDX
+        end
     end
 
 
     %% =====================================================
-    %% INGESTION INTO SPLUNK
+    %% INGESTION
     %% =====================================================
-    WEB -->|"UF · 9997"| SPL
-    DNS -->|"UF · 9997"| SPL
-    R53 -->|"CloudWatch → Kinesis"| SPL
-    VPC -->|"S3 → SQS"| SPL
-    CT -->|"S3 → SQS"| SPL
-    RQ -->|"S3 → SQS"| SPL
-
-
-    %% =====================================================
-    %% SPLUNK OUTPUTS
-    %% =====================================================
-    SPL --> IDX
-    SPL -->|"Internal Webhook"| AIB
-
-    AIB -->|"Responses API"| OAI
-    OAI -->|"Structured JSON"| AIB
-    AIB -->|"Internal HTTPS HEC"| AIDX
+    WEB -->|"UF 9997"| SPL
+    DNS -->|"UF 9997"| SPL
+    R53 -->|"CW / Kinesis"| SPL
+    VPC -->|"S3 / SQS"| SPL
+    CT -->|"S3 / SQS"| SPL
+    RQ -->|"S3 / SQS"| SPL
 
 
     %% =====================================================
-    %% NODE STYLING
+    %% OUTPUTS
+    %% =====================================================
+    SPL --> DATA
+    SPL -->|"Webhook"| AIB
+
+    %% =====================================================
+    %% HEADER STYLES
+    %% =====================================================
+    classDef sourceHeader fill:#0f2238,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
+    classDef aiHeader fill:#24123a,stroke:#c084fc,stroke-width:2px,color:#ffffff;
+
+    class SH sourceHeader;
+    class AH aiHeader;
+
+
+    %% =====================================================
+    %% NODE STYLES
     %% =====================================================
     classDef endpoint fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#ffffff;
     classDef aws fill:#172554,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
@@ -285,17 +288,17 @@ flowchart LR
     class WEB,DNS endpoint;
     class R53,VPC,CT,RQ aws;
     class SPL splunk;
-    class IDX data;
+    class DATA data;
     class AIB ai;
     class OAI api;
     class AIDX aidx;
 
 
     %% =====================================================
-    %% GROUP STYLING
+    %% CONTAINER STYLES
     %% =====================================================
     style SOURCES fill:#0d1117,stroke:#58a6ff,stroke-width:1px
-    style DATA fill:#0d1117,stroke:#94a3b8,stroke-width:1px
+    style RIGHT fill:#0d1117,stroke:#30363d,stroke-width:1px
     style AI fill:#0d1117,stroke:#c084fc,stroke-width:1px
 
     linkStyle default stroke:#94a3b8,stroke-width:2px
