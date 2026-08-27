@@ -22,12 +22,76 @@ This folder is the **network and DNS blueprint** for the lab. It explains how tr
 
 ```mermaid
 flowchart LR
-    A[External attacker account / Windows] -->|Public DNS / Internet only| P[Public Lab Surface]
-    P --> S[SOC-LAB-VPC]
-    A -. No peering / no private route .- S
-    V[Victim] --> R[Defender DNS Resolver]
-    R --> U[Upstream DNS]
-    S --> SPL[Splunk]
+
+    %% =====================================================
+    %% EXTERNAL / UNTRUSTED SIDE
+    %% =====================================================
+    A["🌍 External Attacker<br/>Account / Windows"]
+
+    %% =====================================================
+    %% PUBLIC EXPOSURE
+    %% =====================================================
+    P["🌐 Public Lab<br/>Surface"]
+
+    %% =====================================================
+    %% TRUSTED SOC SIDE
+    %% =====================================================
+    S["🏰 SOC-LAB-VPC"]
+    SPL["📊 Splunk"]
+
+    %% =====================================================
+    %% DEFENDER DNS PATH
+    %% =====================================================
+    V["💻 Victim"]
+    R["🛡️ Defender DNS<br/>Resolver"]
+    U["☁️ Upstream DNS"]
+
+    %% =====================================================
+    %% ALLOWED PATHS
+    %% =====================================================
+    A -->|"Public DNS / Internet Only"| P
+    P -->|"Public Entry"| S
+    S -->|"Telemetry / SOC Access"| SPL
+
+    V -->|"System DNS"| R
+    R -->|"Forwarded Queries"| U
+
+    %% =====================================================
+    %% BLOCKED TRUST PATH
+    %% =====================================================
+    A -. "❌ No Peering / No Private Route" .-> S
+
+
+    %% =====================================================
+    %% STYLING
+    %% =====================================================
+    classDef external fill:#450a0a,stroke:#f87171,stroke-width:3px,color:#ffffff;
+    classDef public fill:#7c2d12,stroke:#fb923c,stroke-width:2px,color:#ffffff;
+    classDef trusted fill:#172554,stroke:#60a5fa,stroke-width:3px,color:#ffffff;
+    classDef splunk fill:#052e16,stroke:#4ade80,stroke-width:3px,color:#ffffff;
+
+    classDef victim fill:#1f2937,stroke:#94a3b8,stroke-width:2px,color:#ffffff;
+    classDef resolver fill:#083344,stroke:#22d3ee,stroke-width:3px,color:#ffffff;
+    classDef upstream fill:#164e63,stroke:#2dd4bf,stroke-width:2px,color:#ffffff;
+
+    class A external;
+    class P public;
+    class S trusted;
+    class SPL splunk;
+
+    class V victim;
+    class R resolver;
+    class U upstream;
+
+    %% Allowed paths
+    linkStyle 0 stroke:#fb923c,stroke-width:3px
+    linkStyle 1 stroke:#60a5fa,stroke-width:3px
+    linkStyle 2 stroke:#4ade80,stroke-width:3px
+    linkStyle 3 stroke:#22d3ee,stroke-width:3px
+    linkStyle 4 stroke:#2dd4bf,stroke-width:3px
+
+    %% Blocked / no-trust path
+    linkStyle 5 stroke:#f87171,stroke-width:3px,stroke-dasharray:6 5
 ```
 
 Implementation evidence stays in [`../02-aws-build/`](../02-aws-build/); Splunk-side data onboarding stays in [`../03-splunk-build/`](../03-splunk-build/).
