@@ -12,16 +12,44 @@ The lab has separate paths for public DNS, public scenario activity, SOC adminis
 
 ```mermaid
 sequenceDiagram
-    participant C as Public Client / Resolver
-    participant P as Route 53 Parent Zone
-    participant D as Route 53 Child Zone
-    participant W as dns-soc-web01
+    autonumber
 
-    C->>P: Query / delegation lookup for soclab.abdul4rehman215.tech
-    P-->>C: NS referral to child Route 53 nameservers
-    C->>D: Query soclab A / TXT / NS or www CNAME
-    D-->>C: Authoritative DNS response
-    C->>W: Optional HTTP / HTTPS follow-up
+    participant C as 🌐 Public Client<br/>Resolver
+
+    box Route 53 DNS Authority
+        participant P as 🏠 Parent<br/>Route 53 Zone
+        participant D as 🧪 Child<br/>Route 53 Zone
+    end
+
+    participant W as 🖥️ Web Target<br/>dns-soc-web01
+
+    Note over C,D: 🔎 Target namespace: soclab.abdul4rehman215.tech
+
+    rect rgba(59, 130, 246, 0.10)
+        Note over C,P: 1 · Delegation Discovery
+        C->>P: Query parent for soclab
+        activate P
+        P-->>C: NS referral → child nameservers
+        deactivate P
+    end
+
+    rect rgba(168, 85, 247, 0.10)
+        Note over C,D: 2 · Authoritative Resolution
+        C->>D: Query A / TXT / NS / www CNAME
+        activate D
+        D-->>C: Authoritative DNS response
+        deactivate D
+    end
+
+    rect rgba(34, 197, 94, 0.10)
+        Note over C,W: 3 · Optional Application Follow-Up
+        opt Client follows resolved web address
+            C->>W: HTTPS request
+            activate W
+            W-->>C: Web response
+            deactivate W
+        end
+    end
 ```
 
 ## Scenario 01 public path
