@@ -97,6 +97,12 @@ controlled name/pattern
 
 The infrastructure build first proved this path safely and restored `rpz-action-override: disabled`. During the later official Scenario 02 exercise, Incident Response independently validated the same reusable control after explicit human approval, proved redirect to `10.50.30.30`, verified unrelated DNS remained functional, and returned RPZ to the safe/non-enforcing state. The operational evidence remains in the dedicated Scenario 02 repository.
 
+## Scenario 02 operational closeout
+
+The Scenario 02 DNS plan has now been exercised successfully. The official case used `dns-soc-victim01` (`10.50.30.20`) through `dns-soc-resolver01` (`10.50.30.10`), produced the planned DGA/high-NXDOMAIN behavior, and later validated the reusable RPZ path to `dns-soc-sinkhole01` (`10.50.30.30`) after explicit human approval. The same test qname was proven as NXDOMAIN before containment, redirected during enforcement, and returned to NXDOMAIN after safe reset.
+
+The evidence and human decision record live in the dedicated Scenario 02 repository; this file remains the shared DNS design reference.
+
 ## Scenario 03 — Fast Flux DNS
 
 Scenario 03 reuses the Scenario 02 resolver/victim/sinkhole platform but needs a temporary public DNS change because controlled Fast Flux behavior requires changing address answers and a short TTL.
@@ -155,10 +161,3 @@ The permanent child-zone baseline stays stable unless a project-level change is 
 
 </div>
 <!-- dns-soc-footer:end -->
-
-
-## Scenario 02 operational closeout
-
-The Scenario 02 DNS plan has now been exercised successfully. The official case used `dns-soc-victim01` (`10.50.30.20`) through `dns-soc-resolver01` (`10.50.30.10`), produced the planned DGA/high-NXDOMAIN behavior, and later validated the reusable RPZ path to `dns-soc-sinkhole01` (`10.50.30.30`) after explicit human approval. The same test qname was proven as NXDOMAIN before containment, redirected during enforcement, and returned to NXDOMAIN after safe reset.
-
-The evidence and human decision record live in the dedicated Scenario 02 repository; this file remains the shared DNS design reference.
