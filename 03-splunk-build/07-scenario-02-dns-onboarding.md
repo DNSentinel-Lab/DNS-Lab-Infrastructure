@@ -7,6 +7,7 @@
 # Scenario 02 Resolver & Sinkhole Onboarding
 
 **Status:** Complete — infrastructure data-quality gate passed  
+**Implementation owner:** [_Abdul-Rehman_](https://github.com/abdul4rehman215)  
 **Resolver:** `dns-soc-resolver01` — `10.50.30.10`  
 **Sinkhole:** `dns-soc-sinkhole01` — `10.50.30.30`  
 **Splunk receiver:** `10.50.20.10:9997`
