@@ -87,7 +87,7 @@ The bridge and output schema stay common. Scenario-specific context/prompt profi
 
 ## Shared working rule
 
-All four members should understand the complete chain even when they do not own every action:
+All four members should understand the complete chain:
 
 ```mermaid
 flowchart LR
@@ -101,8 +101,6 @@ flowchart LR
     H --> I[Verification]
     I --> J[Documentation]
 ```
-
-The SOC Analyst makes the final triage decision; response actions remain human-approved.
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
