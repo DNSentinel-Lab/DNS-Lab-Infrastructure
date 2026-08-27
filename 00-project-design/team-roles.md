@@ -90,16 +90,75 @@ The bridge and output schema stay common. Scenario-specific context/prompt profi
 All four members should understand the complete chain:
 
 ```mermaid
-flowchart LR
-    A[Environment Ready] --> B[Telemetry Visible]
-    B --> C[Detection Tested]
-    C --> D[Simulation]
-    D --> E[Alert]
-    E --> F[AI Enrichment]
-    F --> G[SOC Confirmation]
-    G --> H[IR Response]
-    H --> I[Verification]
-    I --> J[Documentation]
+flowchart TB
+
+    %% =====================================================
+    %% ROW 1
+    %% =====================================================
+    subgraph PREP["⚙️ Prepare & Trigger"]
+        direction LR
+
+        A["🏗️ Environment<br/>Ready"]
+        B["📡 Telemetry<br/>Visible"]
+        C["🧪 Detection<br/>Tested"]
+        D["🎯 Simulation"]
+        E["🚨 Alert"]
+
+        A --> B --> C --> D --> E
+    end
+
+
+    %% =====================================================
+    %% ROW 2
+    %% =====================================================
+    subgraph RESP["🛡️ Analyze, Respond & Close"]
+        direction LR
+
+        F["🤖 AI<br/>Enrichment"]
+        G["🔎 SOC<br/>Confirmation"]
+        H["🛡️ IR<br/>Response"]
+        I["✅ Verification"]
+        J["📝 Documentation"]
+
+        F --> G --> H --> I --> J
+    end
+
+
+    %% Connect GROUP to GROUP instead of E --> F
+    PREP --> RESP
+
+
+    %% =====================================================
+    %% STYLING
+    %% =====================================================
+    classDef ready fill:#172554,stroke:#60a5fa,stroke-width:2px,color:#fff;
+    classDef telemetry fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#fff;
+    classDef detection fill:#3b0764,stroke:#c084fc,stroke-width:2px,color:#fff;
+    classDef simulation fill:#713f12,stroke:#f59e0b,stroke-width:2px,color:#fff;
+    classDef alert fill:#450a0a,stroke:#f87171,stroke-width:2px,color:#fff;
+
+    classDef ai fill:#581c87,stroke:#e879f9,stroke-width:2px,color:#fff;
+    classDef soc fill:#164e63,stroke:#38bdf8,stroke-width:2px,color:#fff;
+    classDef ir fill:#7f1d1d,stroke:#fb7185,stroke-width:2px,color:#fff;
+    classDef verify fill:#052e16,stroke:#4ade80,stroke-width:2px,color:#fff;
+    classDef docs fill:#1f2937,stroke:#94a3b8,stroke-width:2px,color:#fff;
+
+    class A ready;
+    class B telemetry;
+    class C detection;
+    class D simulation;
+    class E alert;
+
+    class F ai;
+    class G soc;
+    class H ir;
+    class I verify;
+    class J docs;
+
+    style PREP fill:#0d1117,stroke:#58a6ff,stroke-width:1px
+    style RESP fill:#0d1117,stroke:#3fb950,stroke-width:1px
+
+    linkStyle default stroke:#8b949e,stroke-width:2px
 ```
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
