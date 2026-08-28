@@ -1,13 +1,181 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#050814",
+    "fontSize": "28px",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#f8fafc"
+  },
+  "flowchart": {
+    "nodeSpacing": 50,
+    "rankSpacing": 60,
+    "curve": "basis"
+  }
+}}%%
+
 flowchart LR
-    V[Victim 10.50.30.20] --> R[Unbound 10.50.30.10]
-    R --> F[flux.soclab... TTL 60]
-    F --> N1[Flux Node 01]
-    F --> N2[Flux Node 02]
-    F --> N3[Flux Node 03]
-    N1 --> NET[Victim HTTP follow-up]
-    N2 --> NET
-    N3 --> NET
-    R --> DNS[Resolver Query Logs]
-    NET --> FLOW[VPC Flow Logs]
-    DNS --> SPL[Splunk]
-    FLOW --> SPL
+
+    %% =====================================================
+    %% 1 · CLIENT + RESOLVER
+    %% =====================================================
+    subgraph CLIENT[" "]
+        direction TB
+
+        H1["💻 1 · CLIENT + DNS"]
+
+        V["🖥️ Victim<br/>10.50.30.20"]
+
+        R["🛡️ Unbound Resolver<br/>10.50.30.10"]
+
+        H1 ==> V ==> R
+    end
+
+
+    %% =====================================================
+    %% 2 · FAST FLUX
+    %% =====================================================
+    subgraph FLUX[" "]
+        direction TB
+
+        H2["🔄 2 · FAST FLUX"]
+
+        F["🌐 flux.soclab...<br/>TTL · 60 sec"]
+
+        subgraph NODES[" "]
+            direction LR
+
+            N1["🔴 Flux Node 01"]
+            N2["🟣 Flux Node 02"]
+            N3["🟠 Flux Node 03"]
+        end
+
+        F ==> N1
+        F ==> N2
+        F ==> N3
+    end
+
+
+    %% =====================================================
+    %% 3 · NETWORK EVIDENCE
+    %% =====================================================
+    subgraph EVIDENCE[" "]
+        direction TB
+
+        H3["📡 3 · NETWORK EVIDENCE"]
+
+        NET["🌍 Victim HTTP<br/>Follow-Up"]
+
+        DNS["🔎 Resolver<br/>Query Logs"]
+
+        FLOW["🔀 VPC Flow Logs"]
+
+        NET ==> FLOW
+    end
+
+
+    %% =====================================================
+    %% 4 · SIEM
+    %% =====================================================
+    subgraph SIEM[" "]
+        direction TB
+
+        H4["🟢 4 · SIEM ANALYSIS"]
+
+        SPL["📊 Splunk Enterprise<br/>DNS + Network Correlation"]
+
+    end
+
+
+    %% =====================================================
+    %% MAIN FAST-FLUX FLOW
+    %% =====================================================
+    R ==> F
+
+    N1 ==> NET
+    N2 ==> NET
+    N3 ==> NET
+
+
+    %% =====================================================
+    %% DNS TELEMETRY
+    %% =====================================================
+    R ==> DNS
+
+
+    %% =====================================================
+    %% EVIDENCE → SPLUNK
+    %% =====================================================
+    DNS ==> SPL
+    FLOW ==> SPL
+
+
+    %% =====================================================
+    %% LARGE PREMIUM HEADERS
+    %% =====================================================
+    classDef clientHeader fill:#172554,stroke:#60a5fa,stroke-width:5px,color:#ffffff,font-size:30px;
+    classDef fluxHeader fill:#581c87,stroke:#e879f9,stroke-width:5px,color:#ffffff,font-size:30px;
+    classDef evidenceHeader fill:#713f12,stroke:#fbbf24,stroke-width:5px,color:#ffffff,font-size:30px;
+    classDef siemHeader fill:#14532d,stroke:#4ade80,stroke-width:5px,color:#ffffff,font-size:30px;
+
+    class H1 clientHeader;
+    class H2 fluxHeader;
+    class H3 evidenceHeader;
+    class H4 siemHeader;
+
+
+    %% =====================================================
+    %% GLOSSY NODE COLORS
+    %% =====================================================
+    classDef victim fill:#172554,stroke:#60a5fa,stroke-width:5px,color:#ffffff,font-size:28px;
+
+    classDef resolver fill:#083344,stroke:#22d3ee,stroke-width:5px,color:#ffffff,font-size:28px;
+
+    classDef domain fill:#4c1d95,stroke:#c084fc,stroke-width:5px,color:#ffffff,font-size:28px;
+
+    classDef flux1 fill:#7f1d1d,stroke:#fb7185,stroke-width:5px,color:#ffffff,font-size:26px;
+    classDef flux2 fill:#6b21a8,stroke:#d946ef,stroke-width:5px,color:#ffffff,font-size:26px;
+    classDef flux3 fill:#9a3412,stroke:#fb923c,stroke-width:5px,color:#ffffff,font-size:26px;
+
+    classDef follow fill:#0c4a6e,stroke:#38bdf8,stroke-width:5px,color:#ffffff,font-size:27px;
+
+    classDef dnslog fill:#312e81,stroke:#818cf8,stroke-width:5px,color:#ffffff,font-size:27px;
+
+    classDef flowlog fill:#134e4a,stroke:#2dd4bf,stroke-width:5px,color:#ffffff,font-size:27px;
+
+    classDef splunk fill:#065f46,stroke:#4ade80,stroke-width:6px,color:#ffffff,font-size:29px;
+
+
+    %% =====================================================
+    %% APPLY CLASSES
+    %% =====================================================
+    class V victim;
+    class R resolver;
+
+    class F domain;
+
+    class N1 flux1;
+    class N2 flux2;
+    class N3 flux3;
+
+    class NET follow;
+
+    class DNS dnslog;
+    class FLOW flowlog;
+
+    class SPL splunk;
+
+
+    %% =====================================================
+    %% PREMIUM CONTAINERS
+    %% =====================================================
+    style CLIENT fill:#08111f,stroke:#60a5fa,stroke-width:3px
+    style FLUX fill:#160b25,stroke:#e879f9,stroke-width:3px
+    style NODES fill:#0d1117,stroke:#475569,stroke-width:2px
+    style EVIDENCE fill:#181007,stroke:#fbbf24,stroke-width:3px
+    style SIEM fill:#07140e,stroke:#4ade80,stroke-width:3px
+
+
+    %% =====================================================
+    %% BRIGHT THICK CONNECTORS
+    %% =====================================================
+    linkStyle default stroke:#f8fafc,stroke-width:5px;
