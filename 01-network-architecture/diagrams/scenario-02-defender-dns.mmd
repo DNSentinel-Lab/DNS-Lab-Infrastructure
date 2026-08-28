@@ -1,21 +1,199 @@
-flowchart LR
-    V[dns-soc-victim01<br/>10.50.30.20]
-    R[dns-soc-resolver01<br/>10.50.30.10<br/>Unbound + RPZ]
-    AWS[AWS VPC Resolver<br/>10.50.0.2]
-    DNS[Route 53 / Internet DNS]
-    H[dns-soc-sinkhole01<br/>10.50.30.30<br/>Nginx]
-    S[dns-soc-splunk01<br/>10.50.20.10<br/>Splunk Enterprise]
-    NAT[SOC-MONITORING-NAT<br/>public NAT in SOC-TARGET-SUBNET]
-    Internet((Internet))
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#050814",
+    "fontSize": "26px",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#f8fafc"
+  },
+  "flowchart": {
+    "nodeSpacing": 48,
+    "rankSpacing": 58,
+    "curve": "basis"
+  }
+}}%%
 
-    V -->|UDP/TCP 53| R
-    R -->|normal forward| AWS
-    AWS --> DNS
-    R -. RPZ local-data when approved .-> H
-    V -. HTTP 80 after RPZ redirect .-> H
-    R -->|UF TCP 9997<br/>unbound:dns| S
-    H -->|UF TCP 9997<br/>nginx:access| S
-    V -. package/management egress .-> NAT
-    R -. package/management egress .-> NAT
-    H -. package/management egress .-> NAT
-    NAT --> Internet
+flowchart LR
+
+    %% =====================================================
+    %% 1 · CLIENT
+    %% =====================================================
+    subgraph CLIENT[" "]
+        direction TB
+
+        H1["💻 1 · CLIENT"]
+
+        V["🖥️ dns-soc-victim01<br/>10.50.30.20"]
+
+        DNSQ["🔎 DNS QUERY<br/>UDP / TCP 53"]
+
+        H1 ==> V
+        V ==> DNSQ
+    end
+
+
+    %% =====================================================
+    %% 2 · DEFENDER DNS + RPZ
+    %% =====================================================
+    subgraph DEFENDER[" "]
+        direction TB
+
+        H2["🛡️ 2 · DEFENDER DNS"]
+
+        R["🛡️ dns-soc-resolver01<br/>10.50.30.10<br/>Unbound + RPZ"]
+
+        RPZ["🎯 RPZ LOCAL-DATA<br/>Human Approved"]
+
+        H["🕳️ dns-soc-sinkhole01<br/>10.50.30.30<br/>Nginx"]
+
+        R -.-> RPZ
+        RPZ -.-> H
+    end
+
+
+    %% =====================================================
+    %% 3 · DNS + SOC SERVICES
+    %% =====================================================
+    subgraph SERVICES[" "]
+        direction TB
+
+        H3["⚙️ 3 · DNS + SOC SERVICES"]
+
+        AWS["☁️ AWS VPC Resolver<br/>10.50.0.2"]
+
+        S["🟢 dns-soc-splunk01<br/>10.50.20.10<br/>Splunk Enterprise"]
+
+        UF1["📡 UF · TCP 9997<br/>unbound:dns"]
+
+        UF2["📡 UF · TCP 9997<br/>nginx:access"]
+    end
+
+
+    %% =====================================================
+    %% 4 · EXTERNAL + EGRESS
+    %% =====================================================
+    subgraph EXTERNAL[" "]
+        direction TB
+
+        H4["🌐 4 · EXTERNAL / EGRESS"]
+
+        DNS["🌍 Route 53<br/>Internet DNS"]
+
+        EG["📦 PACKAGE / MANAGEMENT<br/>EGRESS"]
+
+        NAT["🚪 SOC-MONITORING-NAT<br/>Public NAT<br/>SOC-TARGET-SUBNET"]
+
+        Internet(("🌐 Internet"))
+
+        EG ==> NAT ==> Internet
+    end
+
+
+    %% =====================================================
+    %% MAIN DNS PATH
+    %% =====================================================
+    DNSQ ==> R
+
+    R ==> AWS
+    AWS ==> DNS
+
+
+    %% =====================================================
+    %% RPZ / SINKHOLE PATH
+    %% =====================================================
+    V -.-> H
+
+
+    %% =====================================================
+    %% SPLUNK TELEMETRY
+    %% =====================================================
+    R ==> UF1
+    UF1 ==> S
+
+    H ==> UF2
+    UF2 ==> S
+
+
+    %% =====================================================
+    %% MANAGEMENT EGRESS
+    %% =====================================================
+    V -.-> EG
+    R -.-> EG
+    H -.-> EG
+
+
+    %% =====================================================
+    %% HEADER STYLES
+    %% =====================================================
+    classDef clientHeader fill:#172554,stroke:#60a5fa,stroke-width:5px,color:#ffffff,font-size:30px;
+    classDef defenderHeader fill:#083344,stroke:#22d3ee,stroke-width:5px,color:#ffffff,font-size:30px;
+    classDef serviceHeader fill:#312e81,stroke:#a78bfa,stroke-width:5px,color:#ffffff,font-size:30px;
+    classDef externalHeader fill:#422006,stroke:#fbbf24,stroke-width:5px,color:#ffffff,font-size:30px;
+
+    class H1 clientHeader;
+    class H2 defenderHeader;
+    class H3 serviceHeader;
+    class H4 externalHeader;
+
+
+    %% =====================================================
+    %% PREMIUM NODE STYLES
+    %% =====================================================
+    classDef victim fill:#172554,stroke:#60a5fa,stroke-width:5px,color:#ffffff,font-size:27px;
+
+    classDef dnsQuery fill:#0c4a6e,stroke:#38bdf8,stroke-width:4px,color:#ffffff,font-size:24px;
+
+    classDef resolver fill:#083344,stroke:#22d3ee,stroke-width:5px,color:#ffffff,font-size:27px;
+
+    classDef rpz fill:#713f12,stroke:#fbbf24,stroke-width:5px,color:#ffffff,font-size:25px;
+
+    classDef sinkhole fill:#14532d,stroke:#4ade80,stroke-width:5px,color:#ffffff,font-size:27px;
+
+    classDef aws fill:#312e81,stroke:#a78bfa,stroke-width:5px,color:#ffffff,font-size:26px;
+
+    classDef splunk fill:#052e16,stroke:#4ade80,stroke-width:6px,color:#ffffff,font-size:28px;
+
+    classDef uf fill:#164e63,stroke:#38bdf8,stroke-width:4px,color:#ffffff,font-size:24px;
+
+    classDef dns fill:#581c87,stroke:#e879f9,stroke-width:5px,color:#ffffff,font-size:26px;
+
+    classDef egress fill:#7c2d12,stroke:#fb923c,stroke-width:4px,color:#ffffff,font-size:24px;
+
+    classDef nat fill:#422006,stroke:#fbbf24,stroke-width:5px,color:#ffffff,font-size:25px;
+
+    classDef internet fill:#14532d,stroke:#4ade80,stroke-width:5px,color:#ffffff,font-size:26px;
+
+
+    %% =====================================================
+    %% APPLY STYLES
+    %% =====================================================
+    class V victim;
+    class DNSQ dnsQuery;
+
+    class R resolver;
+    class RPZ rpz;
+    class H sinkhole;
+
+    class AWS aws;
+    class S splunk;
+    class UF1,UF2 uf;
+
+    class DNS dns;
+    class EG egress;
+    class NAT nat;
+    class Internet internet;
+
+
+    %% =====================================================
+    %% GLOSSY CONTAINERS
+    %% =====================================================
+    style CLIENT fill:#08111f,stroke:#60a5fa,stroke-width:3px
+    style DEFENDER fill:#06191c,stroke:#22d3ee,stroke-width:3px
+    style SERVICES fill:#120b24,stroke:#a78bfa,stroke-width:3px
+    style EXTERNAL fill:#181007,stroke:#fbbf24,stroke-width:3px
+
+
+    %% =====================================================
+    %% BRIGHT CONNECTORS
+    %% =====================================================
+    linkStyle default stroke:#f8fafc,stroke-width:5px;
