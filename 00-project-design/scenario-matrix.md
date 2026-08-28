@@ -15,21 +15,6 @@ The four scenario repositories use one shared infrastructure and one documentati
 | 03 | Fast Flux DNS | `T1568.001` — Dynamic Resolution: Fast Flux DNS | answer/IP churn, TTL, changing destinations and client follow-up | identify controlled flux behavior and verify containment | **Infrastructure + Detection Engineering complete; official simulation/SOC/IR execution pending** |
 | 04 | DNS Tunneling | `T1071.004` — Application Layer Protocol: DNS; `T1572` only where implemented behavior fits | label structure/length, frequency, query type, unique subdomains and client behavior | investigate encoded DNS behavior and prove block/sinkhole result | Reuse Scenario 02 platform; authoritative endpoint only if final design requires it |
 
-## Scenario 02 status boundary
-
-Infrastructure validation has already proven:
-
-```text
-victim -> Unbound -> normal DNS / NXDOMAIN
-resolver logs -> Splunk
-RPZ match -> Splunk
-controlled RPZ redirect -> private Nginx sinkhole
-sinkhole access log -> Splunk
-reset -> NXDOMAIN / safe disabled enforcement
-```
-
-The Scenario 02 exercise is now **complete** in the separate Scenario 02 repository. The final case includes Machine Learning Engineering, Detection Engineering, Dashboard Studio, Detection v1.0, scheduled alerting, Rule ↔ ML comparison, AI assistance, fresh information-separated DGA execution, independent SOC/IR decisions, human-approved RPZ containment, before/after verification, and safe reset.
-
 ## Common completion rule
 
 A scenario is complete only after the repository can reproduce and defend the full chain:
