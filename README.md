@@ -60,134 +60,186 @@ One SOC platform supports **four DNS security scenarios**. The infrastructure st
 ## 🏗️ Architecture at a Glance
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#050814",
+    "fontSize": "26px",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#f8fafc",
+    "edgeLabelBackground": "#050814"
+  },
+  "flowchart": {
+    "nodeSpacing": 52,
+    "rankSpacing": 62,
+    "curve": "basis"
+  }
+}}%%
+
 flowchart TB
 
     %% =====================================================
-    %% SCENARIOS
+    %% 1 · SCENARIOS
     %% =====================================================
     subgraph SC[" "]
         direction TB
-        SCH["🧭 Four DNS Security Scenarios"]
 
-        subgraph SCGRID[" "]
+        SCH["🧭 FOUR DNS SECURITY SCENARIOS"]
+
+        subgraph SCROW[" "]
             direction LR
 
-            subgraph SCL[" "]
-                direction TB
-                S1["🔎 01 · DNS Recon"]
-                S2["🧬 02 · DGA + NXDOMAIN"]
-            end
-
-            subgraph SCR[" "]
-                direction TB
-                S3["🔄 03 · Fast Flux"]
-                S4["🛰️ 04 · DNS Tunneling"]
-            end
+            S1["🔎 01 · DNS Recon"]
+            S2["🧬 02 · DGA + NXDOMAIN"]
+            S3["🔄 03 · Fast Flux"]
+            S4["🛰️ 04 · DNS Tunneling"]
         end
     end
 
 
     %% =====================================================
-    %% ENTRY PATHS
+    %% 2 · ENTRY PATHS
     %% =====================================================
     subgraph ENTRY[" "]
         direction LR
-        PUB["🌐 Public DNS<br/>/ Web"]
-        DEF["🛡️ Defender<br/>DNS Path"]
+
+        PUB["🌐 Public DNS / Web"]
+        DEF["🛡️ Defender DNS Path"]
     end
 
 
     %% =====================================================
-    %% CORE
+    %% 3 · TELEMETRY + ANALYSIS
     %% =====================================================
     subgraph CORE[" "]
         direction TB
-        CH["📡 Telemetry + Analysis"]
 
-        TEL["DNS · Web · Network<br/>AWS · Host"]
+        CH["📡 TELEMETRY + ANALYSIS"]
 
-        SPL["🟢 Splunk<br/>Enterprise"]
-
-        subgraph ANAL[" "]
+        subgraph COREROW[" "]
             direction LR
-            AI["🤖 AI<br/>Summary"]
-            SOC["🔎 SOC Analysis<br/>+ Hunting"]
-        end
 
-        IR["🛡️ IR / Defense"]
+            TEL["🧩 DNS · Web · Network<br/>AWS · Host"]
+
+            SPL["🟢 Splunk Enterprise"]
+
+            subgraph ANAL[" "]
+                direction TB
+
+                AI["🤖 AI Summary"]
+                SOC["🔎 SOC Analysis<br/>+ Hunting"]
+
+                AI ==> SOC
+            end
+
+            IR["🛡️ IR / Defense"]
+        end
     end
 
 
     %% =====================================================
-    %% FLOW
+    %% 4 · RESPONSE
     %% =====================================================
-    S1 --> PUB
-    S2 --> DEF
-    S3 --> DEF
-    S4 --> DEF
-
-    PUB --> TEL
-    DEF --> TEL
-
-    CH --> TEL
-    TEL --> SPL
-    SPL --> AI
-    SPL --> SOC
-    AI --> SOC
-    SOC --> IR
-    IR -. "Block / Sinkhole / Verify" .-> DEF
+    ACT["🎯 BLOCK · SINKHOLE · VERIFY"]
 
 
     %% =====================================================
-    %% HEADER STYLES
+    %% MAIN FLOW
     %% =====================================================
-    classDef scenHeader fill:#2a1f0f,stroke:#fbbf24,stroke-width:2px,color:#ffffff;
-    classDef coreHeader fill:#0f2238,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
+    S1 ==> PUB
 
+    S2 ==> DEF
+    S3 ==> DEF
+    S4 ==> DEF
+
+    PUB ==> TEL
+    DEF ==> TEL
+
+    CH ==> TEL
+    TEL ==> SPL
+
+    SPL ==> AI
+    SPL ==> SOC
+
+    SOC ==> IR
+    IR ==> ACT
+
+    ACT -.-> DEF
+
+
+    %% =====================================================
+    %% GLOSSY / VIBRANT COLORS
+    %% =====================================================
+
+    %% Headers
+    classDef scenHeader fill:#3b2506,stroke:#ffd54a,stroke-width:5px,color:#ffffff,font-size:29px;
+    classDef coreHeader fill:#082f49,stroke:#38bdf8,stroke-width:5px,color:#ffffff,font-size:29px;
+
+    %% Scenario cards
+    classDef recon fill:#082f49,stroke:#38bdf8,stroke-width:4px,color:#ffffff,font-size:25px;
+    classDef dga fill:#4c1d95,stroke:#c084fc,stroke-width:4px,color:#ffffff,font-size:25px;
+    classDef flux fill:#7c2d12,stroke:#fb923c,stroke-width:4px,color:#ffffff,font-size:25px;
+    classDef tunnel fill:#134e4a,stroke:#2dd4bf,stroke-width:4px,color:#ffffff,font-size:25px;
+
+    %% Entry paths
+    classDef public fill:#1d4ed8,stroke:#60a5fa,stroke-width:5px,color:#ffffff,font-size:26px;
+    classDef defender fill:#0f766e,stroke:#22d3ee,stroke-width:5px,color:#ffffff,font-size:26px;
+
+    %% Core
+    classDef telemetry fill:#4338ca,stroke:#a5b4fc,stroke-width:5px,color:#ffffff,font-size:26px;
+    classDef splunk fill:#065f46,stroke:#4ade80,stroke-width:6px,color:#ffffff,font-size:28px;
+
+    %% Analysis
+    classDef ai fill:#7e22ce,stroke:#e879f9,stroke-width:5px,color:#ffffff,font-size:26px;
+    classDef soc fill:#0369a1,stroke:#38bdf8,stroke-width:5px,color:#ffffff,font-size:26px;
+
+    %% Response
+    classDef ir fill:#991b1b,stroke:#fb7185,stroke-width:5px,color:#ffffff,font-size:26px;
+    classDef action fill:#a16207,stroke:#facc15,stroke-width:5px,color:#ffffff,font-size:26px;
+
+
+    %% =====================================================
+    %% APPLY CLASSES
+    %% =====================================================
     class SCH scenHeader;
     class CH coreHeader;
 
+    class S1 recon;
+    class S2 dga;
+    class S3 flux;
+    class S4 tunnel;
 
-    %% =====================================================
-    %% NODE STYLES
-    %% =====================================================
-    classDef scenario fill:#1f2937,stroke:#f59e0b,stroke-width:2px,color:#ffffff;
-    classDef public fill:#172554,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
-    classDef defender fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#ffffff;
-
-    classDef telemetry fill:#312e81,stroke:#818cf8,stroke-width:2px,color:#ffffff;
-    classDef splunk fill:#052e16,stroke:#4ade80,stroke-width:3px,color:#ffffff;
-    classDef ai fill:#581c87,stroke:#e879f9,stroke-width:2px,color:#ffffff;
-    classDef soc fill:#164e63,stroke:#38bdf8,stroke-width:2px,color:#ffffff;
-    classDef ir fill:#450a0a,stroke:#f87171,stroke-width:3px,color:#ffffff;
-
-    class S1,S2,S3,S4 scenario;
     class PUB public;
     class DEF defender;
+
     class TEL telemetry;
     class SPL splunk;
+
     class AI ai;
     class SOC soc;
+
     class IR ir;
+    class ACT action;
 
 
     %% =====================================================
-    %% CONTAINER STYLES
+    %% GLOSSY CONTAINER PANELS
     %% =====================================================
-    style SC fill:#0d1117,stroke:#fbbf24,stroke-width:1px
-    style SCGRID fill:#111827,stroke:#30363d,stroke-width:1px
-    style SCL fill:#111827,stroke:#30363d,stroke-width:1px
-    style SCR fill:#111827,stroke:#30363d,stroke-width:1px
+    style SC fill:#0b0d18,stroke:#facc15,stroke-width:3px
+    style SCROW fill:#0f1422,stroke:#3b4254,stroke-width:2px
 
-    style ENTRY fill:#0d1117,stroke:#60a5fa,stroke-width:1px
+    style ENTRY fill:#08131f,stroke:#38bdf8,stroke-width:3px
 
-    style CORE fill:#0d1117,stroke:#4ade80,stroke-width:1px
-    style ANAL fill:#111827,stroke:#30363d,stroke-width:1px
+    style CORE fill:#07140e,stroke:#4ade80,stroke-width:3px
+    style COREROW fill:#0b101a,stroke:#475569,stroke-width:2px
+
+    style ANAL fill:#160b25,stroke:#c084fc,stroke-width:3px
+
 
     %% =====================================================
-    %% EDGE STYLES
+    %% BRIGHT CONNECTORS
     %% =====================================================
-    linkStyle default stroke:#94a3b8,stroke-width:2px
+    linkStyle default stroke:#f8fafc,stroke-width:5px;
 ```
 
 The detailed network, DNS authority, trust boundaries, CIDRs, security groups and traffic paths live in [`01-network-architecture/`](01-network-architecture/). The registrar/delegation chain is documented specifically in [`01-network-architecture/dns-authority-and-delegation.md`](01-network-architecture/dns-authority-and-delegation.md).
@@ -199,17 +251,33 @@ The detailed network, DNS authority, trust boundaries, CIDRs, security groups an
 Splunk is the central evidence and analysis layer. The project combines public DNS, network, cloud, web and defender-controlled DNS telemetry instead of treating one source as the whole investigation.
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#070b14",
+    "fontSize": "26px",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#cbd5e1"
+  },
+  "flowchart": {
+    "nodeSpacing": 42,
+    "rankSpacing": 60,
+    "curve": "basis"
+  }
+}}%%
+
 flowchart LR
 
     %% =====================================================
-    %% SOURCES
+    %% 1 · TELEMETRY SOURCES
     %% =====================================================
     subgraph SOURCES[" "]
         direction TB
-        SH["📡 Telemetry Sources"]
+
+        SH["📡 1 · TELEMETRY SOURCES"]
 
         WEB["🌐 Web / Nginx"]
-        DNS["🛡️ Unbound<br/>+ Sinkhole"]
+        DNS["🛡️ Unbound + Sinkhole"]
         R53["🌍 Route 53<br/>Public DNS"]
         VPC["🔀 VPC Flow"]
         CT["🧾 CloudTrail"]
@@ -218,90 +286,140 @@ flowchart LR
 
 
     %% =====================================================
-    %% SPLUNK CORE
+    %% 2 · INGESTION METHODS
+    %% Proper nodes instead of tiny edge labels
     %% =====================================================
-    SPL["🟢 Splunk Enterprise<br/>Evidence + Analysis"]
-
-
-    %% =====================================================
-    %% RIGHT SIDE
-    %% =====================================================
-    subgraph RIGHT[" "]
+    subgraph INGEST[" "]
         direction TB
+
+        IH["⚡ 2 · INGESTION"]
+
+        UF1["📥 UF · 9997"]
+        UF2["📥 UF · 9997"]
+        CW["☁️ CW / Kinesis"]
+        S31["📦 S3 / SQS"]
+        S32["📦 S3 / SQS"]
+        S33["📦 S3 / SQS"]
+    end
+
+
+    %% =====================================================
+    %% 3 · SPLUNK CORE
+    %% =====================================================
+    SPL["🟢 SPLUNK ENTERPRISE<br/>Evidence + Analysis"]
+
+
+    %% =====================================================
+    %% 4 · OUTPUT + AI
+    %% =====================================================
+    subgraph OUTPUTS[" "]
+        direction TB
+
+        OH["🎯 4 · ANALYTICS + ENRICHMENT"]
 
         DATA["🗃️ Core Indexes<br/>aws · web · dns"]
 
         subgraph AI[" "]
             direction TB
-            AH["🤖 Shared AI Enrichment"]
 
-            AIB["⚙️ Shared<br/>AI Bridge"]
+            AH["🤖 SHARED AI ENRICHMENT"]
+
+            WH["🔗 Webhook"]
+            AIB["⚙️ Shared AI Bridge"]
             OAI["🧠 OpenAI API"]
             AIDX["📝 AI Triage<br/>dns_soc_ai"]
 
-            AH --> AIB
-            AIB --> OAI
-            OAI --> AIB
-            AIB --> AIDX
+            WH ==> AIB
+            AIB ==> OAI
+            OAI -.-> AIB
+            AIB ==> AIDX
         end
     end
 
 
     %% =====================================================
-    %% INGESTION
+    %% SOURCE → INGESTION
     %% =====================================================
-    WEB -->|"UF 9997"| SPL
-    DNS -->|"UF 9997"| SPL
-    R53 -->|"CW / Kinesis"| SPL
-    VPC -->|"S3 / SQS"| SPL
-    CT -->|"S3 / SQS"| SPL
-    RQ -->|"S3 / SQS"| SPL
+    WEB ==> UF1
+    DNS ==> UF2
+    R53 ==> CW
+    VPC ==> S31
+    CT ==> S32
+    RQ ==> S33
 
 
     %% =====================================================
-    %% OUTPUTS
+    %% INGESTION → SPLUNK
     %% =====================================================
-    SPL --> DATA
-    SPL -->|"Webhook"| AIB
-
-    %% =====================================================
-    %% HEADER STYLES
-    %% =====================================================
-    classDef sourceHeader fill:#0f2238,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
-    classDef aiHeader fill:#24123a,stroke:#c084fc,stroke-width:2px,color:#ffffff;
-
-    class SH sourceHeader;
-    class AH aiHeader;
+    UF1 ==> SPL
+    UF2 ==> SPL
+    CW ==> SPL
+    S31 ==> SPL
+    S32 ==> SPL
+    S33 ==> SPL
 
 
     %% =====================================================
-    %% NODE STYLES
+    %% SPLUNK → OUTPUTS
     %% =====================================================
-    classDef endpoint fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#ffffff;
-    classDef aws fill:#172554,stroke:#60a5fa,stroke-width:2px,color:#ffffff;
-    classDef splunk fill:#052e16,stroke:#4ade80,stroke-width:3px,color:#ffffff;
-    classDef data fill:#1f2937,stroke:#94a3b8,stroke-width:2px,color:#ffffff;
-    classDef ai fill:#3b0764,stroke:#c084fc,stroke-width:2px,color:#ffffff;
-    classDef api fill:#581c87,stroke:#e879f9,stroke-width:2px,color:#ffffff;
-    classDef aidx fill:#422006,stroke:#fbbf24,stroke-width:2px,color:#ffffff;
+    SPL ==> DATA
+    SPL ==> WH
+
+
+    %% =====================================================
+    %% PREMIUM LARGE TYPOGRAPHY
+    %% =====================================================
+    classDef header fill:#111827,stroke:#f8fafc,stroke-width:4px,color:#ffffff,font-size:28px;
+
+    classDef endpoint fill:#083344,stroke:#22d3ee,stroke-width:4px,color:#ffffff,font-size:26px;
+    classDef aws fill:#172554,stroke:#60a5fa,stroke-width:4px,color:#ffffff,font-size:26px;
+
+    classDef ingestBlue fill:#0c4a6e,stroke:#38bdf8,stroke-width:3px,color:#ffffff,font-size:23px;
+    classDef ingestPurple fill:#312e81,stroke:#a78bfa,stroke-width:3px,color:#ffffff,font-size:23px;
+
+    classDef splunk fill:#052e16,stroke:#4ade80,stroke-width:5px,color:#ffffff,font-size:29px;
+
+    classDef data fill:#1e293b,stroke:#94a3b8,stroke-width:4px,color:#ffffff,font-size:26px;
+
+    classDef webhook fill:#134e4a,stroke:#2dd4bf,stroke-width:4px,color:#ffffff,font-size:24px;
+    classDef bridge fill:#312e81,stroke:#c084fc,stroke-width:4px,color:#ffffff,font-size:26px;
+    classDef api fill:#581c87,stroke:#e879f9,stroke-width:4px,color:#ffffff,font-size:26px;
+    classDef triage fill:#713f12,stroke:#fbbf24,stroke-width:4px,color:#ffffff,font-size:26px;
+
+
+    %% =====================================================
+    %% APPLY CLASSES
+    %% =====================================================
+    class SH,IH,OH,AH header;
 
     class WEB,DNS endpoint;
     class R53,VPC,CT,RQ aws;
+
+    class UF1,UF2 ingestBlue;
+    class CW,S31,S32,S33 ingestPurple;
+
     class SPL splunk;
+
     class DATA data;
-    class AIB ai;
+    class WH webhook;
+    class AIB bridge;
     class OAI api;
-    class AIDX aidx;
+    class AIDX triage;
 
 
     %% =====================================================
-    %% CONTAINER STYLES
+    %% PREMIUM CONTAINERS
     %% =====================================================
-    style SOURCES fill:#0d1117,stroke:#58a6ff,stroke-width:1px
-    style RIGHT fill:#0d1117,stroke:#30363d,stroke-width:1px
-    style AI fill:#0d1117,stroke:#c084fc,stroke-width:1px
+    style SOURCES fill:#07121f,stroke:#38bdf8,stroke-width:2px
+    style INGEST fill:#0d1022,stroke:#818cf8,stroke-width:2px
+    style OUTPUTS fill:#0d1117,stroke:#4ade80,stroke-width:2px
+    style AI fill:#170b24,stroke:#c084fc,stroke-width:3px
 
-    linkStyle default stroke:#94a3b8,stroke-width:2px
+
+    %% =====================================================
+    %% BRIGHT CONNECTORS
+    %% =====================================================
+    linkStyle default stroke:#dbeafe,stroke-width:5px;
 ```
 
 The AWS collection layer uses the supported Splunk Add-on for AWS `8.2.1`. Live implementation recorded the following source identities:
