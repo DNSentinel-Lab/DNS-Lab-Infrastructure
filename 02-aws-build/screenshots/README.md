@@ -45,3 +45,7 @@ Credential material, MFA QR codes, private keys and raw secrets are intentionall
 
 </div>
 <!-- dns-soc-footer:end -->
+
+## Scenario 03 — Fast Flux
+
+Curated implementation evidence: [`scenario-03-fast-flux/`](scenario-03-fast-flux/).
