@@ -61,6 +61,18 @@ The sinkhole has no public IP and no public inbound service.
 
 The Scenario 02 defender DNS design relies on private addressing, SG-to-SG rules and SSM. A victim host-firewall rule to prevent deliberate direct AWS DNS bypass was discussed during planning but was **not implemented**, so it is not part of the deployed control set.
 
+## Scenario 03 — SG-FLUX-ENDPOINTS
+
+Scenario 03 added one shared security group in `ATTACK-LAB-VPC` for the controlled Fast Flux destination pool.
+
+| Direction | Protocol | Port | Source / destination | Purpose |
+|---|---|---:|---|---|
+| Inbound | TCP | 80 | `0.0.0.0/0` | allow the victim to reach whichever public Fast Flux node DNS returns |
+| Inbound | TCP | 22 | **not public** | SSM preferred for administration |
+| Outbound | All during build/validation | all | `0.0.0.0/0` | package/bootstrap and controlled lab operations |
+
+The nodes are **not DNS servers**. Port 53 and Splunk receiver ports were not opened on this group.
+
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
 <!-- dns-soc-footer:start -->

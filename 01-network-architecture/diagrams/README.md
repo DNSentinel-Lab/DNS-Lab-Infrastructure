@@ -27,3 +27,5 @@ If a diagram is exported to PNG, visually check clipped labels, overlapping arro
 
 </div>
 <!-- dns-soc-footer:end -->
+
+- [`scenario-03-fast-flux.mmd`](scenario-03-fast-flux.mmd) — implemented Scenario 03 DNS answer rotation, victim follow-up and telemetry path.

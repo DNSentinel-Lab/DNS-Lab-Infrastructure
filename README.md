@@ -358,7 +358,7 @@ The SOC Analyst has no attacker-account inventory, no private network route and 
 | 🧠 Scenario 02 Machine Learning Engineering | ✅ Complete — detailed in Scenario 02 repository |
 | 🚦 Scenario 02 Detection Engineering / dashboard / alert / AI | ✅ Complete — maintained in separate Scenario 02 repository |
 | 🧬 Scenario 02 official DGA / SOC / IR / RPZ exercise | ✅ Complete — final case evidence maintained in the Scenario 02 repository |
-| 🔄 Scenario 03 Fast Flux resources | ⚪ Planned when Scenario 03 begins |
+| 🔄 Scenario 03 Fast Flux infrastructure | ✅ Complete — three controlled nodes + short-TTL Route 53 rotation + victim/network validation |
 | 🛰️ Scenario 04 tunneling-specific resources | ⚪ Conditional / planned when Scenario 04 begins |
 
 Scenario-specific detections and exercises are maintained in the separate [scenario repositories](https://github.com/orgs/DNSentinel-Lab/repositories).
@@ -369,13 +369,13 @@ For chronological implementation detail, see [`00-project-design/project-roadmap
 
 ## 👥 Team & Rotating Roles
 
-The four-role rotation model was designed so each member practices every major SOC role once across the four core scenarios. This model was **designed and proposed by [Lubaba](https://github.com/lubaba1513-pixel)**.
+The four-role assignment model rotates responsibilities across scenarios so team members practise multiple SOC viewpoints. The current canonical assignment is shown below. This model was **designed and proposed by [Lubaba](https://github.com/lubaba1513-pixel)**.
 
 | Scenario | Project Lead / Adversary Operator | SOC Analyst / Hunter | Detection Engineer | IR / Defender |
 |---|---|---|---|---|
 | 01 — DNS Recon | [Abdul-Rehman](https://github.com/abdul4rehman215) | [Musfira](https://github.com/MUSFIRA-ZAFAR) | [Sonia](https://github.com/sonia11mansha415) | [Lubaba](https://github.com/lubaba1513-pixel) |
 | 02 — DGA + NXDOMAIN | Musfira | Sonia | Lubaba | Abdul-Rehman |
-| 03 — Fast Flux | Sonia | Lubaba | Abdul-Rehman | Musfira |
+| 03 — Fast Flux | Lubaba | Abdul-Rehman | Musfira | Sonia |
 | 04 — DNS Tunneling | Lubaba | Abdul-Rehman | Musfira | Sonia |
 
 ```text

@@ -1,0 +1,13 @@
+flowchart LR
+    V[Victim 10.50.30.20] --> R[Unbound 10.50.30.10]
+    R --> F[flux.soclab... TTL 60]
+    F --> N1[Flux Node 01]
+    F --> N2[Flux Node 02]
+    F --> N3[Flux Node 03]
+    N1 --> NET[Victim HTTP follow-up]
+    N2 --> NET
+    N3 --> NET
+    R --> DNS[Resolver Query Logs]
+    NET --> FLOW[VPC Flow Logs]
+    DNS --> SPL[Splunk]
+    FLOW --> SPL

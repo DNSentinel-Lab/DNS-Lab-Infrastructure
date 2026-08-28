@@ -6,7 +6,7 @@
 
 # Team Roles
 
-**Role rotation model — designed and proposed by [Lubaba](https://github.com/lubaba1513-pixel).** The four-role rotation was created so that, across the four scenarios, every team member gets an equal opportunity to practise each primary SOC role: Project Lead / Attack Simulation Operator, SOC Analyst / Threat Hunter, Detection Engineer / AI Integrator, and Incident Responder / Defender.
+**Role assignment model — designed and proposed by [Lubaba](https://github.com/lubaba1513-pixel).** The project rotates responsibilities across scenarios so team members practise simulation, SOC investigation, Detection Engineering and Incident Response from different viewpoints. The matrix below is the current canonical assignment for each scenario.
 
 The project uses these four rotating roles. Nobody waits for another person to finish an entire phase; each role has preparation, live-session and documentation work that can run in parallel.
 
@@ -65,10 +65,10 @@ Typical work:
 |---|---|---|---|---|
 | 01 — DNS Recon | Abdul-Rehman | Musfira | Sonia | Lubaba |
 | 02 — DGA + NXDOMAIN | Musfira | Sonia | Lubaba | Abdul-Rehman |
-| 03 — Fast Flux | Sonia | Lubaba | Abdul-Rehman | Musfira |
+| 03 — Fast Flux | Lubaba | Abdul-Rehman | Musfira | Sonia |
 | 04 — DNS Tunneling | Lubaba | Abdul-Rehman | Musfira | Sonia |
 
-After four scenarios, every member has performed each primary role once.
+The role table records the current scenario assignments. Individual scenario repositories provide the evidence for what each member actually implemented or executed.
 
 ## Shared AI foundation
 

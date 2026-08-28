@@ -59,7 +59,7 @@ The Scenario 02 service path is documented in [`08-scenario-02-defender-dns.md`]
 |---|---|
 | **01 — DNS Recon** | Shared foundation complete; no extra infrastructure required |
 | **02 — DGA** | **Resolver/victim/sinkhole + NAT/SG/RPZ infrastructure complete** |
-| **03 — Fast Flux** | Reuse Scenario 02 platform; temporary controlled destinations + short-TTL DNS changes later |
+| **03 — Fast Flux** | ✅ Implemented: three controlled HTTP nodes, `SG-FLUX-ENDPOINTS`, 60s Route 53 A record, controlled UPSERT rotation, victim/VPC Flow validation — see [`09-scenario-03-fast-flux.md`](09-scenario-03-fast-flux.md) |
 | **04 — DNS Tunneling** | Reuse Scenario 02 platform; add an authoritative endpoint only if final controlled design needs it |
 
 Scenario 02 infrastructure completion does **not** mean the DGA scenario itself is complete. The dedicated Scenario 02 repository now also records Machine Learning Engineering, Detection Engineering, Dashboard Studio, scheduled alerting and Scenario 02 AI evidence integration as complete. The fresh official adversary/SOC/IR/response-verification exercise still belongs there.

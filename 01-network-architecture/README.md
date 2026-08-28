@@ -108,6 +108,11 @@ Implementation evidence stays in [`../02-aws-build/`](../02-aws-build/); Splunk-
 
 The subnet remains private and uses `SOC-MONITORING-NAT` for outbound package/management egress. No private attacker-to-SOC route exists. The official Scenario 01 adversary is outside the defender account and uses public Internet paths only.
 
+
+## Scenario-specific implemented diagrams
+
+- [`diagrams/scenario-03-fast-flux.mmd`](diagrams/scenario-03-fast-flux.mmd) — implemented Scenario 03 answer rotation, victim follow-up and Splunk telemetry path.
+
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
 [🧭 Previous: Project Design](../00-project-design/README.md) · [🏠 Repository Home](../README.md) · [☁️ Next: AWS Build](../02-aws-build/README.md)

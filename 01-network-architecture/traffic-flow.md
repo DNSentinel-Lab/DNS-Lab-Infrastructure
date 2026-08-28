@@ -185,9 +185,29 @@ Splunk scheduled alert
 
 AI output is advisory; raw telemetry remains the evidence source.
 
-## Scenario 03 and 04 reuse
+## Scenario 03 — implemented Fast Flux traffic path
 
-Scenario 03 and 04 reuse the Scenario 02 victim/resolver/sinkhole path. They do not introduce a new VPC or attacker-to-SOC private route.
+Scenario 03 reuses the Scenario 02 defender DNS path and reaches the controlled Fast Flux nodes through public addressing. There is still **no VPC peering** between the SOC and attacker VPCs.
+
+```text
+dns-soc-victim01 10.50.30.20
+        ↓ DNS
+dns-soc-resolver01 10.50.30.10
+        ↓
+flux.soclab.abdul4rehman215.tech / TTL 60
+        ↓ public DNS answer
+13.220.94.188 / 52.73.218.100 / 54.81.98.44 (exercise-time values)
+        ↓ HTTP/80
+controlled flux nodes in ATTACK-LAB-VPC
+        ↓
+VPC Flow + Resolver logs → Splunk
+```
+
+The three public IP values above are observed validation values; the control script refreshes current node public IPs before rotation. Detailed build evidence: [`../02-aws-build/09-scenario-03-fast-flux.md`](../02-aws-build/09-scenario-03-fast-flux.md).
+
+## Scenario 04 reuse
+
+Scenario 04 continues to reuse the Scenario 02 victim/resolver/sinkhole path. It does not introduce a new VPC or attacker-to-SOC private route unless its final authoritative design explicitly requires an additional controlled endpoint.
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
