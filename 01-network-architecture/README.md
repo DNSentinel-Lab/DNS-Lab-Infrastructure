@@ -21,61 +21,112 @@ This folder is the **network and DNS blueprint** for the lab. It explains how tr
 ## 🔐 Trust Boundary at a Glance
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#0d1117",
+    "fontSize": "26px",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#cbd5e1"
+  },
+  "flowchart": {
+    "nodeSpacing": 40,
+    "rankSpacing": 55,
+    "curve": "basis"
+  }
+}}%%
+
 flowchart LR
 
     %% =====================================================
-    %% EXTERNAL / UNTRUSTED SIDE
+    %% MAIN SYSTEM NODES
     %% =====================================================
     A["🌍 External Attacker<br/>Account / Windows"]
-
-    %% =====================================================
-    %% PUBLIC EXPOSURE
-    %% =====================================================
     P["🌐 Public Lab<br/>Surface"]
 
-    %% =====================================================
-    %% TRUSTED SOC SIDE
-    %% =====================================================
     S["🏰 SOC-LAB-VPC"]
     SPL["📊 Splunk"]
 
-    %% =====================================================
-    %% DEFENDER DNS PATH
-    %% =====================================================
     V["💻 Victim"]
     R["🛡️ Defender DNS<br/>Resolver"]
     U["☁️ Upstream DNS"]
 
-    %% =====================================================
-    %% ALLOWED PATHS
-    %% =====================================================
-    A -->|"Public DNS / Internet Only"| P
-    P -->|"Public Entry"| S
-    S -->|"Telemetry / SOC Access"| SPL
+    X["⛔ NO PEERING<br/>NO PRIVATE ROUTE"]
 
-    V -->|"System DNS"| R
-    R -->|"Forwarded Queries"| U
+
+    %% =====================================================
+    %% LARGE CONNECTION LABEL CARDS
+    %% =====================================================
+    L1["🌐 PUBLIC DNS<br/>INTERNET"]
+    L2["🚪 PUBLIC ENTRY"]
+    L3["📡 TELEMETRY<br/>SOC ACCESS"]
+
+    L4["🔎 SYSTEM DNS"]
+    L5["↗️ FORWARDED<br/>QUERIES"]
+
+
+    %% =====================================================
+    %% PUBLIC / SOC PATH
+    %% =====================================================
+    A --> L1 --> P
+    P --> L2 --> S
+    S --> L3 --> SPL
+
+
+    %% =====================================================
+    %% DEFENDER DNS PATH
+    %% =====================================================
+    V --> L4 --> R
+    R --> L5 --> U
+
 
     %% =====================================================
     %% BLOCKED TRUST PATH
     %% =====================================================
-    A -. "❌ No Peering / No Private Route" .-> S
+    A -.-> X
+    X -.-> S
 
 
     %% =====================================================
-    %% STYLING
+    %% MAIN NODE STYLES
     %% =====================================================
-    classDef external fill:#450a0a,stroke:#f87171,stroke-width:3px,color:#ffffff;
-    classDef public fill:#7c2d12,stroke:#fb923c,stroke-width:2px,color:#ffffff;
-    classDef trusted fill:#172554,stroke:#60a5fa,stroke-width:3px,color:#ffffff;
-    classDef splunk fill:#052e16,stroke:#4ade80,stroke-width:3px,color:#ffffff;
+    classDef external fill:#450a0a,stroke:#fb7185,stroke-width:4px,color:#ffffff,font-size:26px;
 
-    classDef victim fill:#1f2937,stroke:#94a3b8,stroke-width:2px,color:#ffffff;
-    classDef resolver fill:#083344,stroke:#22d3ee,stroke-width:3px,color:#ffffff;
-    classDef upstream fill:#164e63,stroke:#2dd4bf,stroke-width:2px,color:#ffffff;
+    classDef public fill:#7c2d12,stroke:#fb923c,stroke-width:4px,color:#ffffff,font-size:26px;
 
+    classDef trusted fill:#172554,stroke:#60a5fa,stroke-width:4px,color:#ffffff,font-size:26px;
+
+    classDef splunk fill:#052e16,stroke:#4ade80,stroke-width:4px,color:#ffffff,font-size:26px;
+
+    classDef victim fill:#1f2937,stroke:#cbd5e1,stroke-width:4px,color:#ffffff,font-size:26px;
+
+    classDef resolver fill:#083344,stroke:#22d3ee,stroke-width:4px,color:#ffffff,font-size:26px;
+
+    classDef upstream fill:#164e63,stroke:#2dd4bf,stroke-width:4px,color:#ffffff,font-size:26px;
+
+    classDef blocked fill:#450a0a,stroke:#f87171,stroke-width:4px,color:#ffffff,font-size:24px;
+
+
+    %% =====================================================
+    %% CONNECTION CARD STYLES
+    %% =====================================================
+    classDef orangeLabel fill:#422006,stroke:#fb923c,stroke-width:3px,color:#ffffff,font-size:22px;
+
+    classDef blueLabel fill:#172554,stroke:#60a5fa,stroke-width:3px,color:#ffffff,font-size:22px;
+
+    classDef greenLabel fill:#052e16,stroke:#4ade80,stroke-width:3px,color:#ffffff,font-size:22px;
+
+    classDef cyanLabel fill:#083344,stroke:#22d3ee,stroke-width:3px,color:#ffffff,font-size:22px;
+
+    classDef tealLabel fill:#134e4a,stroke:#2dd4bf,stroke-width:3px,color:#ffffff,font-size:22px;
+
+
+    %% =====================================================
+    %% APPLY CLASSES
+    %% =====================================================
     class A external;
     class P public;
+
     class S trusted;
     class SPL splunk;
 
@@ -83,15 +134,26 @@ flowchart LR
     class R resolver;
     class U upstream;
 
-    %% Allowed paths
-    linkStyle 0 stroke:#fb923c,stroke-width:3px
-    linkStyle 1 stroke:#60a5fa,stroke-width:3px
-    linkStyle 2 stroke:#4ade80,stroke-width:3px
-    linkStyle 3 stroke:#22d3ee,stroke-width:3px
-    linkStyle 4 stroke:#2dd4bf,stroke-width:3px
+    class X blocked;
 
-    %% Blocked / no-trust path
-    linkStyle 5 stroke:#f87171,stroke-width:3px,stroke-dasharray:6 5
+    class L1 orangeLabel;
+    class L2 blueLabel;
+    class L3 greenLabel;
+    class L4 cyanLabel;
+    class L5 tealLabel;
+
+
+    %% =====================================================
+    %% COLORED CONNECTIONS
+    %% =====================================================
+    linkStyle 0,1 stroke:#fb923c,stroke-width:5px
+    linkStyle 2,3 stroke:#60a5fa,stroke-width:5px
+    linkStyle 4,5 stroke:#4ade80,stroke-width:5px
+
+    linkStyle 6,7 stroke:#22d3ee,stroke-width:5px
+    linkStyle 8,9 stroke:#2dd4bf,stroke-width:5px
+
+    linkStyle 10,11 stroke:#f87171,stroke-width:4px,stroke-dasharray:8 6
 ```
 
 Implementation evidence stays in [`../02-aws-build/`](../02-aws-build/); Splunk-side data onboarding stays in [`../03-splunk-build/`](../03-splunk-build/).
