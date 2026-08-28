@@ -1,26 +1,181 @@
-sequenceDiagram
-    participant A as Project Lead / External Adversary
-    participant P as Route 53 Parent DNS
-    participant C as Route 53 Child DNS
-    participant W as Public Web Target
-    participant S as Splunk Enterprise
-    participant L as AI Bridge
-    participant SOC as SOC Analyst
-    participant IR as IR / Defender
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#050814",
+    "fontSize": "28px",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#f8fafc"
+  },
+  "flowchart": {
+    "nodeSpacing": 55,
+    "rankSpacing": 65,
+    "curve": "basis"
+  }
+}}%%
 
-    Note over A,SOC: Adversary uses separate AWS account / optional external Windows. SOC is not told start time, source IP or commands.
-    A->>P: Public lookup for lab namespace
-    P-->>A: Child NS referral where applicable
-    A->>C: A / AAAA / MX / NS / TXT / likely-name DNS reconnaissance
-    C-->>A: Authoritative DNS responses
-    A->>C: Optional AXFR check
-    A->>W: Optional non-destructive HTTP / HTTPS follow-up
-    C-->>S: Route 53 authoritative query logs via collection pipeline
-    W-->>S: Nginx / network telemetry
-    S->>S: Detection v1.0 / scheduled alert
-    S->>L: Webhook alert evidence
-    L-->>S: AI-assisted context via HEC
-    SOC->>S: Validate raw evidence / history / correlations
-    SOC->>IR: Evidence-backed escalation when warranted
-    IR->>IR: Human-approved response / verification if required
-    Note over A,IR: Ground truth is revealed only after SOC disposition and IR handoff are locked.
+flowchart LR
+
+    %% =====================================================
+    %% 1 · EXTERNAL ADVERSARY
+    %% =====================================================
+    subgraph EXT[" "]
+        direction TB
+
+        H1["🎭 1 · EXTERNAL ACTIVITY"]
+
+        A["🌍 Project Lead / Adversary<br/>Separate External Source"]
+
+        Q["🔎 Public DNS Recon<br/>A · AAAA · MX · NS · TXT<br/>Optional AXFR"]
+
+        H1 ==> A ==> Q
+    end
+
+
+    %% =====================================================
+    %% 2 · PUBLIC DNS + WEB
+    %% =====================================================
+    subgraph PUBLIC[" "]
+        direction TB
+
+        H2["🌐 2 · PUBLIC LAB SURFACE"]
+
+        P["🏠 Route 53 Parent DNS<br/>Delegation / NS Referral"]
+
+        C["🧪 Route 53 Child DNS<br/>Authoritative Responses"]
+
+        W["🖥️ Public Web Target<br/>Optional HTTP / HTTPS Follow-Up"]
+
+        H2 ==> P
+        P ==> C
+        C ==> W
+    end
+
+
+    %% =====================================================
+    %% 3 · DETECTION + AI
+    %% =====================================================
+    subgraph DETECT[" "]
+        direction TB
+
+        H3["📡 3 · DETECTION + AI"]
+
+        S["🟢 Splunk Enterprise<br/>DNS + Web + Network Evidence<br/>Detection v1.0"]
+
+        L["🤖 AI Bridge<br/>Webhook → AI Context → HEC"]
+
+        H3 ==> S
+        S <==> L
+    end
+
+
+    %% =====================================================
+    %% 4 · HUMAN DECISION
+    %% =====================================================
+    subgraph HUMAN[" "]
+        direction TB
+
+        H4["🛡️ 4 · HUMAN DECISION"]
+
+        SOC["🔎 SOC Analyst<br/>Validate Raw Evidence<br/>History + Correlations"]
+
+        IR["🚨 IR / Defender<br/>Evidence-Backed Escalation<br/>Response + Verification"]
+
+        GT["🔓 GROUND TRUTH REVEAL<br/>Only After SOC Disposition<br/>+ IR Handoff Are Locked"]
+
+        H4 ==> SOC ==> IR
+        IR -.-> GT
+    end
+
+
+    %% =====================================================
+    %% MAIN FLOW
+    %% =====================================================
+    Q ==> P
+
+    C ==> S
+    W ==> S
+
+    S ==> SOC
+
+
+    %% =====================================================
+    %% HIDDEN-GROUND-TRUTH RELATIONSHIP
+    %% =====================================================
+    A -.-> GT
+
+
+    %% =====================================================
+    %% PREMIUM HEADER STYLES
+    %% =====================================================
+    classDef extHeader fill:#3f0d20,stroke:#fb7185,stroke-width:5px,color:#ffffff,font-size:30px;
+
+    classDef publicHeader fill:#422006,stroke:#fbbf24,stroke-width:5px,color:#ffffff,font-size:30px;
+
+    classDef detectHeader fill:#082f49,stroke:#38bdf8,stroke-width:5px,color:#ffffff,font-size:30px;
+
+    classDef humanHeader fill:#14532d,stroke:#4ade80,stroke-width:5px,color:#ffffff,font-size:30px;
+
+
+    %% =====================================================
+    %% NODE STYLES
+    %% =====================================================
+    classDef adversary fill:#7f1d1d,stroke:#fb7185,stroke-width:5px,color:#ffffff,font-size:28px;
+
+    classDef recon fill:#7c2d12,stroke:#fb923c,stroke-width:5px,color:#ffffff,font-size:28px;
+
+
+    classDef parent fill:#312e81,stroke:#a78bfa,stroke-width:5px,color:#ffffff,font-size:28px;
+
+    classDef child fill:#4338ca,stroke:#818cf8,stroke-width:5px,color:#ffffff,font-size:28px;
+
+    classDef web fill:#0c4a6e,stroke:#38bdf8,stroke-width:5px,color:#ffffff,font-size:28px;
+
+
+    classDef splunk fill:#065f46,stroke:#4ade80,stroke-width:6px,color:#ffffff,font-size:29px;
+
+    classDef ai fill:#7e22ce,stroke:#e879f9,stroke-width:5px,color:#ffffff,font-size:28px;
+
+
+    classDef soc fill:#0369a1,stroke:#38bdf8,stroke-width:5px,color:#ffffff,font-size:28px;
+
+    classDef ir fill:#991b1b,stroke:#fb7185,stroke-width:5px,color:#ffffff,font-size:28px;
+
+    classDef truth fill:#713f12,stroke:#facc15,stroke-width:5px,color:#ffffff,font-size:26px;
+
+
+    %% =====================================================
+    %% APPLY STYLES
+    %% =====================================================
+    class H1 extHeader;
+    class H2 publicHeader;
+    class H3 detectHeader;
+    class H4 humanHeader;
+
+    class A adversary;
+    class Q recon;
+
+    class P parent;
+    class C child;
+    class W web;
+
+    class S splunk;
+    class L ai;
+
+    class SOC soc;
+    class IR ir;
+    class GT truth;
+
+
+    %% =====================================================
+    %% GLOSSY CONTAINERS
+    %% =====================================================
+    style EXT fill:#170810,stroke:#fb7185,stroke-width:3px
+    style PUBLIC fill:#171007,stroke:#fbbf24,stroke-width:3px
+    style DETECT fill:#071822,stroke:#38bdf8,stroke-width:3px
+    style HUMAN fill:#07140e,stroke:#4ade80,stroke-width:3px
+
+
+    %% =====================================================
+    %% BRIGHT CONNECTORS
+    %% =====================================================
+    linkStyle default stroke:#f8fafc,stroke-width:5px;
