@@ -1,24 +1,167 @@
-flowchart TB
-    Registrar[Hostinger<br/>Registrar]
-    TLD[.tech registry / DNS hierarchy]
-    Parent[Route 53 Parent Zone<br/>abdul4rehman215.tech]
-    ParentSite[Parent A<br/>2.57.91.91]
-    ParentMail[Parent mail / TXT / CNAME records]
-    ChildNS[NS delegation<br/>soclab.abdul4rehman215.tech]
-    Child[Route 53 Child Zone<br/>soclab.abdul4rehman215.tech]
-    Apex[A<br/>soclab -> 100.49.192.164]
-    WWW[CNAME<br/>www CNAME to soclab]
-    TXT[TXT<br/>DNS SOC Training Lab]
-    Web[dns-soc-web01<br/>EIP 100.49.192.164]
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#050814",
+    "fontSize": "26px",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#e2e8f0",
+    "edgeLabelBackground": "#050814"
+  },
+  "flowchart": {
+    "nodeSpacing": 55,
+    "rankSpacing": 65,
+    "curve": "basis"
+  }
+}}%%
 
-    Registrar -. registered nameservers .-> TLD
-    TLD --> Parent
-    Parent --> ParentSite
-    Parent --> ParentMail
-    Parent --> ChildNS
-    ChildNS --> Child
-    Child --> Apex
-    Child --> WWW
-    Child --> TXT
-    Apex --> Web
-    WWW --> Apex
+flowchart TB
+
+    %% =====================================================
+    %% 1 · REGISTRAR + DNS HIERARCHY
+    %% =====================================================
+    subgraph ROOT[" "]
+        direction TB
+
+        RH["🌐 1 · REGISTRAR + DNS HIERARCHY"]
+
+        Registrar["🏷️ Hostinger<br/>Registrar"]
+        TLD["🌍 .tech Registry<br/>DNS Hierarchy"]
+
+        Registrar ==> TLD
+    end
+
+
+    %% =====================================================
+    %% 2 · PARENT ZONE
+    %% =====================================================
+    subgraph PARENT[" "]
+        direction TB
+
+        PH["🏠 2 · PARENT ZONE"]
+
+        Parent["☁️ Route 53 Parent Zone<br/>abdul4rehman215.tech"]
+
+        subgraph PREC[" "]
+            direction LR
+
+            ParentSite["🌐 Parent A<br/>2.57.91.91"]
+            ParentMail["📨 Parent Mail / TXT / CNAME"]
+            ChildNS["🔀 NS Delegation<br/>soclab.abdul4rehman215.tech"]
+        end
+
+        Parent ==> ParentSite
+        Parent ==> ParentMail
+        Parent ==> ChildNS
+    end
+
+
+    %% =====================================================
+    %% 3 · CHILD / LAB ZONE
+    %% =====================================================
+    subgraph CHILD[" "]
+        direction TB
+
+        CH["🧪 3 · CHILD DNS ZONE"]
+
+        Child["☁️ Route 53 Child Zone<br/>soclab.abdul4rehman215.tech"]
+
+        subgraph CREC[" "]
+            direction LR
+
+            TXT["📝 TXT Record<br/>DNS SOC Training Lab"]
+            Apex["🎯 A Record<br/>soclab → 100.49.192.164"]
+            WWW["🔗 CNAME Record<br/>www → soclab"]
+        end
+
+        Child ==> TXT
+        Child ==> Apex
+        Child ==> WWW
+        WWW ==> Apex
+    end
+
+
+    %% =====================================================
+    %% 4 · WEB TARGET
+    %% =====================================================
+    subgraph TARGET[" "]
+        direction TB
+
+        TH["🖥️ 4 · WEB TARGET"]
+
+        Web["🌐 dns-soc-web01<br/>EIP 100.49.192.164"]
+    end
+
+
+    %% =====================================================
+    %% MAIN FLOW
+    %% =====================================================
+    TLD ==> Parent
+    ChildNS ==> Child
+    Apex ==> Web
+
+
+    %% =====================================================
+    %% PREMIUM HEADER STYLES
+    %% =====================================================
+    classDef rootHeader fill:#3b2506,stroke:#facc15,stroke-width:5px,color:#ffffff,font-size:28px;
+    classDef parentHeader fill:#1e1b4b,stroke:#a78bfa,stroke-width:5px,color:#ffffff,font-size:28px;
+    classDef childHeader fill:#082f49,stroke:#38bdf8,stroke-width:5px,color:#ffffff,font-size:28px;
+    classDef targetHeader fill:#14532d,stroke:#4ade80,stroke-width:5px,color:#ffffff,font-size:28px;
+
+    class RH rootHeader;
+    class PH parentHeader;
+    class CH childHeader;
+    class TH targetHeader;
+
+
+    %% =====================================================
+    %% PREMIUM NODE STYLES
+    %% =====================================================
+    classDef registrar fill:#7c2d12,stroke:#fb923c,stroke-width:4px,color:#ffffff,font-size:26px;
+    classDef registry fill:#422006,stroke:#facc15,stroke-width:4px,color:#ffffff,font-size:26px;
+
+    classDef parent fill:#312e81,stroke:#a78bfa,stroke-width:5px,color:#ffffff,font-size:26px;
+    classDef parentRec fill:#1f2937,stroke:#cbd5e1,stroke-width:4px,color:#ffffff,font-size:24px;
+    classDef delegation fill:#581c87,stroke:#e879f9,stroke-width:5px,color:#ffffff,font-size:24px;
+
+    classDef child fill:#0c4a6e,stroke:#38bdf8,stroke-width:5px,color:#ffffff,font-size:26px;
+    classDef txt fill:#134e4a,stroke:#2dd4bf,stroke-width:4px,color:#ffffff,font-size:24px;
+    classDef arec fill:#14532d,stroke:#4ade80,stroke-width:5px,color:#ffffff,font-size:24px;
+    classDef cname fill:#4338ca,stroke:#818cf8,stroke-width:4px,color:#ffffff,font-size:24px;
+
+    classDef web fill:#991b1b,stroke:#fb7185,stroke-width:5px,color:#ffffff,font-size:26px;
+
+
+    %% =====================================================
+    %% APPLY NODE STYLES
+    %% =====================================================
+    class Registrar registrar;
+    class TLD registry;
+
+    class Parent parent;
+    class ParentSite,ParentMail parentRec;
+    class ChildNS delegation;
+
+    class Child child;
+    class TXT txt;
+    class Apex arec;
+    class WWW cname;
+
+    class Web web;
+
+
+    %% =====================================================
+    %% GLOSSY CONTAINER PANELS
+    %% =====================================================
+    style ROOT fill:#0b0d18,stroke:#facc15,stroke-width:2px
+    style PARENT fill:#0d1022,stroke:#a78bfa,stroke-width:2px
+    style PREC fill:#101826,stroke:#334155,stroke-width:1px
+    style CHILD fill:#071822,stroke:#38bdf8,stroke-width:2px
+    style CREC fill:#101826,stroke:#334155,stroke-width:1px
+    style TARGET fill:#07140e,stroke:#4ade80,stroke-width:2px
+
+
+    %% =====================================================
+    %% BRIGHT CONNECTORS
+    %% =====================================================
+    linkStyle default stroke:#e2e8f0,stroke-width:5px;
