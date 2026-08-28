@@ -11,42 +11,58 @@ The lab has separate paths for public DNS, public scenario activity, SOC adminis
 ## Public DNS resolution path
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#0d1117",
+    "primaryColor": "#111827",
+    "primaryTextColor": "#ffffff",
+    "primaryBorderColor": "#94a3b8",
+    "lineColor": "#cbd5e1",
+    "secondaryColor": "#111827",
+    "tertiaryColor": "#0f172a",
+    "fontSize": "22px"
+  }
+}}%%
+
 sequenceDiagram
     autonumber
 
     participant C as 🌐 Public Client<br/>Resolver
 
-    box Route 53 DNS Authority
+    box rgb(17, 24, 39) Route 53 DNS Authority
         participant P as 🏠 Parent<br/>Route 53 Zone
         participant D as 🧪 Child<br/>Route 53 Zone
     end
 
     participant W as 🖥️ Web Target<br/>dns-soc-web01
 
-    Note over C,D: 🔎 Target namespace: soclab.abdul4rehman215.tech
+    Note over C,D: 🔎 TARGET · soclab.abdul4rehman215.tech
 
-    rect rgba(59, 130, 246, 0.10)
-        Note over C,P: 1 · Delegation Discovery
-        C->>P: Query parent for soclab
+    rect rgba(59, 130, 246, 0.16)
+        Note over C,P: 1 · DELEGATION DISCOVERY
+        C->>P: Parent lookup
         activate P
-        P-->>C: NS referral → child nameservers
+        Note over P: Delegation for child zone
+        P-->>C: Child nameservers
         deactivate P
     end
 
-    rect rgba(168, 85, 247, 0.10)
-        Note over C,D: 2 · Authoritative Resolution
-        C->>D: Query A / TXT / NS / www CNAME
+    rect rgba(168, 85, 247, 0.16)
+        Note over C,D: 2 · AUTHORITATIVE RESOLUTION
+        C->>D: Record lookup
         activate D
-        D-->>C: Authoritative DNS response
+        Note over D: A / TXT / NS / www
+        D-->>C: DNS answer
         deactivate D
     end
 
-    rect rgba(34, 197, 94, 0.10)
-        Note over C,W: 3 · Optional Application Follow-Up
+    rect rgba(34, 197, 94, 0.16)
+        Note over C,W: 3 · OPTIONAL APPLICATION FOLLOW-UP
         opt Client follows resolved web address
-            C->>W: HTTPS request
+            C->>W: HTTPS
             activate W
-            W-->>C: Web response
+            W-->>C: Response
             deactivate W
         end
     end
@@ -109,18 +125,88 @@ Public authoritative DNS logs and AWS VPC Resolver Query Logs are different visi
 ## Completed Scenario 02 normal DNS path
 
 ```mermaid
-sequenceDiagram
-    participant V as dns-soc-victim01 / 10.50.30.20
-    participant R as dns-soc-resolver01 / Unbound / 10.50.30.10
-    participant A as AWS VPC Resolver / 10.50.0.2
-    participant D as DNS authority
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#070B14",
+    "fontSize": "28px",
 
-    V->>R: DNS query UDP/TCP 53
-    R->>A: Forward normal DNS
-    A->>D: Resolve authoritative data
-    D-->>A: Answer / NXDOMAIN
-    A-->>R: Result
-    R-->>V: Result
+    "primaryColor": "#111827",
+    "primaryTextColor": "#FFFFFF",
+    "primaryBorderColor": "#E2E8F0",
+
+    "actorBkg": "#111827",
+    "actorBorder": "#F8FAFC",
+    "actorTextColor": "#FFFFFF",
+    "actorLineColor": "#64748B",
+
+    "signalColor": "#F8FAFC",
+    "signalTextColor": "#FFFFFF",
+
+    "labelBoxBkgColor": "#111827",
+    "labelBoxBorderColor": "#94A3B8",
+    "labelTextColor": "#FFFFFF",
+
+    "noteBkgColor": "#172554",
+    "noteBorderColor": "#60A5FA",
+    "noteTextColor": "#FFFFFF",
+
+    "sequenceNumberColor": "#FFFFFF"
+  }
+}}%%
+
+sequenceDiagram
+    autonumber
+
+    box rgb(15, 42, 92) CLIENT
+        participant V as 🖥️ dns-soc-victim01<br/>10.50.30.20
+    end
+
+    box rgb(8, 77, 94) DEFENDER DNS
+        participant R as 🛡️ dns-soc-resolver01<br/>Unbound · 10.50.30.10
+    end
+
+    box rgb(76, 29, 149) AWS DNS
+        participant A as ☁️ AWS VPC Resolver<br/>10.50.0.2
+    end
+
+    box rgb(20, 83, 45) AUTHORITY
+        participant D as 🌐 DNS Authority
+    end
+
+    Note over V,D: ✨ NORMAL DNS RESOLUTION · DEFENDER-CONTROLLED PATH
+
+    rect rgba(37, 99, 235, 0.24)
+        Note over V,R: 🔵 1 · CLIENT DNS QUERY
+        V->>R: DNS Query · UDP/TCP 53
+    end
+
+    rect rgba(147, 51, 234, 0.24)
+        Note over R,D: 🟣 2 · RECURSIVE + AUTHORITATIVE LOOKUP
+
+        R->>A: Forward DNS Request
+        activate A
+
+        A->>D: Resolve Authoritative Data
+        activate D
+
+        D-->>A: Answer / NXDOMAIN
+        deactivate D
+
+        deactivate A
+    end
+
+    rect rgba(16, 185, 129, 0.24)
+        Note over A,V: 🟢 3 · DNS RESPONSE RETURN
+
+        A-->>R: Recursive Result
+        activate R
+
+        R-->>V: Final DNS Result
+        deactivate R
+    end
+
+    Note over V,D: ✅ Query → Resolve → Answer → Return
 ```
 
 Normal victim applications use the Ubuntu local stub (`127.0.0.53`), whose validated upstream is `10.50.30.10`.
