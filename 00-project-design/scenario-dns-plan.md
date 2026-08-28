@@ -105,24 +105,29 @@ The evidence and human decision record live in the dedicated Scenario 02 reposit
 
 ## Scenario 03 — Fast Flux DNS
 
-Scenario 03 reuses the Scenario 02 resolver/victim/sinkhole platform but needs a temporary public DNS change because controlled Fast Flux behavior requires changing address answers and a short TTL.
-
-Planned namespace:
+**Implemented infrastructure state:**
 
 ```text
 flux.soclab.abdul4rehman215.tech
+A record
+TTL 60 seconds
+controlled Route 53 UPSERT rotation
 ```
 
-At Scenario 03 preparation time:
+The record was validated against three team-controlled public HTTP endpoints. The rotation process refreshes current node public IPs before changing the A record, so temporary EC2 public addresses are not treated as permanent architecture constants.
 
-1. provision or identify only team-controlled public endpoints;
-2. create a controlled A RRset;
-3. use a deliberately short scenario TTL;
-4. rotate only those controlled addresses;
-5. capture DNS-answer and network-flow evidence;
-6. remove/reset the temporary record after the exercise.
+Validated chain:
 
-Do not use random third-party Internet addresses to imitate Fast Flux.
+```text
+Route 53 UPSERT
+→ authoritative answer changes
+→ Unbound cache/TTL refresh
+→ victim receives new answer
+→ victim connects to returned address
+→ VPC Flow / Splunk evidence
+```
+
+The official scenario has not yet performed its final containment/reset. After execution, the temporary rotation must be stopped and the record/reset state documented.
 
 ## Scenario 04 — DNS Tunneling
 
