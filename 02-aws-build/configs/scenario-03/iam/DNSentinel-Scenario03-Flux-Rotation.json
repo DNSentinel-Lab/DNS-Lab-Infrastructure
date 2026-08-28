@@ -1,0 +1,26 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadFluxNodePublicIPs",
+      "Effect": "Allow",
+      "Action": "ec2:DescribeInstances",
+      "Resource": "*"
+    },
+    {
+      "Sid": "UpdateOnlyScenario03FluxRecord",
+      "Effect": "Allow",
+      "Action": "route53:ChangeResourceRecordSets",
+      "Resource": "arn:aws:route53:::hostedzone/Z0116802C4H563Z159K",
+      "Condition": {
+        "ForAllValues:StringEquals": {
+          "route53:ChangeResourceRecordSetsNormalizedRecordNames": [
+            "flux.soclab.abdul4rehman215.tech"
+          ],
+          "route53:ChangeResourceRecordSetsRecordTypes": ["A"],
+          "route53:ChangeResourceRecordSetsActions": ["UPSERT"]
+        }
+      }
+    }
+  ]
+}
