@@ -15,7 +15,7 @@ This folder is the **source of truth for what the lab is building and why**. It 
 | 🧪 [`scenario-matrix.md`](scenario-matrix.md) | Side-by-side view of all four DNS scenarios |
 | 🚦 [`project-roadmap.md`](project-roadmap.md) | Build sequence and current progress |
 | 📡 [`scenario-dns-plan.md`](scenario-dns-plan.md) | Permanent child-zone baseline and later scenario-specific DNS changes |
-| 🏗️ [`scenario-infrastructure-roadmap.md`](scenario-infrastructure-roadmap.md) | Implemented Scenario 02 defender-DNS resources and remaining just-in-time Scenario 03–04 changes |
+| 🏗️ [`scenario-infrastructure-roadmap.md`](scenario-infrastructure-roadmap.md) | Implemented Scenario 02 defender-DNS resources, completed Scenario 03 Fast Flux extension, and remaining just-in-time Scenario 04 changes |
 | 📋 [`scenario-documentation-standard.md`](scenario-documentation-standard.md) | Required 20-part scenario workflow, network/MITRE discipline and dashboard standard |
 
 ## 🧭 How This Section Fits
