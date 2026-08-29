@@ -1,6 +1,6 @@
 # Scenario 03 — Fast Flux Infrastructure Implementation
 
-**Status:** ✅ Built and technically validated  
+**Status:** ✅ Built, technically validated, exercised and closed out  
 **Implementation owner:** [Musfira](https://github.com/MUSFIRA-ZAFAR)  
 **Scenario:** `T1568.001 — Dynamic Resolution: Fast Flux DNS`
 
@@ -38,6 +38,8 @@ No public SSH rule
 | `dns-flux-node03` | `10.60.10.23` | controlled HTTP Fast Flux node |
 
 The nodes served simple Nginx pages so the victim could genuinely connect to whatever address DNS returned.
+
+> **Closeout state:** these three EC2s were temporary Scenario 03 resources and were stopped/deleted/reset after the official exercise. The table above is retained as the historical build/addressing record.
 
 ### Public address handling
 
@@ -132,15 +134,17 @@ At one point `Ctrl+Z` suspended the foreground rotation script. Route 53 therefo
 
 The lesson was to validate the control process before changing DNS/resolver configuration.
 
-## Cleanup / reset plan
+## Cleanup / operational closeout
 
-After the official Scenario 03 exercise:
+The official Scenario 03 exercise has now been completed in the dedicated scenario repository.
 
-1. stop the rotation process;
-2. remove or restore the temporary `flux.soclab...` record as agreed;
-3. return any response/RPZ policy to safe state;
-4. stop/terminate temporary flux nodes when no longer needed;
-5. verify ordinary DNS and Splunk telemetry remain healthy;
-6. record the final reset evidence in the Scenario 03 repository.
+Closeout state:
 
-The cleanup is **planned but not claimed as executed yet**, because the official exercise is still pending.
+1. the live rotation controller was stopped and its process absence was confirmed;
+2. the victim follow-up loop was stopped;
+3. Incident Response found no active Scenario 03 RPZ rule and therefore did not perform an unnecessary containment change;
+4. `unbound-checkconf`, service state and victim-side normal DNS were verified;
+5. the three temporary Fast Flux EC2 nodes were stopped/deleted/reset after the exercise;
+6. final operator/SOC/IR evidence and ground-truth comparison are maintained in the Scenario 03 repository.
+
+The exact temporary-node teardown timestamp was not part of the preserved evidence package, so this infrastructure record does not manufacture one. The node IPs and public addresses above remain as historical implementation/evidence values only.

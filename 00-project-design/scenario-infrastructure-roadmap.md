@@ -6,7 +6,7 @@
 
 # Scenario Infrastructure Roadmap
 
-**Status:** Scenario 02 defender DNS infrastructure complete; Scenario 03 Fast Flux infrastructure complete; Scenario 04 additions remain just-in-time.
+**Status:** Scenario 02 defender DNS infrastructure complete; Scenario 03 Fast Flux infrastructure exercised and closed out with the temporary endpoint pool retired; Scenario 04 additions remain just-in-time.
 
 The shared AWS/Splunk/Web/DNS/AI platform is not rebuilt for each scenario. New infrastructure is added only when the scenario needs a real new network/service behavior.
 
@@ -159,7 +159,7 @@ Detailed operational evidence remains in the dedicated Scenario 02 repository.
 
 ## Scenario 03 — Fast Flux
 
-**Infrastructure status: ✅ Complete / technically validated.**
+**Infrastructure status: ✅ Complete / exercised / temporary endpoint pool retired.**
 
 Scenario 03 reused the Scenario 02 victim/resolver/sinkhole platform and added only the infrastructure needed for controlled Fast Flux behavior:
 
@@ -173,7 +173,9 @@ Scenario 03 reused the Scenario 02 victim/resolver/sinkhole platform and added o
 
 The infrastructure implementation is documented in [`../02-aws-build/09-scenario-03-fast-flux.md`](../02-aws-build/09-scenario-03-fast-flux.md).
 
-The official Scenario 03 attacker/SOC/IR exercise remains in the separate scenario repository and is not presented here as complete. Temporary Fast Flux resources must be reset/removed after that exercise.
+The official Scenario 03 operator/SOC/IR exercise is complete in the separate scenario repository. The frozen detection surfaced the official run; SOC escalated the real Fast Flux-like behavior without inventing malicious attribution; IR independently recovered the answer history and host context, classified the activity as controlled/expected, and did not activate RPZ because containment was not proportionate. Resolver/RPZ safe state was verified.
+
+The live controller and victim follow-up were stopped cleanly, and the three temporary Fast Flux EC2 nodes were stopped/deleted/reset after the exercise. The shared repository retains their historical addressing/configuration as implementation evidence rather than as a claim that those temporary nodes remain deployed.
 
 ## Scenario 04 — DNS Tunneling
 

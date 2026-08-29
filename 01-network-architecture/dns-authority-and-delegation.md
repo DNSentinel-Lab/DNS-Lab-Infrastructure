@@ -288,7 +288,7 @@ The five-record child baseline above is permanent infrastructure. Later scenario
 
 - Scenario 01 uses the existing records for reconnaissance and DNS-to-web follow-up.
 - Scenario 02 intentionally generates nonexistent names to produce NXDOMAIN telemetry.
-- Scenario 03 later adds a temporary controlled `flux.soclab...` record set and short TTL when controlled endpoints exist.
+- Scenario 03 used a temporary controlled `flux.soclab...` A record with short TTL during the completed Fast Flux exercise; the temporary endpoint pool was retired after closeout.
 - Scenario 04 uses the future controlled resolver/DNS path for tunneling telemetry rather than a fake permanent public record.
 - Sinkhole behavior is implemented later inside the defender-controlled resolver path.
 

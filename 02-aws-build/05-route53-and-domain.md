@@ -253,7 +253,7 @@ These additions do not change the parent-to-child delegation. They extend only t
 No other permanent Route 53 records are required now. Later scenario changes are intentionally deferred:
 
 - Scenario 02 generates nonexistent DGA-style names so NXDOMAIN behavior can be measured.
-- Scenario 03 later creates a temporary controlled `flux.soclab...` A RRset with short TTLs when team-controlled endpoints exist.
+- Scenario 03 later used a temporary controlled `flux.soclab...` A RRset with short TTLs across team-controlled endpoints; the official exercise is complete and the temporary endpoint pool was retired.
 - Scenario 04 reuses the implemented Scenario 02 controlled resolver/DNS path for tunneling telemetry instead of a fake static public record.
 - Sinkhole behavior remains an internal resolver/incident-response control.
 
@@ -288,7 +288,7 @@ The Route 53 DNS phase is complete. `abdul4rehman215.tech` is authoritative in t
 
 The delegated lab hostname resolves publicly to `100.49.192.164`, and `www.soclab.abdul4rehman215.tech` follows a CNAME to the same target. The child zone also contains the permanent `"DNS SOC Training Lab"` TXT fixture for controlled reconnaissance.
 
-The stable public DNS baseline is complete. Nginx/HTTPS, Web telemetry and AWS telemetry have since been completed as separate build phases. Scenario-specific DGA, Fast Flux, tunneling and sinkhole DNS behavior remains deferred to the scenario stages that actually need it; see [`../00-project-design/scenario-infrastructure-roadmap.md`](../00-project-design/scenario-infrastructure-roadmap.md).
+The stable public DNS baseline is complete. Nginx/HTTPS, Web telemetry and AWS telemetry have since been completed as separate build phases. Scenario 02 DGA and Scenario 03 Fast Flux DNS behavior have now been exercised and closed out in their dedicated repositories; Scenario 04 tunneling-specific DNS behavior remains just-in-time. See [`../00-project-design/scenario-infrastructure-roadmap.md`](../00-project-design/scenario-infrastructure-roadmap.md).
 
 ## Evidence index
 

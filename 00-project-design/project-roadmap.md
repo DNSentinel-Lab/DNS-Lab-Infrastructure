@@ -108,7 +108,7 @@ Scenario repositories reuse this bridge and add only a scenario profile after st
 
 - **Scenario 01:** reuse the completed shared platform.
 - **Scenario 02:** defender DNS infrastructure, Machine Learning Engineering, Detection Engineering, Dashboard Studio, scheduled alerting, AI evidence mapping, the information-separated DGA/SOC/IR exercise, human-approved RPZ containment, verification, and safe reset are complete. Final scenario evidence is maintained in the dedicated Scenario 02 repository; ML and AI remained supporting signals rather than automatic verdicts.
-- **Scenario 03:** reused the Scenario 02 victim/resolver/sinkhole platform and added the controlled three-node Fast Flux pool, short-TTL Route 53 rotation and validation path documented in `02-aws-build/09-scenario-03-fast-flux.md`.
+- **Scenario 03:** reused the Scenario 02 victim/resolver/sinkhole platform and added the controlled three-node Fast Flux pool, short-TTL Route 53 rotation and validation path documented in `02-aws-build/09-scenario-03-fast-flux.md`. The official operator/SOC/IR exercise is now complete: Detection v1.0 produced the live lead, SOC escalated with attribution limits, IR independently recovered answer history and host context, chose no containment because the activity was controlled/inactive, verified resolver/RPZ safe state, and the temporary endpoint pool was retired after closeout.
 - **Scenario 04:** reuse the same defender path; add a separate authoritative DNS endpoint only if the final tunneling implementation genuinely requires it.
 
 Scenario-specific SPL, dashboards, attack ground truth, analyst findings, AI profiles and incident-response evidence belong in the scenario repositories rather than this shared infrastructure folder.
