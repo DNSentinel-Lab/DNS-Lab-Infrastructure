@@ -476,7 +476,8 @@ The SOC Analyst has no attacker-account inventory, no private network route and 
 | 🧠 Scenario 02 Machine Learning Engineering | ✅ Complete — detailed in Scenario 02 repository |
 | 🚦 Scenario 02 Detection Engineering / dashboard / alert / AI | ✅ Complete — maintained in separate Scenario 02 repository |
 | 🧬 Scenario 02 official DGA / SOC / IR / RPZ exercise | ✅ Complete — final case evidence maintained in the Scenario 02 repository |
-| 🔄 Scenario 03 Fast Flux infrastructure | ✅ Complete — three controlled nodes + short-TTL Route 53 rotation + victim/network validation |
+| 🔄 Scenario 03 Fast Flux infrastructure | ✅ Complete — three controlled nodes + short-TTL Route 53 rotation + victim/network validation; temporary pool retired after official exercise |
+| 🔄 Scenario 03 official operator / SOC / IR exercise | ✅ Complete — final case evidence maintained in the Scenario 03 repository; IR chose no containment and verified resolver/RPZ safe state |
 | 🛰️ Scenario 04 tunneling-specific resources | ⚪ Conditional / planned when Scenario 04 begins |
 
 Scenario-specific detections and exercises are maintained in the separate [scenario repositories](https://github.com/orgs/DNSentinel-Lab/repositories).
@@ -494,7 +495,7 @@ The four-role assignment model rotates responsibilities across scenarios so team
 | 01 — DNS Recon | [Abdul-Rehman](https://github.com/abdul4rehman215) | [Musfira](https://github.com/MUSFIRA-ZAFAR) | [Sonia](https://github.com/sonia11mansha415) | [Lubaba](https://github.com/lubaba1513-pixel) |
 | 02 — DGA + NXDOMAIN | Musfira | Sonia | Lubaba | Abdul-Rehman |
 | 03 — Fast Flux | Lubaba | Abdul-Rehman | Musfira | Sonia |
-| 04 — DNS Tunneling | Lubaba | Abdul-Rehman | Musfira | Sonia |
+| 04 — DNS Tunneling | Sonia | Lubaba | Abdul-Rehman | Musfira |
 
 ```text
 External Adversary → Telemetry → Detection → AI Assistance → Independent SOC Investigation → IR / Defense → Evidence-Backed Response → Documentation
