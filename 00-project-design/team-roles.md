@@ -66,7 +66,7 @@ Typical work:
 | 01 — DNS Recon | Abdul-Rehman | Musfira | Sonia | Lubaba |
 | 02 — DGA + NXDOMAIN | Musfira | Sonia | Lubaba | Abdul-Rehman |
 | 03 — Fast Flux | Lubaba | Abdul-Rehman | Musfira | Sonia |
-| 04 — DNS Tunneling | Lubaba | Abdul-Rehman | Musfira | Sonia |
+| 04 — DNS Tunneling | Sonia | Lubaba | Abdul-Rehman | Musfira |
 
 The role table records the current scenario assignments. Individual scenario repositories provide the evidence for what each member actually implemented or executed.
 
