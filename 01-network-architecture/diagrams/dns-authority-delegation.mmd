@@ -71,11 +71,13 @@ flowchart TB
             TXT["📝 TXT Record<br/>DNS SOC Training Lab"]
             Apex["🎯 A Record<br/>soclab → 100.49.192.164"]
             WWW["🔗 CNAME Record<br/>www → soclab"]
+            TunnelNS["🛰️ Scenario 04 NS<br/>tunnel → ns1.tunnel"]
         end
 
         Child ==> TXT
         Child ==> Apex
         Child ==> WWW
+        Child ==> TunnelNS
         WWW ==> Apex
     end
 
@@ -89,6 +91,7 @@ flowchart TB
         TH["🖥️ 4 · WEB TARGET"]
 
         Web["🌐 dns-soc-web01<br/>EIP 100.49.192.164"]
+        TunnelAuth["🛰️ dns-tunnel-auth01<br/>BIND Authority<br/>build-time public IP 98.93.89.38"]
     end
 
 
@@ -98,6 +101,7 @@ flowchart TB
     TLD ==> Parent
     ChildNS ==> Child
     Apex ==> Web
+    TunnelNS ==> TunnelAuth
 
 
     %% =====================================================
@@ -146,8 +150,10 @@ flowchart TB
     class TXT txt;
     class Apex arec;
     class WWW cname;
+    class TunnelNS delegation;
 
     class Web web;
+    class TunnelAuth child;
 
 
     %% =====================================================

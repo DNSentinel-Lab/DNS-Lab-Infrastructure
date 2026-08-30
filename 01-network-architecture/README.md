@@ -13,7 +13,7 @@ This folder is the **network and DNS blueprint** for the lab. It explains how tr
 | 🏗️ [`base-network.md`](base-network.md) | Overall AWS network design and trust boundaries |
 | 🧮 [`cidr-plan.md`](cidr-plan.md) | Defender CIDRs plus the historical in-account attack-VPC record |
 | 🕶️ [`external-adversary-boundary.md`](external-adversary-boundary.md) | Official Scenario 01 separate-account attacker trust boundary |
-| 🔐 [`security-groups.md`](security-groups.md) | Baseline and Scenario 02 service exposure / SG-to-SG access |
+| 🔐 [`security-groups.md`](security-groups.md) | Baseline, Scenario 02 private service controls, Scenario 03 flux endpoint SG and Scenario 04 authoritative DNS exposure |
 | 🌍 [`dns-authority-and-delegation.md`](dns-authority-and-delegation.md) | Registrar, parent zone, child zone and public DNS delegation |
 | 🔀 [`traffic-flow.md`](traffic-flow.md) | Management, DNS, public target, logging, defender DNS and response paths |
 | 🧩 [`diagrams/`](diagrams/) | Editable Mermaid source used by architecture documentation |
@@ -160,7 +160,7 @@ Implementation evidence stays in [`../02-aws-build/`](../02-aws-build/); Splunk-
 
 ## 🛡️ Scenario Platform State
 
-`SOC-MONITORING-SUBNET` is active and hosts the Scenario 02 defender DNS platform:
+`SOC-MONITORING-SUBNET` is active and hosts the reusable Scenario 02 defender DNS platform:
 
 | Host | Address | Role |
 |---|---:|---|
@@ -170,10 +170,12 @@ Implementation evidence stays in [`../02-aws-build/`](../02-aws-build/); Splunk-
 
 The subnet remains private and uses `SOC-MONITORING-NAT` for outbound package/management egress. No private attacker-to-SOC route exists. The official Scenario 01 adversary is outside the defender account and uses public Internet paths only.
 
+Scenario 04 additionally uses `dns-tunnel-auth01` at `10.60.10.30` in the existing public `ATTACK-PUBLIC-SUBNET`. It is a team-controlled BIND authoritative server, not a new attacker route and not an open recursive resolver.
 
 ## Scenario-specific implemented diagrams
 
 - [`diagrams/scenario-03-fast-flux.mmd`](diagrams/scenario-03-fast-flux.mmd) — implemented Scenario 03 answer rotation, victim follow-up and Splunk telemetry path.
+- [`diagrams/scenario-04-dns-tunneling.mmd`](diagrams/scenario-04-dns-tunneling.mmd) — implemented Scenario 04 victim/resolver/public-delegation/authoritative path plus later RPZ response position.
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 

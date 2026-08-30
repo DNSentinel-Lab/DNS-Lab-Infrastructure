@@ -22,7 +22,7 @@ The defender CIDRs remain stable. The repository also preserves the original in-
 | SOC | `SOC-TARGET-SUBNET` | `10.50.10.0/24` | Public | Public Web target + public monitoring NAT placement |
 | SOC | `SOC-SIEM-SUBNET` | `10.50.20.0/24` | Public/restricted | Splunk / AI services with restricted inbound access |
 | SOC | `SOC-MONITORING-SUBNET` | `10.50.30.0/24` | Private + NAT egress | Defender resolver, victim and sinkhole |
-| Historical Attack | `ATTACK-PUBLIC-SUBNET` | `10.60.10.0/24` | Public | Historical engineering attack host |
+| Historical Attack / Scenario 04 authority | `ATTACK-PUBLIC-SUBNET` | `10.60.10.0/24` | Public | Historical engineering attack host + Scenario 04 controlled authoritative DNS endpoint |
 
 ## Assigned private addresses
 
@@ -34,6 +34,7 @@ The defender CIDRs remain stable. The repository also preserves the original in-
 | `10.50.30.20` | `dns-soc-victim01` | **Deployed** |
 | `10.50.30.30` | `dns-soc-sinkhole01` | **Deployed** |
 | `10.60.10.10` | `dns-attack01` | Deployed — historical engineering host |
+| `10.60.10.30` | `dns-tunnel-auth01` | **Deployed — Scenario 04 authoritative DNS endpoint** |
 
 
 ## Official external attacker addressing

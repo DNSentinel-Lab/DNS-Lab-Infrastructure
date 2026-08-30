@@ -289,8 +289,25 @@ The five-record child baseline above is permanent infrastructure. Later scenario
 - Scenario 01 uses the existing records for reconnaissance and DNS-to-web follow-up.
 - Scenario 02 intentionally generates nonexistent names to produce NXDOMAIN telemetry.
 - Scenario 03 used a temporary controlled `flux.soclab...` A record with short TTL during the completed Fast Flux exercise; the temporary endpoint pool was retired after closeout.
-- Scenario 04 uses the future controlled resolver/DNS path for tunneling telemetry rather than a fake permanent public record.
+- Scenario 04 now uses a nested `tunnel.soclab...` delegation from Route 53 to the implemented `dns-tunnel-auth01` BIND authoritative endpoint. The build-time nameserver A record used `98.93.89.38`, an auto-assigned public IPv4 that must be rechecked before execution because the EIP quota was full.
 - Sinkhole behavior is implemented later inside the defender-controlled resolver path.
+
+## Scenario 04 nested authority
+
+The permanent Route 53 child zone remains authoritative for `soclab.abdul4rehman215.tech`, but one narrower namespace is delegated again for Scenario 04:
+
+```text
+soclab.abdul4rehman215.tech              Route 53
+    |
+    +-- tunnel NS ns1.tunnel.soclab.abdul4rehman215.tech.
+    +-- ns1.tunnel A 98.93.89.38
+                    |
+                    v
+             dns-tunnel-auth01
+             BIND authoritative-only
+```
+
+The nested delegation keeps the main lab namespace in Route 53 while allowing the controlled endpoint to receive arbitrary fresh child labels. The authoritative server's public address is currently operational state, not a permanent design constant.
 
 The detailed change-control plan is maintained in [`../00-project-design/scenario-dns-plan.md`](../00-project-design/scenario-dns-plan.md).
 

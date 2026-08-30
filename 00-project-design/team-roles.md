@@ -70,6 +70,8 @@ Typical work:
 
 The role table records the current scenario assignments. Individual scenario repositories provide the evidence for what each member actually implemented or executed.
 
+**Scenario 04 infrastructure preparation was implemented by Lubaba** before the rotating official exercise begins. This build credit is separate from the canonical Scenario 04 simulation role assigned to Sonia.
+
 ## Shared AI foundation
 
 AI is shared infrastructure, not a fifth role and not a replacement for SOC judgement. The common Flask/LLM bridge is built once after the Web/AWS data-quality gates and then reused by all scenario repositories.

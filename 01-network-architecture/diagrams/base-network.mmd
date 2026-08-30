@@ -57,11 +57,14 @@ flowchart TB
     subgraph GOV["📘 CONTROL NOTES"]
         direction TB
 
-        H["🕰️ Historical Engineering Only<br/>ATTACK-LAB-VPC · 10.60.0.0/16<br/>dns-attack01"]
+        H["🕰️ Historical Engineering Host<br/>ATTACK-LAB-VPC · 10.60.0.0/16<br/>dns-attack01 · 10.60.10.10"]
 
-        X["⛔ Not Official Scenario 01 Source<br/>No Private Attacker-to-Defender Route<br/>Ground Truth Withheld from SOC"]
+        TA["🛰️ Scenario 04 Controlled Authority<br/>dns-tunnel-auth01 · 10.60.10.30<br/>BIND Authoritative-Only"]
+
+        X["⛔ No Private Attacker-to-Defender Route<br/>Scenario 04 Authority Reached via Public DNS"]
 
         H -.-> X
+        TA -.-> X
     end
 
 
@@ -102,6 +105,7 @@ flowchart TB
     INTERNET ==> Child
 
     Child ==> RES ==> W
+    Child -. "tunnel NS delegation" .-> TA
     INTERNET ==> WEBPUB ==> W
 
     W ==> S
@@ -131,6 +135,7 @@ flowchart TB
     class REG,DELEG,RES,WEBPUB dnsLabel;
 
     class H history;
+    class TA monitor;
     class X control;
 
     class W web;

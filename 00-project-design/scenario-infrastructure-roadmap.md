@@ -6,7 +6,7 @@
 
 # Scenario Infrastructure Roadmap
 
-**Status:** Scenario 02 defender DNS infrastructure complete; Scenario 03 Fast Flux infrastructure exercised and closed out with the temporary endpoint pool retired; Scenario 04 additions remain just-in-time.
+**Status:** Scenario 02 defender DNS infrastructure complete; Scenario 03 Fast Flux infrastructure exercised and closed out with the temporary endpoint pool retired; Scenario 04 authoritative-DNS infrastructure complete and Detection Engineering next.
 
 The shared AWS/Splunk/Web/DNS/AI platform is not rebuilt for each scenario. New infrastructure is added only when the scenario needs a real new network/service behavior.
 
@@ -179,15 +179,47 @@ The live controller and victim follow-up were stopped cleanly, and the three tem
 
 ## Scenario 04 — DNS Tunneling
 
-Reuse the Scenario 02 defender DNS platform.
+**Infrastructure status: ✅ Complete / Detection Engineering next.**
 
-Potential additional infrastructure is conditional:
+Scenario 04 reuses the Scenario 02 defender DNS platform and adds one controlled public authoritative endpoint because the final design needs a real service that can receive fresh synthetic labels.
 
-- if the final controlled tunneling simulation can be represented through the existing resolver/public DNS path, reuse it;
-- if the exercise genuinely requires an authoritative server that receives encoded labels, deploy one controlled endpoint/delegation at Scenario 04 preparation time;
-- reuse the existing RPZ/sinkhole path for human-approved containment verification.
+Implemented extension:
 
-Do not create a permanent authoritative tunnel service before the scenario needs it.
+```text
+Existing defender path
+  dns-soc-victim01   10.50.30.20
+        |
+        v
+  dns-soc-resolver01 10.50.30.10 / Unbound
+        |
+        v
+  AWS/public recursive DNS
+        |
+        v
+  Route 53 nested tunnel delegation
+        |
+        v
+  dns-tunnel-auth01  10.60.10.30 / BIND authoritative-only
+```
+
+New resources/configuration:
+
+- `SG-TUNNEL-AUTH` in `ATTACK-LAB-VPC`;
+- public inbound TCP/UDP 53 only; no public SSH;
+- `dns-tunnel-auth01`, Ubuntu 24.04, `t3.small`, 20 GiB gp3, private IP `10.60.10.30`, SSM-managed;
+- BIND 9.20.18 configured as authoritative-only with recursion disabled and IPv4-only operation;
+- authoritative zone `tunnel.soclab.abdul4rehman215.tech` with wildcard A response and query logging;
+- Route 53 `tunnel` NS delegation and `ns1.tunnel` A record;
+- public recursive, victim/Unbound and authoritative receipt validation;
+- three-fresh-subdomain smoke test.
+
+The authoritative query log is operator ground truth. Defender detection continues to use the existing Unbound/Splunk DNS path.
+
+Operational limitation: an additional Elastic IP could not be allocated because the regional EIP quota was full. The build used the auto-assigned public IPv4 `98.93.89.38`; it must be rechecked before the official run and any changed address must be synchronized across Route 53 and the BIND zone.
+
+The existing Scenario 02 RPZ/sinkhole remains the reusable response path. It has **not** been activated for Scenario 04 yet.
+
+Implementation: [`../02-aws-build/10-scenario-04-dns-tunneling.md`](../02-aws-build/10-scenario-04-dns-tunneling.md).
 
 ## Infrastructure discipline
 

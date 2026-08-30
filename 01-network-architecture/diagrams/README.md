@@ -13,6 +13,8 @@ The diagrams are maintained as Mermaid source so they stay editable and render d
 - [`scenario-01-traffic-flow.mmd`](scenario-01-traffic-flow.mmd) — DNS reconnaissance and public Web follow-up path
 - [`scenario-02-defender-dns.mmd`](scenario-02-defender-dns.mmd) — private victim/resolver/sinkhole, Splunk telemetry and NAT egress
 - [`soc-lifecycle.mmd`](soc-lifecycle.mmd) — telemetry-to-response workflow
+- [`scenario-03-fast-flux.mmd`](scenario-03-fast-flux.mmd) — implemented Scenario 03 DNS answer rotation, victim follow-up and telemetry path
+- [`scenario-04-dns-tunneling.mmd`](scenario-04-dns-tunneling.mmd) — implemented Scenario 04 defender-resolver to public authoritative DNS path
 
 If a diagram is exported to PNG, visually check clipped labels, overlapping arrows, unreadable text and incorrect routes before publication.
 
@@ -28,4 +30,3 @@ If a diagram is exported to PNG, visually check clipped labels, overlapping arro
 </div>
 <!-- dns-soc-footer:end -->
 
-- [`scenario-03-fast-flux.mmd`](scenario-03-fast-flux.mmd) — implemented Scenario 03 DNS answer rotation, victim follow-up and telemetry path.

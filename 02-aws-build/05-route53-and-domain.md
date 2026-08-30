@@ -254,7 +254,7 @@ No other permanent Route 53 records are required now. Later scenario changes are
 
 - Scenario 02 generates nonexistent DGA-style names so NXDOMAIN behavior can be measured.
 - Scenario 03 later used a temporary controlled `flux.soclab...` A RRset with short TTLs across team-controlled endpoints; the official exercise is complete and the temporary endpoint pool was retired.
-- Scenario 04 reuses the implemented Scenario 02 controlled resolver/DNS path for tunneling telemetry instead of a fake static public record.
+- Scenario 04 now uses the implemented Scenario 02 controlled resolver path plus a nested `tunnel.soclab...` Route 53 delegation to `dns-tunnel-auth01`; see [`10-scenario-04-dns-tunneling.md`](10-scenario-04-dns-tunneling.md).
 - Sinkhole behavior remains an internal resolver/incident-response control.
 
 The shared design for those changes is documented in [`../00-project-design/scenario-dns-plan.md`](../00-project-design/scenario-dns-plan.md).
@@ -288,7 +288,7 @@ The Route 53 DNS phase is complete. `abdul4rehman215.tech` is authoritative in t
 
 The delegated lab hostname resolves publicly to `100.49.192.164`, and `www.soclab.abdul4rehman215.tech` follows a CNAME to the same target. The child zone also contains the permanent `"DNS SOC Training Lab"` TXT fixture for controlled reconnaissance.
 
-The stable public DNS baseline is complete. Nginx/HTTPS, Web telemetry and AWS telemetry have since been completed as separate build phases. Scenario 02 DGA and Scenario 03 Fast Flux DNS behavior have now been exercised and closed out in their dedicated repositories; Scenario 04 tunneling-specific DNS behavior remains just-in-time. See [`../00-project-design/scenario-infrastructure-roadmap.md`](../00-project-design/scenario-infrastructure-roadmap.md).
+The stable public DNS baseline is complete. Nginx/HTTPS, Web telemetry and AWS telemetry have since been completed as separate build phases. Scenario 02 DGA and Scenario 03 Fast Flux DNS behavior have now been exercised and closed out in their dedicated repositories; Scenario 04 tunneling infrastructure is now prepared with the nested `tunnel.soclab...` delegation and authoritative BIND endpoint; Detection Engineering and official execution remain pending. See [`../00-project-design/scenario-infrastructure-roadmap.md`](../00-project-design/scenario-infrastructure-roadmap.md).
 
 ## Evidence index
 

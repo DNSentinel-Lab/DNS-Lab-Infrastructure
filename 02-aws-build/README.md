@@ -30,6 +30,9 @@ This folder records **what has actually been built in AWS**. Architecture files 
 | Unbound forwarding resolver + persistent victim DNS path | ✅ Complete |
 | Private Nginx sinkhole | ✅ Complete |
 | Unbound RPZ safe-match / controlled redirect / reset | ✅ Complete |
+| Scenario 04 `SG-TUNNEL-AUTH` + `dns-tunnel-auth01` | ✅ Complete |
+| Scenario 04 BIND authoritative-only zone + query logging | ✅ Complete |
+| Scenario 04 Route 53 nested delegation + end-to-end DNS smoke test | ✅ Complete |
 
 > [!IMPORTANT]
 > The AWS build folder preserves what was actually built in the defender account, including the original `ATTACK-LAB-VPC` and `dns-attack01`. Those artifacts are historical engineering evidence. The official Scenario 01 information-separated exercise now uses a Kali attacker in a **separate AWS account**, so attacker-account infrastructure is intentionally not mirrored into this defender build record.
@@ -41,7 +44,7 @@ PUBLIC / SHARED
 Route 53 public DNS → dns-soc-web01
 AWS telemetry → CloudWatch/Kinesis or S3/SQS → Splunk
 
-PRIVATE SCENARIO 02
+PRIVATE DEFENDER DNS PLATFORM
 SOC-MONITORING-SUBNET 10.50.30.0/24
     dns-soc-resolver01 10.50.30.10
     dns-soc-victim01   10.50.30.20
@@ -49,6 +52,12 @@ SOC-MONITORING-SUBNET 10.50.30.0/24
          │
          ├─ private NAT egress through SOC-MONITORING-NAT
          └─ local SOC paths to Splunk 10.50.20.10:9997
+
+SCENARIO 04 PUBLIC AUTHORITATIVE ENDPOINT
+ATTACK-PUBLIC-SUBNET 10.60.10.0/24
+    dns-tunnel-auth01  10.60.10.30
+         │
+         └─ public TCP/UDP 53 via SG-TUNNEL-AUTH
 ```
 
 The Scenario 02 service path is documented in [`08-scenario-02-defender-dns.md`](08-scenario-02-defender-dns.md). Splunk-side resolver/sinkhole onboarding is in [`../03-splunk-build/07-scenario-02-dns-onboarding.md`](../03-splunk-build/07-scenario-02-dns-onboarding.md).
@@ -60,9 +69,9 @@ The Scenario 02 service path is documented in [`08-scenario-02-defender-dns.md`]
 | **01 — DNS Recon** | Shared foundation complete; no extra infrastructure required |
 | **02 — DGA** | **Resolver/victim/sinkhole + NAT/SG/RPZ infrastructure complete** |
 | **03 — Fast Flux** | ✅ Implemented: three controlled HTTP nodes, `SG-FLUX-ENDPOINTS`, 60s Route 53 A record, controlled UPSERT rotation, victim/VPC Flow validation — see [`09-scenario-03-fast-flux.md`](09-scenario-03-fast-flux.md) |
-| **04 — DNS Tunneling** | Reuse Scenario 02 platform; add an authoritative endpoint only if final controlled design needs it |
+| **04 — DNS Tunneling** | ✅ Infrastructure ready: Scenario 02 defender path + `dns-tunnel-auth01` authoritative BIND endpoint + nested Route 53 delegation; Detection Engineering next |
 
-Scenario 02 infrastructure completion does **not** mean the DGA scenario itself is complete. The dedicated Scenario 02 repository now also records Machine Learning Engineering, Detection Engineering, Dashboard Studio, scheduled alerting and Scenario 02 AI evidence integration as complete. The fresh official adversary/SOC/IR/response-verification exercise still belongs there.
+Scenario-specific detection, operator, SOC and IR evidence remains in the dedicated scenario repositories. Scenario 02 and Scenario 03 are closed out there; Scenario 04 has reached infrastructure readiness only.
 
 ## 📚 Build Documents
 
@@ -76,6 +85,9 @@ Scenario 02 infrastructure completion does **not** mean the DGA scenario itself 
 | 🔒 [`06-nginx-https-web-server.md`](06-nginx-https-web-server.md) | Nginx / HTTPS target |
 | 📡 [`07-security-telemetry.md`](07-security-telemetry.md) | AWS security telemetry |
 | 🧬 [`08-scenario-02-defender-dns.md`](08-scenario-02-defender-dns.md) | Resolver/victim/sinkhole, Unbound, RPZ and safe-state validation |
+| 🛰️ [`10-scenario-04-dns-tunneling.md`](10-scenario-04-dns-tunneling.md) | Authoritative BIND endpoint, nested Route 53 delegation, two-sided DNS evidence and smoke tests |
+| ⚙️ [`configs/scenario-04/`](configs/scenario-04/) | Repository-safe Scenario 04 BIND configuration and command ledger |
+| 🖼️ [`screenshots/scenario-04-dns-tunneling/`](screenshots/scenario-04-dns-tunneling/) | Curated Scenario 04 infrastructure evidence |
 | ⚙️ [`configs/scenario-02/`](configs/scenario-02/) | Repository-safe Scenario 02 service configuration |
 | 🖼️ [`screenshots/scenario-02/`](screenshots/scenario-02/) | Curated Scenario 02 infrastructure evidence `79–106` where AWS/service-side evidence applies |
 

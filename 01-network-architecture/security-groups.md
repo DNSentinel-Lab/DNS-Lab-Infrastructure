@@ -73,6 +73,19 @@ Scenario 03 added one shared security group in `ATTACK-LAB-VPC` for the controll
 
 The nodes are **not DNS servers**. Port 53 and Splunk receiver ports were not opened on this group.
 
+
+## Scenario 04 — `SG-TUNNEL-AUTH`
+
+Scenario 04 adds one public authoritative DNS security group in `ATTACK-LAB-VPC`. This is intentionally different from the private `SG-DNS` recursive resolver.
+
+| Direction | Protocol / Port | Source | Reason |
+|---|---|---|---|
+| Inbound | UDP 53 | `0.0.0.0/0` | Public authoritative DNS queries |
+| Inbound | TCP 53 | `0.0.0.0/0` | TCP DNS / fallback to the authoritative service |
+| Inbound | SSH 22 | None | Administration uses SSM |
+
+BIND recursion is disabled on `dns-tunnel-auth01`, so the public DNS listener is authoritative-only rather than an open recursive resolver.
+
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
 <!-- dns-soc-footer:start -->

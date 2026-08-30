@@ -291,9 +291,32 @@ VPC Flow + Resolver logs → Splunk
 
 The three public IP values above are observed validation values; the control script refreshes current node public IPs before rotation. Detailed build evidence: [`../02-aws-build/09-scenario-03-fast-flux.md`](../02-aws-build/09-scenario-03-fast-flux.md).
 
-## Scenario 04 reuse
+## Scenario 04 authoritative DNS path
 
-Scenario 04 continues to reuse the Scenario 02 victim/resolver/sinkhole path. It does not introduce a new VPC or attacker-to-SOC private route unless its final authoritative design explicitly requires an additional controlled endpoint.
+Scenario 04 reuses the Scenario 02 victim/resolver/sinkhole path and now adds a controlled public authoritative endpoint in the existing `ATTACK-LAB-VPC`. No VPC peering or private attacker-to-SOC route was introduced.
+
+```text
+dns-soc-victim01 10.50.30.20
+        | system DNS
+        v
+dns-soc-resolver01 10.50.30.10 / Unbound
+        | recursive upstream
+        v
+AWS/public recursive DNS
+        |
+        v
+Route 53: tunnel.soclab... NS delegation
+        |
+        v
+dns-tunnel-auth01 10.60.10.30 / BIND authoritative-only
+        |
+        +--> /var/log/named/scenario04-queries.log
+
+Defender telemetry: Unbound -> Splunk
+Later response: Unbound RPZ -> 10.50.30.30 sinkhole
+```
+
+Unbound sees the original private client. The public authoritative service sees upstream recursive-resolver source addresses. Those two views must not be confused during investigation.
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 

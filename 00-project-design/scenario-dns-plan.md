@@ -133,29 +133,38 @@ The three temporary Fast Flux EC2 nodes were stopped/deleted/reset after the exe
 
 ## Scenario 04 — DNS Tunneling
 
-Do **not** create a normal static Route 53 A record just to reserve the tunneling name.
+**Infrastructure status:** ✅ Complete / Detection Engineering next.
 
-Planned namespace:
+Scenario 04 now uses a real delegated child namespace rather than a fake static reservation:
 
 ```text
-tunnel.soclab.abdul4rehman215.tech
+soclab.abdul4rehman215.tech           Route 53 child zone
+    |
+    +-- tunnel  NS  ns1.tunnel.soclab.abdul4rehman215.tech.
+    +-- ns1.tunnel  A  98.93.89.38   # build-time auto-assigned public IPv4
+             |
+             v
+       dns-tunnel-auth01
+       BIND authoritative-only
 ```
 
-The final design must be chosen when the scenario is prepared. Reuse the Scenario 02 resolver/victim/sinkhole platform. Add a separate authoritative DNS endpoint/delegation only if the controlled tunneling simulation genuinely needs to receive and interpret the encoded queries.
+The authoritative host serves `tunnel.soclab.abdul4rehman215.tech` with a 60-second wildcard A response so fresh controlled labels can reach one real DNS service without creating thousands of Route 53 records. BIND query logging preserves the received qnames as operator ground truth.
 
-The traffic must contain harmless lab-generated data only.
+The public address `98.93.89.38` is **not an Elastic IP**. The regional EIP quota was full during the build. Before the official scenario run, confirm the current EC2 public IPv4; if it changed, update the Route 53 nameserver A record, BIND A records and SOA serial, then repeat the smoke tests.
 
-## DNS cleanup rule
+The defender path remains:
 
-Temporary scenario DNS changes must be documented with:
+```text
+dns-soc-victim01 10.50.30.20
+    -> dns-soc-resolver01 10.50.30.10 / Unbound
+    -> AWS/public recursive DNS
+    -> Route 53 nested delegation
+    -> dns-tunnel-auth01 / BIND
+```
 
-- what was added or changed;
-- expected TTL/behavior;
-- exact scenario purpose;
-- before/after validation;
-- reset/removal state after the exercise.
+The existing RPZ/sinkhole path stays available for a later human-approved response. No Scenario 04 sinkhole action is claimed yet.
 
-The permanent child-zone baseline stays stable unless a project-level change is deliberately approved.
+The implementation and evidence are documented in [`../02-aws-build/10-scenario-04-dns-tunneling.md`](../02-aws-build/10-scenario-04-dns-tunneling.md).
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
