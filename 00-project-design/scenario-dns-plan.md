@@ -129,7 +129,7 @@ Route 53 UPSERT
 
 The official Scenario 03 exercise is complete. The rotation controller was stopped cleanly and IR found no Scenario 03 RPZ rule active. After independent DNS/network/host validation, IR classified the behavior as controlled/expected and chose **no containment**, then verified Unbound/RPZ safe state and normal DNS operation from the victim path.
 
-The three temporary Fast Flux EC2 nodes were stopped/deleted/reset after the exercise. Historical Resolver Query Logs did not expose TTL, so the defender record preserves that limitation even though the controlled DNS design used a 60-second TTL and a later live victim check observed TTL 60.
+The three temporary Fast Flux EC2 nodes were deleted after the exercise. Historical Resolver Query Logs did not expose TTL, so the defender record preserves that limitation even though the controlled DNS design used a 60-second TTL and a later live victim check observed TTL 60.
 
 ## Scenario 04 — DNS Tunneling
 
