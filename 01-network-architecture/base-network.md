@@ -8,7 +8,7 @@
 
 The current official Scenario 01 trust model separates the adversary from the defender **by AWS account**, not only by VPC. The defender platform remains in `SOC-LAB-VPC`; the official Kali attacker is in a separate AWS account and reaches only public services.
 
-The original in-account `ATTACK-LAB-VPC` is retained as historical engineering infrastructure and is not the official Scenario 01 information-separated source.
+The original in-account `ATTACK-LAB-VPC` is retained as historical engineering infrastructure and is not the official Scenario 01 information-separated source. Scenario 04 now also uses that VPC for a **team-controlled public authoritative DNS endpoint**, which is reached through public DNS rather than a private attacker-to-SOC route.
 
 ```text
 OFFICIAL EXTERNAL ADVERSARY
@@ -19,7 +19,8 @@ OFFICIAL EXTERNAL ADVERSARY
 HISTORICAL ENGINEERING ATTACK VPC
     ATTACK-LAB-VPC  10.60.0.0/16
         ATTACK-PUBLIC-SUBNET 10.60.10.0/24
-            dns-attack01 10.60.10.10
+            dns-attack01       10.60.10.10
+            dns-tunnel-auth01  10.60.10.30   Scenario 04 authoritative DNS
 
 DEFENDER
 SOC-LAB-VPC     10.50.0.0/16
@@ -39,7 +40,7 @@ SOC-LAB-VPC     10.50.0.0/16
 ## Trust boundaries
 
 - The official external attacker account has no VPC peering, Transit Gateway or private cross-account route to the defender.
-- The historical in-account attack VPC also has no private route to the SOC VPC.
+- The historical in-account attack VPC also has no private route to the SOC VPC. Scenario 04 reaches `dns-tunnel-auth01` through the public DNS/Internet path, not peering.
 - The public Web target is intentionally reachable through the Internet on 80/443.
 - Splunk Web is restricted to approved team source addresses; administration uses SSM.
 - The Scenario 02 resolver and sinkhole are private-only.
@@ -97,7 +98,19 @@ Resolver 10.50.30.10 / Unbound
 
 The final RPZ state keeps enforcement disabled until a later human-approved exercise response.
 
-See [`diagrams/base-network.mmd`](diagrams/base-network.mmd) and [`diagrams/scenario-02-defender-dns.mmd`](diagrams/scenario-02-defender-dns.mmd).
+## Scenario 04 authoritative path
+
+```text
+Victim 10.50.30.20
+    -> Unbound 10.50.30.10
+    -> AWS/public recursive DNS
+    -> Route 53 tunnel delegation
+    -> dns-tunnel-auth01 10.60.10.30 / public BIND authoritative DNS
+```
+
+The authoritative host records received qnames as operator ground truth. Unbound remains the defender source that preserves the original client identity.
+
+See [`diagrams/base-network.mmd`](diagrams/base-network.mmd), [`diagrams/scenario-02-defender-dns.mmd`](diagrams/scenario-02-defender-dns.mmd) and [`diagrams/scenario-04-dns-tunneling.mmd`](diagrams/scenario-04-dns-tunneling.mmd).
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 

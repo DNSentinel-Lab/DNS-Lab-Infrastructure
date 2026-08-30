@@ -1,0 +1,36 @@
+flowchart LR
+    V["💻 dns-soc-victim01<br/>10.50.30.20"]
+    R["🛡️ dns-soc-resolver01<br/>10.50.30.10<br/>Unbound"]
+    AWS["☁️ AWS VPC Resolver<br/>Public Recursive DNS"]
+    R53["🌍 Route 53<br/>soclab.abdul4rehman215.tech<br/>tunnel NS delegation"]
+    A["🛰️ dns-tunnel-auth01<br/>10.60.10.30<br/>BIND Authoritative"]
+    GT["🧾 Authoritative Ground Truth<br/>scenario04-queries.log"]
+    SPL["🟢 Splunk Enterprise<br/>Existing defender DNS telemetry"]
+    RPZ["📋 Unbound RPZ<br/>Human-approved later"]
+    H["🎯 dns-soc-sinkhole01<br/>10.50.30.30"]
+
+    V -->|System DNS| R
+    R -->|Recursive upstream| AWS
+    AWS --> R53
+    R53 -->|Delegated child namespace| A
+    A --> GT
+    R -->|Resolver telemetry| SPL
+
+    RPZ -.-> R
+    R -.->|Later containment only| H
+
+    classDef endpoint fill:#172554,stroke:#60a5fa,stroke-width:2px,color:#fff;
+    classDef resolver fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#fff;
+    classDef cloud fill:#312e81,stroke:#a78bfa,stroke-width:2px,color:#fff;
+    classDef auth fill:#134e4a,stroke:#2dd4bf,stroke-width:2px,color:#fff;
+    classDef evidence fill:#3f2a0a,stroke:#f59e0b,stroke-width:2px,color:#fff;
+    classDef splunk fill:#052e16,stroke:#4ade80,stroke-width:2px,color:#fff;
+    classDef response fill:#450a0a,stroke:#f87171,stroke-width:2px,color:#fff;
+
+    class V endpoint;
+    class R resolver;
+    class AWS,R53 cloud;
+    class A auth;
+    class GT evidence;
+    class SPL splunk;
+    class RPZ,H response;
