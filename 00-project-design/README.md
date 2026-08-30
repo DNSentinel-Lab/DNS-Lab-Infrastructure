@@ -82,7 +82,7 @@ Detailed VPC, subnet, routing, DNS authority and traffic decisions belong in [`.
 - The **official Scenario 01 adversary boundary** is a separate AWS account, the original in-account attack VPC remains historical engineering evidence.
 - The **Scenario 02 defender-DNS infrastructure** is complete.
 - The **Scenario 03 Fast Flux extension** is complete.
-- The **Scenario 04 authoritative-DNS preparation** is complete; Detection Engineering is the next workstream.
+- The **Scenario 04 authoritative-DNS preparation and Detection Engineering workstreams** are complete; the official information-separated simulation/SOC/IR exercise is next.
 - Scenario implementation/evidence is maintained in separate scenario repositories.
 
 [`scenario-infrastructure-roadmap.md`](scenario-infrastructure-roadmap.md) records what is already implemented across the scenario-specific infrastructure extensions and what remains operationally conditional. [`scenario-documentation-standard.md`](scenario-documentation-standard.md) keeps all four scenario repositories reproducible and consistent.
