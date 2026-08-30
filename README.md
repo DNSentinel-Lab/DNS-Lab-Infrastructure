@@ -42,9 +42,9 @@ One SOC platform supports **four DNS security scenarios**. The infrastructure st
 | 🔎 [**01 — DNS Reconnaissance & Enumeration**](https://github.com/DNSentinel-Lab/Scenario-01-DNS-Recon) | Abnormal DNS record enumeration and follow-up activity | `T1590.002` | Public DNS visibility, detection, investigation and evidence correlation |
 | 🧬 [**02 — DGA + High NXDOMAIN**](https://github.com/DNSentinel-Lab/Scenario-02-DGA) | Generated-domain behavior and abnormal NXDOMAIN activity | `T1568.002` | Defender-controlled resolution, baselining, detection/ML and containment path |
 | 🔄 [**03 — Fast Flux DNS**](https://github.com/DNSentinel-Lab/Scenario-03-Fast-Flux) | Rapidly changing DNS answers and short-TTL behavior | `T1568.001` | DNS answer/TTL correlation and destination-change analysis |
-| 🛰️ [**04 — DNS Tunneling**](https://github.com/DNSentinel-Lab/Scenario-04-DNS-Tunneling) | Controlled encoded DNS behavior | `T1071.004` / `T1572` where the implemented behavior fits | Suspicious query-pattern detection, investigation and response verification |
+| 🛰️ [**04 — DNS Tunneling**](https://github.com/DNSentinel-Lab/Scenario-04-DNS-Tunneling) | Controlled encoded DNS behavior | `T1071.004` primary; `T1572` only if later implementation genuinely fits | Suspicious query-pattern detection, investigation and response verification |
 
-> MITRE mappings describe the behavior the team intends to simulate.
+> MITRE mappings stay evidence-based. Scenario 04 currently uses `T1071.004` as the primary planned mapping; `T1572` is not claimed unless a later implementation actually encapsulates another protocol.
 
 <div align="center">
 
@@ -478,7 +478,7 @@ The SOC Analyst has no attacker-account inventory, no private network route and 
 | 🧬 Scenario 02 official DGA / SOC / IR / RPZ exercise | ✅ Complete — final case evidence maintained in the Scenario 02 repository |
 | 🔄 Scenario 03 Fast Flux infrastructure | ✅ Complete — three controlled nodes + short-TTL Route 53 rotation + victim/network validation; temporary pool retired after official exercise |
 | 🔄 Scenario 03 official operator / SOC / IR exercise | ✅ Complete — final case evidence maintained in the Scenario 03 repository; IR chose no containment and verified resolver/RPZ safe state |
-| 🛰️ Scenario 04 tunneling-specific resources | ⚪ Conditional / planned when Scenario 04 begins |
+| 🛰️ Scenario 04 tunneling infrastructure | ✅ Complete — authoritative BIND endpoint + nested Route 53 delegation + victim/resolver/authoritative path validated; Detection Engineering next |
 
 Scenario-specific detections and exercises are maintained in the separate [scenario repositories](https://github.com/orgs/DNSentinel-Lab/repositories).
 
@@ -511,7 +511,7 @@ See [`00-project-design/team-roles.md`](00-project-design/team-roles.md) for eac
 |---|---|
 | 🧭 [`00-project-design/`](00-project-design/) | Scope, four-scenario model, roles, roadmaps and documentation standard |
 | 🌐 [`01-network-architecture/`](01-network-architecture/) | VPC blueprint, CIDRs, DNS authority, trust boundaries, security groups and traffic flows |
-| ☁️ [`02-aws-build/`](02-aws-build/) | Implemented AWS configuration, telemetry and Scenario 02 defender-DNS platform |
+| ☁️ [`02-aws-build/`](02-aws-build/) | Implemented AWS configuration, telemetry, Scenario 02 defender-DNS platform, Scenario 03 extension and Scenario 04 authoritative-DNS preparation |
 | 🔎 [`03-splunk-build/`](03-splunk-build/) | Splunk platform, indexes, Web/AWS/DNS onboarding, validation and operations |
 | 🤖 [`04-ai-integration/`](04-ai-integration/) | Shared AI bridge, schemas, HEC/webhook path, validation and operating evidence |
 | 🤝 [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contribution workflow and repository expectations |
