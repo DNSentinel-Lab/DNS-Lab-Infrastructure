@@ -70,7 +70,7 @@ Typical work:
 
 The role table records the current scenario assignments. Individual scenario repositories provide the evidence for what each member actually implemented or executed.
 
-**Scenario 04 infrastructure preparation was implemented by Lubaba** before the rotating official exercise begins. This build credit is separate from the canonical Scenario 04 simulation role assigned to Sonia.
+**Scenario 04 infrastructure preparation was implemented by Lubaba** before the rotating official exercise begins. 
 
 ## Shared AI foundation
 
