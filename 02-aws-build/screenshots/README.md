@@ -34,6 +34,12 @@ Primary screenshots are displayed inline in the relevant technical documents so 
 
 Credential material, MFA QR codes, private keys and raw secrets are intentionally not part of the evidence set.
 
+## Scenario-specific infrastructure evidence
+
+- [`scenario-02/`](scenario-02/) — private resolver/victim/sinkhole, Unbound and RPZ infrastructure evidence.
+- [`scenario-03-fast-flux/`](scenario-03-fast-flux/) — controlled Fast Flux infrastructure evidence.
+- [`scenario-04-dns-tunneling/`](scenario-04-dns-tunneling/) — authoritative DNS, nested delegation, victim-path and unique-subdomain smoke-test evidence.
+
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
 <!-- dns-soc-footer:start -->
@@ -45,7 +51,3 @@ Credential material, MFA QR codes, private keys and raw secrets are intentionall
 
 </div>
 <!-- dns-soc-footer:end -->
-
-## Scenario 03 — Fast Flux
-
-Curated implementation evidence: [`scenario-03-fast-flux/`](scenario-03-fast-flux/).
