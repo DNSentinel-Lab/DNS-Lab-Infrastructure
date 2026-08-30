@@ -175,7 +175,7 @@ The infrastructure implementation is documented in [`../02-aws-build/09-scenario
 
 The official Scenario 03 operator/SOC/IR exercise is complete in the separate scenario repository. The frozen detection surfaced the official run; SOC escalated the real Fast Flux-like behavior without inventing malicious attribution; IR independently recovered the answer history and host context, classified the activity as controlled/expected, and did not activate RPZ because containment was not proportionate. Resolver/RPZ safe state was verified.
 
-The live controller and victim follow-up were stopped cleanly, and the three temporary Fast Flux EC2 nodes were stopped/deleted/reset after the exercise. The shared repository retains their historical addressing/configuration as implementation evidence rather than as a claim that those temporary nodes remain deployed.
+The live controller and victim follow-up were stopped cleanly, and the three temporary Fast Flux EC2 nodes were deleted after the exercise. The shared repository retains their historical addressing/configuration as implementation evidence.
 
 ## Scenario 04 — DNS Tunneling
 
