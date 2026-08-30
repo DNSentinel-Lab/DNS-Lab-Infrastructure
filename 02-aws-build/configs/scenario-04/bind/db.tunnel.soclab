@@ -1,0 +1,15 @@
+$TTL 60
+
+@   IN  SOA ns1.tunnel.soclab.abdul4rehman215.tech. admin.tunnel.soclab.abdul4rehman215.tech. (
+        2026082901
+        300
+        120
+        604800
+        60
+)
+
+    IN  NS  ns1.tunnel.soclab.abdul4rehman215.tech.
+
+ns1 IN  A   98.93.89.38
+@   IN  A   98.93.89.38
+*   IN  A   98.93.89.38
