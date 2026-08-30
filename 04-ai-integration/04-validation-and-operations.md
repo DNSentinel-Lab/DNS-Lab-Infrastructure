@@ -167,6 +167,52 @@ human analyst remains the source of truth
 
 Detailed Scenario 01 detection logic, screenshots, troubleshooting and payload mapping belong in the separate `Scenario-01-DNS-Recon` repository; this shared repository records only the common-platform handoff result.
 
+## Validation 5 — Scenario 04 DNS tunneling consumer
+
+Scenario 04 reused the same shared bridge after its human-facing Detection v1.0 fields had stabilized. The scenario-specific result contract added:
+
+```text
+scenario_id = scenario-04-dns-tunneling
+ai_profile  = dns_tunneling_v1
+```
+
+The frozen scheduled detection returned the common bridge wrapper:
+
+```text
+alert_id
+alert_name
+scenario
+severity
+event_time
+source
+evidence_json
+```
+
+A fresh controlled Detection Engineering validation produced this path:
+
+```text
+Unbound defender telemetry
+        -> Scenario 04 Detection v1.0
+        -> scheduled alert
+        -> native Webhook
+        -> dns-soc-ai-bridge
+        -> OpenAI
+        -> internal HTTPS HEC
+        -> index=dns_soc_ai / sourcetype=dns_soc:ai:triage
+```
+
+The returned AI event was compared with the source alert evidence. It matched the evaluated client, query count, A-record behavior, 32-character first labels, 67-character qnames and `T1071.004`, while explicitly avoiding a claim that the evidence alone proved tunneling or data exfiltration. `human_validation_required=true` remained preserved.
+
+This is the intended shared-platform boundary:
+
+```text
+scenario detection = behavioral lead
+shared AI bridge   = evidence enrichment
+human analyst       = final security decision
+```
+
+Detailed Scenario 04 thresholds, dashboard, validation evidence and screenshots belong in the dedicated `Scenario-04-DNS-Tunneling` repository. The official Scenario 04 simulation/SOC/IR exercise remains pending.
+
 ## Routine health checks
 
 Container state:
