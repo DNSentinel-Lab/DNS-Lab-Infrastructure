@@ -39,7 +39,7 @@ No public SSH rule
 
 The nodes served simple Nginx pages so the victim could genuinely connect to whatever address DNS returned.
 
-> **Closeout state:** these three EC2s were temporary Scenario 03 resources and were stopped/deleted/reset after the official exercise. The table above is retained as the historical build/addressing record.
+> **Closeout state:** these three EC2s were temporary Scenario 03 resources and were deleted after the official exercise. The table above is retained as the historical build/addressing record.
 
 ### Public address handling
 
