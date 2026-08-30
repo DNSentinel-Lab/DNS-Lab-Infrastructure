@@ -133,7 +133,7 @@ The three temporary Fast Flux EC2 nodes were deleted after the exercise. Histori
 
 ## Scenario 04 — DNS Tunneling
 
-**Infrastructure status:** ✅ Complete / Detection Engineering next.
+**Infrastructure status:** ✅ Complete. **Detection Engineering:** ✅ Complete / SOC-ready. **Official exercise:** ⏳ Pending.
 
 Scenario 04 now uses a real delegated child namespace rather than a fake static reservation:
 
@@ -162,7 +162,7 @@ dns-soc-victim01 10.50.30.20
     -> dns-tunnel-auth01 / BIND
 ```
 
-The existing RPZ/sinkhole path stays available for a later human-approved response. No Scenario 04 sinkhole action is claimed yet.
+The existing RPZ/sinkhole path stays available for a later human-approved response. Detection v1.0 is now frozen in the Scenario 04 repository, but no Scenario 04 sinkhole action is claimed yet because the official SOC/IR exercise has not started.
 
 The implementation and evidence are documented in [`../02-aws-build/10-scenario-04-dns-tunneling.md`](../02-aws-build/10-scenario-04-dns-tunneling.md).
 
