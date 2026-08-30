@@ -144,7 +144,5 @@ Closeout state:
 2. the victim follow-up loop was stopped;
 3. Incident Response found no active Scenario 03 RPZ rule and therefore did not perform an unnecessary containment change;
 4. `unbound-checkconf`, service state and victim-side normal DNS were verified;
-5. the three temporary Fast Flux EC2 nodes were stopped/deleted/reset after the exercise;
+5. the three temporary Fast Flux EC2 nodes were deleted after the exercise;
 6. final operator/SOC/IR evidence and ground-truth comparison are maintained in the Scenario 03 repository.
-
-The exact temporary-node teardown timestamp was not part of the preserved evidence package, so this infrastructure record does not manufacture one. The node IPs and public addresses above remain as historical implementation/evidence values only.
