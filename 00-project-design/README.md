@@ -15,7 +15,7 @@ This folder is the **source of truth for what the lab is building and why**. It 
 | 🧪 [`scenario-matrix.md`](scenario-matrix.md) | Side-by-side view of all four DNS scenarios |
 | 🚦 [`project-roadmap.md`](project-roadmap.md) | Build sequence and current progress |
 | 📡 [`scenario-dns-plan.md`](scenario-dns-plan.md) | Permanent child-zone baseline and later scenario-specific DNS changes |
-| 🏗️ [`scenario-infrastructure-roadmap.md`](scenario-infrastructure-roadmap.md) | Implemented Scenario 02 defender-DNS resources, completed Scenario 03 Fast Flux extension, and remaining just-in-time Scenario 04 changes |
+| 🏗️ [`scenario-infrastructure-roadmap.md`](scenario-infrastructure-roadmap.md) | Implemented Scenario 02 defender-DNS resources, completed Scenario 03 Fast Flux extension, and completed Scenario 04 authoritative-DNS preparation |
 | 📋 [`scenario-documentation-standard.md`](scenario-documentation-standard.md) | Required 20-part scenario workflow, network/MITRE discipline and dashboard standard |
 
 ## 🧭 How This Section Fits
@@ -81,10 +81,11 @@ Detailed VPC, subnet, routing, DNS authority and traffic decisions belong in [`.
 - The **shared AI foundation** is complete.
 - The **official Scenario 01 adversary boundary** is a separate AWS account, with optional external Windows traffic; the original in-account attack VPC remains historical engineering evidence.
 - The **Scenario 02 defender-DNS infrastructure** is complete.
-- Remaining infrastructure is **scenario-specific and just-in-time**.
+- The **Scenario 03 Fast Flux extension** is complete and its temporary endpoint pool was retired after closeout.
+- The **Scenario 04 authoritative-DNS preparation** is complete; Detection Engineering is the next workstream.
 - Scenario implementation/evidence is maintained in separate scenario repositories.
 
-[`scenario-infrastructure-roadmap.md`](scenario-infrastructure-roadmap.md) records what is already implemented and what still needs to be built for Scenarios 03–04. [`scenario-documentation-standard.md`](scenario-documentation-standard.md) keeps all four scenario repositories reproducible and consistent.
+[`scenario-infrastructure-roadmap.md`](scenario-infrastructure-roadmap.md) records what is already implemented across the scenario-specific infrastructure extensions and what remains operationally conditional. [`scenario-documentation-standard.md`](scenario-documentation-standard.md) keeps all four scenario repositories reproducible and consistent.
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 

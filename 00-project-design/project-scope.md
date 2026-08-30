@@ -58,7 +58,7 @@ The common platform and Scenario 02 defender DNS infrastructure are now complete
 - **Scenario 01:** reuses the common AWS/Splunk/Web/DNS/AI platform.
 - **Scenario 02:** uses the implemented private resolver, victim and sinkhole in `SOC-MONITORING-SUBNET`; Machine Learning Engineering, Detection Engineering, Dashboard Studio, scheduled alerting, AI integration, the information-separated DGA/SOC/IR exercise, human-approved RPZ containment, verification, and safe reset are complete in the dedicated Scenario 02 repository.
 - **Scenario 03:** reused Scenario 02 and the temporary team-controlled Fast Flux destinations/short-TTL rotation. The official operator → SOC → IR exercise is complete in the Scenario 03 repository. IR independently classified the behavior as controlled/expected, did not activate RPZ because containment was not justified, verified resolver/RPZ safe state, and the temporary Fast Flux EC2 pool was retired after the exercise.
-- **Scenario 04:** reuses the same defender DNS path and adds a separate authoritative DNS service only if the final tunneling design genuinely needs it.
+- **Scenario 04:** reuses the same defender DNS path and now includes the implemented `dns-tunnel-auth01` authoritative BIND endpoint, `tunnel.soclab...` nested Route 53 delegation and validated victim → resolver → public DNS → authoritative path. Detection Engineering and execution remain pending.
 
 The detailed resource state is maintained in [`scenario-infrastructure-roadmap.md`](scenario-infrastructure-roadmap.md). The common scenario workflow is maintained in [`scenario-documentation-standard.md`](scenario-documentation-standard.md).
 

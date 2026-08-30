@@ -50,6 +50,26 @@ Scenario 02 infrastructure was built in parallel after the common platform was s
 
 Implementation is documented in [`../02-aws-build/08-scenario-02-defender-dns.md`](../02-aws-build/08-scenario-02-defender-dns.md) and [`../03-splunk-build/07-scenario-02-dns-onboarding.md`](../03-splunk-build/07-scenario-02-dns-onboarding.md).
 
+## Scenario 04 infrastructure preparation
+
+Scenario 04 reused the Scenario 02 defender DNS platform and added one controlled authoritative endpoint because the tunneling design requires a real service that can receive fresh child labels.
+
+| Work | Status |
+|---|---|
+| `SG-TUNNEL-AUTH` — public authoritative DNS only | **Complete** |
+| `dns-tunnel-auth01` — `10.60.10.30` in `ATTACK-LAB-VPC` | **Complete** |
+| BIND 9 authoritative-only / recursion disabled / IPv4-only | **Complete** |
+| `tunnel.soclab.abdul4rehman215.tech` authoritative zone + wildcard | **Complete** |
+| BIND query ground-truth logging | **Complete** |
+| Route 53 `tunnel` NS delegation + `ns1.tunnel` A record | **Complete** |
+| Public recursive validation | **Complete** |
+| Victim -> Unbound -> public DNS -> authoritative endpoint validation | **Complete** |
+| Unbound client attribution + BIND authoritative receipt correlation | **Complete** |
+| Fresh unique-subdomain smoke test | **Complete** |
+| Stable Elastic IP | **Not available — regional EIP quota full; pre-run public-IP check required** |
+
+Implementation is documented in [`../02-aws-build/10-scenario-04-dns-tunneling.md`](../02-aws-build/10-scenario-04-dns-tunneling.md). Detection Engineering and the official scenario run remain separate work in the Scenario 04 repository.
+
 ## Current checkpoint
 
 ```text
@@ -109,7 +129,7 @@ Scenario repositories reuse this bridge and add only a scenario profile after st
 - **Scenario 01:** reuse the completed shared platform.
 - **Scenario 02:** defender DNS infrastructure, Machine Learning Engineering, Detection Engineering, Dashboard Studio, scheduled alerting, AI evidence mapping, the information-separated DGA/SOC/IR exercise, human-approved RPZ containment, verification, and safe reset are complete. Final scenario evidence is maintained in the dedicated Scenario 02 repository; ML and AI remained supporting signals rather than automatic verdicts.
 - **Scenario 03:** reused the Scenario 02 victim/resolver/sinkhole platform and added the controlled three-node Fast Flux pool, short-TTL Route 53 rotation and validation path documented in `02-aws-build/09-scenario-03-fast-flux.md`. The official operator/SOC/IR exercise is now complete: Detection v1.0 produced the live lead, SOC escalated with attribution limits, IR independently recovered answer history and host context, chose no containment because the activity was controlled/inactive, verified resolver/RPZ safe state, and the temporary endpoint pool was retired after closeout.
-- **Scenario 04:** reuse the same defender path; add a separate authoritative DNS endpoint only if the final tunneling implementation genuinely requires it.
+- **Scenario 04:** infrastructure preparation is complete. The existing defender victim/resolver/sinkhole path now reaches a controlled BIND authoritative endpoint through a nested Route 53 delegation. Detection Engineering is next; the official simulation/SOC/IR exercise has not started.
 
 Scenario-specific SPL, dashboards, attack ground truth, analyst findings, AI profiles and incident-response evidence belong in the scenario repositories rather than this shared infrastructure folder.
 
