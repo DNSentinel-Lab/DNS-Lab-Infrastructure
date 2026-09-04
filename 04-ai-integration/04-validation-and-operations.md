@@ -211,7 +211,7 @@ shared AI bridge   = evidence enrichment
 human analyst       = final security decision
 ```
 
-Detailed Scenario 04 thresholds, dashboard, validation evidence and screenshots belong in the dedicated `Scenario-04-DNS-Tunneling` repository. The official Scenario 04 simulation/SOC/IR exercise remains pending.
+Detailed Scenario 04 thresholds, dashboard, validation evidence and screenshots belong in the dedicated `Scenario-04-DNS-Tunneling` repository. The official exercise has now also validated this consumer in live use: the production alert generated an AI event, Lubaba compared it with raw Unbound evidence, rated the summary correct, and preserved `human_validation_required=true`.
 
 ## Routine health checks
 
