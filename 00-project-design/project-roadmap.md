@@ -68,7 +68,7 @@ Scenario 04 reused the Scenario 02 defender DNS platform and added one controlle
 | Fresh unique-subdomain smoke test | **Complete** |
 | Stable Elastic IP | **Not available — regional EIP quota full; pre-run public-IP check required** |
 
-Implementation is documented in [`../02-aws-build/10-scenario-04-dns-tunneling.md`](../02-aws-build/10-scenario-04-dns-tunneling.md). Scenario 04 Detection Engineering, Dashboard Studio, scheduled alerting and the scenario-specific AI evidence contract are now complete and maintained in the dedicated Scenario 04 repository. The official simulation/SOC/IR exercise remains separate and has not started.
+Implementation is documented in [`../02-aws-build/10-scenario-04-dns-tunneling.md`](../02-aws-build/10-scenario-04-dns-tunneling.md). Scenario 04 Detection Engineering, Dashboard Studio, scheduled alerting and the scenario-specific AI evidence contract were frozen before execution. The official information-separated operator/SOC/IR run is now complete in the dedicated Scenario 04 repository, including a human-approved temporary RPZ redirect to `10.50.30.30` and verified safe reset.
 
 ## Current checkpoint
 
@@ -129,7 +129,7 @@ Scenario repositories reuse this bridge and add only a scenario profile after st
 - **Scenario 01:** reuse the completed shared platform.
 - **Scenario 02:** defender DNS infrastructure, Machine Learning Engineering, Detection Engineering, Dashboard Studio, scheduled alerting, AI evidence mapping, the information-separated DGA/SOC/IR exercise, human-approved RPZ containment, verification, and safe reset are complete. Final scenario evidence is maintained in the dedicated Scenario 02 repository; ML and AI remained supporting signals rather than automatic verdicts.
 - **Scenario 03:** reused the Scenario 02 victim/resolver/sinkhole platform and added the controlled three-node Fast Flux pool, short-TTL Route 53 rotation and validation path documented in `02-aws-build/09-scenario-03-fast-flux.md`. The official operator/SOC/IR exercise is now complete: Detection v1.0 produced the live lead, SOC escalated with attribution limits, IR independently recovered answer history and host context, chose no containment because the activity was controlled/inactive, verified resolver/RPZ safe state, and the temporary endpoint pool was retired after closeout.
-- **Scenario 04:** infrastructure preparation **and Detection Engineering** are complete. The existing defender victim/resolver/sinkhole path reaches the controlled BIND authority; Detection v1.0, Dashboard Studio, scheduled alerting and `dns_tunneling_v1` AI evidence mapping are frozen/SOC-ready in the Scenario 04 repository. The official simulation/SOC/IR exercise has not started.
+- **Scenario 04:** complete end to end. The existing defender victim/resolver/sinkhole path reached the controlled BIND authority; frozen Detection v1.0 and `dns_tunneling_v1` surfaced the official seven-query tunneling-like burst; SOC independently escalated with attribution limits; IR independently validated the evidence, proved a temporary `*.tunnel... → 10.50.30.30` RPZ response, and restored the resolver safely. Detailed evidence remains in the dedicated Scenario 04 repository.
 
 Scenario-specific SPL, dashboards, attack ground truth, analyst findings, AI profiles and incident-response evidence belong in the scenario repositories rather than this shared infrastructure folder.
 
