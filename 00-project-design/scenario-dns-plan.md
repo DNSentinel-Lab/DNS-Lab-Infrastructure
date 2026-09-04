@@ -162,7 +162,7 @@ dns-soc-victim01 10.50.30.20
     -> dns-tunnel-auth01 / BIND
 ```
 
-The existing RPZ/sinkhole path stays available for a later human-approved response. Detection v1.0 is now frozen in the Scenario 04 repository, but no Scenario 04 sinkhole action is claimed yet because the official SOC/IR exercise has not started.
+The existing RPZ/sinkhole path was later exercised during the official Scenario 04 IR phase after human approval. The temporary wildcard `*.tunnel.soclab.abdul4rehman215.tech` was proven to return `10.50.30.30`, Unbound telemetry recorded the RPZ application, and the pre-change safe/non-enforcing state was then restored. Detailed response evidence remains in the dedicated Scenario 04 repository.
 
 The implementation and evidence are documented in [`../02-aws-build/10-scenario-04-dns-tunneling.md`](../02-aws-build/10-scenario-04-dns-tunneling.md).
 
