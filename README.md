@@ -479,7 +479,8 @@ The SOC Analyst has no attacker-account inventory, no private network route and 
 | 🔄 Scenario 03 Fast Flux infrastructure | ✅ Complete — three controlled nodes + short-TTL Route 53 rotation + victim/network validation; temporary pool retired after official exercise |
 | 🔄 Scenario 03 official operator / SOC / IR exercise | ✅ Complete — final case evidence maintained in the Scenario 03 repository; IR chose no containment and verified resolver/RPZ safe state |
 | 🛰️ Scenario 04 tunneling infrastructure | ✅ Complete — authoritative BIND endpoint + nested Route 53 delegation + victim/resolver/authoritative path validated |
-| 🎯 Scenario 04 Detection Engineering / dashboard / scheduled alert / AI | ✅ Complete / SOC-ready — maintained in separate Scenario 04 repository; official simulation/SOC/IR next |
+| 🎯 Scenario 04 Detection Engineering / dashboard / scheduled alert / AI | ✅ Complete — frozen v1.0 and `dns_tunneling_v1` validated in the dedicated Scenario 04 repository |
+| 🎬 Scenario 04 official operator / SOC / IR / RPZ closeout | ✅ Complete — information-separated execution, SOC escalation, IR validation, temporary RPZ containment and safe reset documented in the Scenario 04 repository |
 
 Scenario-specific detections and exercises are maintained in the separate [scenario repositories](https://github.com/orgs/DNSentinel-Lab/repositories).
 
