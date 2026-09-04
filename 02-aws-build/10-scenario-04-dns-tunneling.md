@@ -72,7 +72,7 @@ The later response path remains the already-built Scenario 02 control:
 Victim -> Unbound RPZ -> 10.50.30.30 -> dns-soc-sinkhole01
 ```
 
-That response path is **available infrastructure**, not a claim that Scenario 04 containment has been executed.
+At infrastructure-build time, that response path was **available infrastructure**, not yet an executed containment claim. The later official IR phase subsequently validated the same path temporarily and restored it safely; detailed evidence remains in the dedicated Scenario 04 repository.
 
 ## 3. Public authoritative security boundary
 
@@ -286,25 +286,24 @@ Scenario 04 infrastructure is ready because the team has proven:
 - multiple fresh unique subdomains traverse the full path;
 - the existing Scenario 02 RPZ/sinkhole remains available for a later human-approved response.
 
-Infrastructure completion does **not** mean the security scenario is complete.
+Infrastructure completion did **not** mean the security scenario was complete at build time. The later Detection Engineering and official execution phases have now been completed separately.
 
-## 13. Work deliberately left for later phases
+## 13. Later phases — now completed in the scenario repository
 
-Not implemented here:
+This infrastructure document intentionally did not implement the later security workflow. Those phases have now been completed in `Scenario-04-DNS-Tunneling`:
 
-- encoded-label generator/official simulation;
-- optional synthetic-message decoder/reassembly tool;
-- Scenario 04 baseline;
-- feature extraction/threshold selection;
+- finite encoded-label operator client / official session;
+- Scenario 04 baseline and feature engineering;
 - Detection v1.0;
 - Dashboard Studio / scheduled alert;
-- Scenario 04 AI evidence mapping;
-- official information-separated operator run;
-- SOC investigation;
-- IR decision;
-- Scenario 04 RPZ/sinkhole action and before/after verification.
+- `dns_tunneling_v1` AI evidence mapping;
+- information-separated SOC investigation;
+- SOC→IR handoff;
+- independent IR validation;
+- human-approved temporary RPZ/sinkhole verification;
+- safe reset and final ground-truth comparison.
 
-The next phase is **Detection Engineering**, using real defender-side resolver telemetry and small controlled engineering tests before the official run.
+The shared Infrastructure repository records only the platform state; detailed scenario evidence belongs in the dedicated Scenario 04 repository.
 
 ## 14. Repository artifacts
 
@@ -313,3 +312,21 @@ The next phase is **Detection Engineering**, using real defender-side resolver t
 - [`configs/scenario-04/ARTIFACT-MANIFEST.md`](configs/scenario-04/ARTIFACT-MANIFEST.md) — ownership and evidence boundary.
 - [`screenshots/scenario-04-dns-tunneling/README.md`](screenshots/scenario-04-dns-tunneling/README.md) — curated evidence manifest.
 - [`../01-network-architecture/diagrams/scenario-04-dns-tunneling.mmd`](../01-network-architecture/diagrams/scenario-04-dns-tunneling.mmd) — final infrastructure flow.
+
+
+## 15. Official Scenario 04 closeout synchronization
+
+The completed exercise later proved the infrastructure in operational use:
+
+```text
+10.50.30.20 / victim
+  → 10.50.30.10 / Unbound
+  → public DNS / delegation
+  → dns-tunnel-auth01 / BIND
+  → Splunk Detection v1.0 / AI / SOC
+  → IR-approved temporary RPZ
+  → 10.50.30.30
+  → safe reset
+```
+
+The official seven-query burst reached both Unbound and the authoritative BIND endpoint. Detection v1.0 fired without live tuning, SOC escalated with explicit attribution limits, and IR later proved the existing RPZ/sinkhole design before restoring the pre-change state.

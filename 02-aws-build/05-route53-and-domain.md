@@ -288,7 +288,7 @@ The Route 53 DNS phase is complete. `abdul4rehman215.tech` is authoritative in t
 
 The delegated lab hostname resolves publicly to `100.49.192.164`, and `www.soclab.abdul4rehman215.tech` follows a CNAME to the same target. The child zone also contains the permanent `"DNS SOC Training Lab"` TXT fixture for controlled reconnaissance.
 
-The stable public DNS baseline is complete. Nginx/HTTPS, Web telemetry and AWS telemetry have since been completed as separate build phases. Scenario 02 DGA and Scenario 03 Fast Flux DNS behavior have now been exercised and closed out in their dedicated repositories; Scenario 04 tunneling infrastructure is now prepared with the nested `tunnel.soclab...` delegation and authoritative BIND endpoint; Detection Engineering and official execution remain pending. See [`../00-project-design/scenario-infrastructure-roadmap.md`](../00-project-design/scenario-infrastructure-roadmap.md).
+The stable public DNS baseline is complete. Nginx/HTTPS, Web telemetry and AWS telemetry have since been completed as separate build phases. Scenario 02 DGA, Scenario 03 Fast Flux and Scenario 04 DNS Tunneling have now been exercised and closed out in their dedicated repositories. Scenario 04 used the nested `tunnel.soclab...` delegation and authoritative BIND endpoint, then validated the reusable RPZ/sinkhole response and safe reset. See [`../00-project-design/scenario-infrastructure-roadmap.md`](../00-project-design/scenario-infrastructure-roadmap.md).
 
 ## Evidence index
 
