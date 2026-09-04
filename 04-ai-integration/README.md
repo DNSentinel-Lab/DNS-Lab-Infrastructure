@@ -180,7 +180,7 @@ The strong synthetic result also demonstrated why framework mappings remain advi
 
 The bridge stays scenario-neutral. A scenario repository adds only its stable evidence mapping/profile after detection fields are ready:
 
-Scenario 02 validates this reuse pattern with `scenario_id=scenario-02-dga` / `dga_nxdomain_v1`. Scenario 04 now also validates the same shared foundation with `scenario_id=scenario-04-dns-tunneling` / `dns_tunneling_v1`; its frozen detection evidence and AI mapping remain in the dedicated Scenario 04 repository.
+Scenario 02 validates this reuse pattern with `scenario_id=scenario-02-dga` / `dga_nxdomain_v1`. Scenario 04 also validates the same shared foundation with `scenario_id=scenario-04-dns-tunneling` / `dns_tunneling_v1`; after engineering validation, the official production alert used the same path and the SOC analyst independently validated the AI result against raw resolver evidence. Detailed scenario evidence remains in the dedicated Scenario 04 repository.
 
 ```text
 scenario detection
